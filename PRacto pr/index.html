@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEE J PRODUCTIONS | Premium Video Editor Portfolio</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="index.css?v=2.1.4">
+
+    <!-- CDNs (GSAP, Lenis) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
+</head>
+
+<body>
+    <!-- Film Grain / Noise Overlay -->
+    <div class="grain-overlay"></div>
+
+    <!-- Custom Liquid Cursor -->
+    <div class="custom-cursor">
+        <span class="cursor-text">PLAY</span>
+    </div>
+    <div class="custom-cursor-follower"></div>
+
+    <!-- Video Background Container -->
+    <div id="webgl-container">
+        <video id="bg-video" src="background video.mp4" autoplay loop muted playsinline preload="auto"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; opacity: 1.0; filter: brightness(1.05) contrast(1.25) saturate(1.0); transform: scale(1.08); mask-image: radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, rgba(0,0,0,0.55) 45%, transparent 100%); -webkit-mask-image: radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, rgba(0,0,0,0.55) 45%, transparent 100%);"></video>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <a href="#" class="logo">
+            <div class="logo-dock" id="logo-dock">
+                <!-- SVG logo will morph and dock here on scroll -->
+            </div>
+            <span class="logo-text">DEE J</span>
+        </a>
+        <nav class="nav-links">
+            <a href="#showreel" class="nav-link">Showreel</a>
+            <a href="#longform" class="nav-link">Cinematic</a>
+            <a href="#shorts" class="nav-link">Shorts</a>
+            <a href="#reviews" class="nav-link">Reviews</a>
+            <a href="#contact" class="nav-link btn-contact">Let's Cut</a>
+        </nav>
+    </header>
+
+    <!-- Main Scroll Content -->
+    <main class="scroll-content">
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="hero-section">
+            <div class="hero-container">
+                <div class="hero-left">
+                    <div class="hero-tagline">VISUAL ARCHITECT & EDITOR</div>
+                    <h1 class="hero-title">
+                        <span class="reveal-text">WE CRAFT</span><br>
+                        <span class="reveal-text accent">NARRATIVES</span><br>
+                        <span class="reveal-text">THAT BEND</span><br>
+                        <span class="reveal-text">REALITY.</span>
+                    </h1>
+                    <p class="hero-desc">
+                        High-impact editing for commercial brands, cinematic documentaries, and viral short-form
+                        creators. We don't just cut clips; we design attention.
+                    </p>
+                    <div class="scroll-indicator">
+                        <span class="scroll-mouse">
+                            <span class="scroll-wheel"></span>
+                        </span>
+                        <span class="scroll-label">SCROLL TO DISCOVER</span>
+                    </div>
+                </div>
+
+                <!-- Interactive SVG Monogram Logo in Hero -->
+                <div class="hero-right" id="hero-logo-wrapper">
+                    <div id="hero-logo-container">
+                        <svg class="djp-logo" viewBox="0 0 500 550" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <!-- Volumetric Neon Glow -->
+                                <filter id="hologram-glow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="5" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+
+                                <!-- Core Paths Definition -->
+                                <g id="logo-paths">
+                                    <!-- Top Horizontal Bar -->
+                                    <path class="logo-path" d="M 200,50 L 400,50" stroke-linecap="square" />
+                                    <!-- Left Small Vertical Drop -->
+                                    <path class="logo-path" d="M 200,50 L 200,120" stroke-linecap="square" />
+                                    <!-- Upper Arching Curve -->
+                                    <path class="logo-path" d="M 160,120 C 220,110 320,110 400,120"
+                                        stroke-linecap="round" />
+                                    <!-- Left Vertical Inner Bar -->
+                                    <path class="logo-path" d="M 240,110 L 240,280" stroke-linecap="square" />
+                                    <!-- Lower Horizontal Inner Bar -->
+                                    <path class="logo-path" d="M 210,280 L 300,280" stroke-linecap="square" />
+                                    <!-- Main J-Stem (with bottom hook) -->
+                                    <path class="logo-path" d="M 300,50 L 300,390 A 85,85 0 0 1 130,390"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <!-- Right P/D Curve -->
+                                    <path class="logo-path"
+                                        d="M 300,120 C 390,120 440,150 440,200 C 440,250 390,280 300,280"
+                                        stroke-linecap="round" />
+                                </g>
+                            </defs>
+
+                            <!-- Glitch Cyan Layer -->
+                            <use class="logo-glitch cyan" href="#logo-paths" stroke="#00f2fe" stroke-width="8" />
+
+                            <!-- Glitch Magenta Layer -->
+                            <use class="logo-glitch magenta" href="#logo-paths" stroke="#ff007f" stroke-width="8" />
+
+                            <!-- Glitch Neon Layer -->
+                            <use class="logo-glitch neon" href="#logo-paths" stroke="#dfff00" stroke-width="8" />
+
+                            <!-- Glitch Purple Layer -->
+                            <use class="logo-glitch purple" href="#logo-paths" stroke="#bd00ff" stroke-width="8" />
+
+                            <!-- Glitch Orange Layer -->
+                            <use class="logo-glitch orange" href="#logo-paths" stroke="#ff6600" stroke-width="8" />
+
+                            <!-- Main Volumetric White Layer -->
+                            <use class="logo-main" href="#logo-paths" stroke="#dfff00" stroke-width="8"
+                                filter="url(#hologram-glow)" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SHOWREEL SECTION -->
+        <section id="showreel" class="showreel-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-num">01 // SOURCE</span>
+                    <h2 class="section-title">THE SHOWREEL</h2>
+                </div>
+                <div class="showreel-wrapper" data-video-id="ScMzIvxBSi4">
+                    <div class="showreel-preview">
+                        <div class="glow-bg"></div>
+                        <img src="https://img.youtube.com/vi/ScMzIvxBSi4/maxresdefault.jpg" alt="Showreel Thumbnail"
+                            class="showreel-img">
+                        <div class="play-btn-circle">
+                            <svg class="play-svg" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                        <div class="showreel-meta">
+                            <span class="meta-tag">DIRECTOR'S CUT</span>
+                            <span class="meta-time">2026 EDITION</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LONG-FORM SECTION (HORIZONTAL SCROLL - 5 VIDEOS) -->
+        <section id="longform" class="longform-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-num">02 // FORMAT</span>
+                    <h2 class="section-title">CINEMATIC WORKS</h2>
+                    <p class="section-subtitle">Long-form storytelling, commercials, and documentaries.</p>
+                </div>
+                <div class="horizontal-scroll-container">
+                    <div class="horizontal-scroll-track">
+                        <!-- Card 1 -->
+                        <div class="video-card long-card" data-video-id="wX-y0Zc6Qh4">
+                            <div class="card-image-wrapper">
+                                <img src="https://img.youtube.com/vi/wX-y0Zc6Qh4/maxresdefault.jpg"
+                                    alt="Cinematic Edit 1">
+                                <div class="card-overlay">
+                                    <span class="card-play-icon">◢</span>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <span class="card-genre">COMMERCIAL</span>
+                                <h3 class="card-title">RED BULL // RISE OF THE STREETS</h3>
+                                <p class="card-desc">Fast-paced, heavy sound-designed edit showing urban athlete
+                                    culture.</p>
+                            </div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="video-card long-card" data-video-id="ScMzIvxBSi4">
+                            <div class="card-image-wrapper">
+                                <img src="https://img.youtube.com/vi/ScMzIvxBSi4/maxresdefault.jpg"
+                                    alt="Cinematic Edit 2">
+                                <div class="card-overlay">
+                                    <span class="card-play-icon">◢</span>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <span class="card-genre">DOCUMENTARY</span>
+                                <h3 class="card-title">CHASING HORIZONS // ICELAND</h3>
+                                <p class="card-desc">Atmospheric, slow-paced narrative showcasing geographic symmetry
+                                    and scale.</p>
+                            </div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="video-card long-card" data-video-id="338D6hC0-qg">
+                            <div class="card-image-wrapper">
+                                <img src="https://img.youtube.com/vi/338D6hC0-qg/maxresdefault.jpg"
+                                    alt="Cinematic Edit 3">
+                                <div class="card-overlay">
+                                    <span class="card-play-icon">◢</span>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <span class="card-genre">MUSIC VIDEO</span>
+                                <h3 class="card-title">LOST IN THE CITY // AFTER HOURS</h3>
+                                <p class="card-desc">Glitchy, color-heavy music edit with rhythm-synced speed ramps.</p>
+                            </div>
+                        </div>
+                        <!-- Card 4 -->
+                        <div class="video-card long-card" data-video-id="ScMzIvxBSi4">
+                            <div class="card-image-wrapper">
+                                <img src="https://img.youtube.com/vi/ScMzIvxBSi4/maxresdefault.jpg"
+                                    alt="Cinematic Edit 4">
+                                <div class="card-overlay">
+                                    <span class="card-play-icon">◢</span>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <span class="card-genre">SHORT FILM</span>
+                                <h3 class="card-title">THE SILENT PEAK // EVEREST ASCENT</h3>
+                                <p class="card-desc">Slow pacing, natural soundscapes, high dynamic range, and majestic
+                                    colors.</p>
+                            </div>
+                        </div>
+                        <!-- Card 5 -->
+                        <div class="video-card long-card" data-video-id="wX-y0Zc6Qh4">
+                            <div class="card-image-wrapper">
+                                <img src="https://img.youtube.com/vi/wX-y0Zc6Qh4/maxresdefault.jpg"
+                                    alt="Cinematic Edit 5">
+                                <div class="card-overlay">
+                                    <span class="card-play-icon">◢</span>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <span class="card-genre">BRAND FILM</span>
+                                <h3 class="card-title">FUTURA // TECH LAUNCH SHOWCASE</h3>
+                                <p class="card-desc">Sleek, minimalist product rendering, tracking cameras, and synth
+                                    beats.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SHORTS SECTION (3D STACKED FEED - 10 VIDEOS) -->
+        <section id="shorts" class="shorts-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-num">03 // RETENTION</span>
+                    <h2 class="section-title">VIRAL SHORTS</h2>
+                    <p class="section-subtitle">Micro-content engineered for high retention, hooks, and loops.</p>
+                </div>
+                <div class="shorts-slider-container">
+                    <div class="shorts-slider-track">
+                        <!-- Short 1 -->
+                        <div class="video-card short-card" data-video-id="qC69h2q-fA0">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">
+                                    <img src="https://img.youtube.com/vi/qC69h2q-fA0/hqdefault.jpg" alt="Short 1"
+                                        class="short-thumb">
+                                    <div class="short-overlay">
+                                        <div class="short-stats">
+                                            <span class="stat-views">4.2M VIEWS</span>
+                                            <span class="stat-retention">89% Retention</span>
+                                        </div>
+                                        <div class="short-info">
+                                            <h4 class="short-title">Red Bull F1 Match Cuts</h4>
+                                            <p class="short-tags">#sports #editing #f1</p>
+                                        </div>
+                                        <span class="card-play-icon">◢</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Short 2 -->
+                        <div class="video-card short-card" data-video-id="z8e4o4J4iU4">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">
+                                    <img src="https://img.youtube.com/vi/z8e4o4J4iU4/hqdefault.jpg" alt="Short 2"
+                                        class="short-thumb">
+                                    <div class="short-overlay">
+                                        <div class="short-stats">
+                                            <span class="stat-views">2.8M VIEWS</span>
+                                            <span class="stat-retention">92% Loop Rate</span>
+                                        </div>
+                                        <div class="short-info">
+                                            <h4 class="short-title">Apple Vision Pro Review Hook</h4>
+                                            <p class="short-tags">#tech #marketing #shorts</p>
+                                        </div>
+                                        <span class="card-play-icon">◢</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Short 3 -->
+                        <div class="video-card short-card" data-video-id="tA_3x8Y3mI4">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">
+                                    <img src="https://img.youtube.com/vi/tA_3x8Y3mI4/hqdefault.jpg" alt="Short 3"
+                                        class="short-thumb">
+                                    <div class="short-overlay">
+                                        <div class="short-stats">
+                                            <span class="stat-views">1.9M VIEWS</span>
+                                            <span class="stat-retention">81% Watch Time</span>
+                                        </div>
+                                        <div class="short-info">
+                                            <h4 class="short-title">Cyberpunk City Loop</h4>
+                                            <p class="short-tags">#colorgrade #tokyo #glow</p>
+                                        </div>
+                                        <span class="card-play-icon">◢</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Short 4 -->
+                        <div class="video-card short-card" data-video-id="qC69h2q-fA0">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">
+                                    <img src="https://img.youtube.com/vi/qC69h2q-fA0/hqdefault.jpg" alt="Short 4"
+                                        class="short-thumb">
+                                    <div class="short-overlay">
+                                        <div class="short-stats">
+                                            <span class="stat-views">3.1M VIEWS</span>
+                                            <span class="stat-retention">87% Loop Rate</span>
+                                        </div>
+                                        <div class="short-info">
+                                            <h4 class="short-title">Nike Running Ad Rhythm</h4>
+                                            <p class="short-tags">#nike #sounddesign #beats</p>
+                                        </div>
+                                        <span class="card-play-icon">◢</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Short 5 -->
+                        <div class="video-card short-card" data-video-id="z8e4o4J4iU4">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">
+                                    <img src="https://img.youtube.com/vi/z8e4o4J4iU4/hqdefault.jpg" alt="Short 5"
+                                        class="short-thumb">
+                                    <div class="short-overlay">
+                                        <div class="short-stats">
+                                            <span class="stat-views">5.5M VIEWS</span>
+                                            <span class="stat-retention">94% Retention</span>
+                                        </div>
+                                        <div class="short-info">
+                                            <h4 class="short-title">MrBeast-Style Hook Tricks</h4>
+                                            <p class="short-tags">#viral #pacing #graphics</p>
+                                        </div>
+                                        <span class="card-play-icon">◢</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Short 6 -->
+                        <div class="video-card short-card" data-video-id="tA_3x8Y3mI4">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">
+                                    <img src="https://img.youtube.com/vi/tA_3x8Y3mI4/hqdefault.jpg" alt="Short 6"
+                                        class="short-thumb">
+                                    <div class="short-overlay">
+                                        <div class="short-stats">
+                                            <span class="stat-views">1.5M VIEWS</span>
+                                            <span class="stat-retention">78% Watch Time</span>
+                                        </div>
+                                        <div class="short-info">
+                                            <h4 class="short-title">Iceland Travel Montage</h4>
+                                            <p class="short-tags">#travel #cinematic #grain</p>
+                                        </div>
+                                        <span class="card-play-icon">◢</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Short 7 -->
+                        <div class="video-card short-card" data-video-id="qC69h2q-fA0">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">
+                                    <img src="https://img.youtube.com/vi/qC69h2q-fA0/hqdefault.jpg" alt="Short 7"
+                                        class="short-thumb">
+                                    <div class="short-overlay">
+                                        <div class="short-stats">
+                                            <span class="stat-views">2.2M VIEWS</span>
+                                            <span class="stat-retention">86% Loop Rate</span>
+                                        </div>
+                                        <div class="short-info">
+                                            <h4 class="short-title">Cooking Sound Design ASMR</h4>
+                                            <p class="short-tags">#asmr #cooking #cuts</p>
+                                        </div>
+                                        <span class="card-play-icon">◢</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Short 8 -->
+                        <div class="video-card short-card" data-video-id="z8e4o4J4iU4">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">
+                                    <img src="https://img.youtube.com/vi/z8e4o4J4iU4/hqdefault.jpg" alt="Short 8"
+                                        class="short-thumb">
+                                    <div class="short-overlay">
+                                        <div class="short-stats">
+                                            <span class="stat-views">1.1M VIEWS</span>
+                                            <span class="stat-retention">80% Retention</span>
+                                        </div>
+                                        <div class="short-info">
+                                            <h4 class="short-title">Streetwear Clothing B-Roll</h4>
+                                            <p class="short-tags">#fashion #vibe #speedramp</p>
+                                        </div>
+                                        <span class="card-play-icon">◢</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Short 9 -->
+                        <div class="video-card short-card" data-video-id="tA_3x8Y3mI4">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">
+                                    <img src="https://img.youtube.com/vi/tA_3x8Y3mI4/hqdefault.jpg" alt="Short 9"
+                                        class="short-thumb">
+                                    <div class="short-overlay">
+                                        <div class="short-stats">
+                                            <span class="stat-views">3.8M VIEWS</span>
+                                            <span class="stat-retention">91% Loop Rate</span>
+                                        </div>
+                                        <div class="short-info">
+                                            <h4 class="short-title">Gaming Cinematic Transition</h4>
+                                            <p class="short-tags">#vfx #gaming #visuals</p>
+                                        </div>
+                                        <span class="card-play-icon">◢</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Short 10 -->
+                        <div class="video-card short-card" data-video-id="qC69h2q-fA0">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">
+                                    <img src="https://img.youtube.com/vi/qC69h2q-fA0/hqdefault.jpg" alt="Short 10"
+                                        class="short-thumb">
+                                    <div class="short-overlay">
+                                        <div class="short-stats">
+                                            <span class="stat-views">980K VIEWS</span>
+                                            <span class="stat-retention">76% Watch Time</span>
+                                        </div>
+                                        <div class="short-info">
+                                            <h4 class="short-title">Product Unboxing Macro Zoom</h4>
+                                            <p class="short-tags">#tech #unboxing #sound</p>
+                                        </div>
+                                        <span class="card-play-icon">◢</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- CLIENT REVIEWS SECTION -->
+        <section id="reviews" class="hero-section reviews-section">
+            <div class="hero-container reviews-container">
+                <div class="hero-left reviews-left">
+                    <div class="hero-tagline">CLIENT TESTIMONIALS</div>
+                    <h1 class="hero-title reviews-title">
+                        <span class="reveal-text">WHAT THEY</span><br>
+                        <span class="reveal-text accent">SAY ABOUT</span><br>
+                        <span class="reveal-text">THE CUTS.</span>
+                    </h1>
+                    <p class="hero-desc reviews-desc">
+                        Collaborating with world-class filmmakers, viral creators, and commercial brands to transform
+                        raw footage into visual masterpieces. Here is what our clients say about the cuts.
+                    </p>
+                    <div class="reviews-slider-indicator">
+                        <span class="active-index-label">01 / 03</span>
+                    </div>
+                </div>
+
+                <div class="hero-right reviews-right">
+                    <div class="reviews-stack">
+                        <!-- Review Card 1 -->
+                        <div class="review-card active" data-index="0">
+                            <div class="review-quote-icon">“</div>
+                            <p class="review-text-content">
+                                Dee J didn't just edit our documentary; they reshaped our entire storytelling arc. The
+                                sound design additions created a haunting, immersive environment that blew our audience
+                                away.
+                            </p>
+                            <div class="review-author-meta">
+                                <h4 class="review-author-name">Alex Rivera</h4>
+                                <span class="review-author-details">Director, Rivera Films — The Lost Canvas</span>
+                            </div>
+                        </div>
+
+                        <!-- Review Card 2 -->
+                        <div class="review-card" data-index="1">
+                            <div class="review-quote-icon">“</div>
+                            <p class="review-text-content">
+                                Absolutely insane watch time metrics. Since switching to their editing pipeline, our
+                                retention rates have averaged 88%+ and our subscriber count surged by over a million.
+                            </p>
+                            <div class="review-author-meta">
+                                <h4 class="review-author-name">Sarah K.</h4>
+                                <span class="review-author-details">Creator — Macro Tech Series (1.8M Subs)</span>
+                            </div>
+                        </div>
+
+                        <!-- Review Card 3 -->
+                        <div class="review-card" data-index="2">
+                            <div class="review-quote-icon">“</div>
+                            <p class="review-text-content">
+                                High-performance, visual precision, and incredibly fast turnarounds. The cinematic
+                                pacing they brought to our product launch campaign set a new sales record.
+                            </p>
+                            <div class="review-author-meta">
+                                <h4 class="review-author-name">Marcus Vance</h4>
+                                <span class="review-author-details">Creative Director, Vance Media — Vanguard X</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reviews-controls">
+                        <button class="reviews-control-btn prev-btn" aria-label="Previous review">⟵</button>
+                        <button class="reviews-control-btn next-btn" aria-label="Next review">⟶</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- CONTACT & OUTRO SECTION -->
+        <section id="contact" class="contact-section">
+            <div class="section-container">
+                <div class="contact-grid">
+                    <div class="contact-text">
+                        <span class="contact-label">HAVE A PROJECT?</span>
+                        <h2 class="contact-heading">LET'S SHAPE THE NARRATIVE TOGETHER.</h2>
+                        <p class="contact-sub">Currently booking high-impact edits for Q3/Q4. Commercial reels, product
+                            launches, documentary narratives, and creator-led platforms.</p>
+                        <div class="contact-socials">
+                            <a href="https://youtube.com" target="_blank" class="social-link">YOUTUBE</a>
+                            <a href="https://instagram.com" target="_blank" class="social-link">INSTAGRAM</a>
+                            <a href="mailto:edit@deejproductions.co" class="social-link">EMAIL</a>
+                            <a href="https://x.com" target="_blank" class="social-link">TWITTER / X</a>
+                        </div>
+                    </div>
+                    <div class="contact-form-wrapper">
+                        <form class="contact-form" id="contact-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>YOUR NAME</label>
+                                    <input type="text" placeholder="e.g. John Doe" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>EMAIL ADDRESS</label>
+                                    <input type="email" placeholder="e.g. john@company.com" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>PROJECT FORMAT</label>
+                                <select>
+                                    <option value="commercial">Commercial / Ad Campaign</option>
+                                    <option value="longform">Cinematic / Long-form Documentary</option>
+                                    <option value="shorts">Short-form TikTok/Shorts/Reels (Pack)</option>
+                                    <option value="other">Full-time Retainer / Brand Partnership</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>TELL US ABOUT THE VISION</label>
+                                <textarea rows="4"
+                                    placeholder="Briefly describe your footage, sound design requests, and timeline..."></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                <span class="submit-btn-text">SUBMIT BRIEF</span>
+                                <span class="submit-btn-icon">◢</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <footer class="footer-bottom">
+                    <span class="copy-text">© 2026 DEE J PRODUCTIONS. ALL RIGHTS RESERVED.</span>
+                    <span class="design-by">DESIGNED & ENGINEERED DEE J Productions.</span>
+                </footer>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- YouTube Lightbox Modal -->
+    <div class="modal" id="video-modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">✕ CLOSE</button>
+            <div class="modal-video-container" id="modal-player-container">
+                <!-- iFrame loaded dynamically here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Imports -->
+    <script src="sound-manager.js?v=2.1.4"></script>
+    <script src="three-bg.js?v=2.1.4"></script>
+    <script src="app.js?v=2.1.4"></script>
+</body>
+
+</html>
