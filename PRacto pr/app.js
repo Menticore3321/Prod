@@ -161,26 +161,19 @@ class App {
                     longCards.forEach(card => {
                         gsap.fromTo(card,
                             {
-                                y: 120,
-                                scaleY: 0.2,
-                                scaleX: 0.9,
-                                rotation: -3,
-                                opacity: 0,
-                                transformOrigin: "bottom center"
+                                y: 50,
+                                opacity: 0
                             },
                             {
                                 y: 0,
-                                scaleY: 1,
-                                scaleX: 1,
-                                rotation: 0,
                                 opacity: 1,
                                 ease: "power2.out",
                                 scrollTrigger: {
                                     trigger: card,
                                     containerAnimation: longformTween,
-                                    start: "left 100%",
-                                    end: "left 75%",
-                                    scrub: 1.2
+                                    start: "left 98%",
+                                    end: "left 80%",
+                                    scrub: true
                                 }
                             }
                         );
