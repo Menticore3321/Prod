@@ -257,7 +257,7 @@ class SoundManager {
 
     bindUISounds() {
         // Bind hover and click responses to interactive elements without selector overlapping duplicates
-        const elements = document.querySelectorAll('a, button, .video-card, .phone-mockup, .review-card');
+        const elements = document.querySelectorAll('a, button, .video-card, .review-card');
         
         elements.forEach(el => {
             el.addEventListener('mouseenter', () => {

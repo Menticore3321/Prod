@@ -105,7 +105,8 @@ body {
     background-color: var(--color-white);
     border-radius: 50%;
     position: fixed;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
     pointer-events: none;
     z-index: 10000;
     mix-blend-mode: difference;
@@ -114,6 +115,7 @@ body {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    will-change: transform;
 }
 
 /* Backlight Spotlight Follower - Lando Norris Style */
@@ -125,10 +127,12 @@ body {
     border: none;
     border-radius: 50%;
     position: fixed;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
     pointer-events: none;
     z-index: 9999;
-    transition: transform 0.1s ease-out, width 0.3s, height 0.3s, background 0.3s;
+    transition: width 0.3s, height 0.3s, background 0.3s;
+    will-change: transform;
 }
 
 .custom-cursor .cursor-text {
@@ -1236,7 +1240,7 @@ section {
 }
 
 /* Shorts Modal Specifics */
-.video-modal.short-modal .modal-card {
+.modal.short-modal .modal-content {
     max-width: 380px;
     aspect-ratio: 9/16;
 }
@@ -1717,7 +1721,7 @@ section {
     bottom: 24px; /* Dock at bottom-right on desktop */
     right: 24px;
     z-index: 1000;
-    font-family: var(--font-primary);
+    font-family: var(--font-mono);
 }
 
 #audio-panel-trigger {
@@ -1886,4 +1890,87 @@ section {
     .audio-panel-wrapper.expanded #audio-settings-menu {
         transform: translateY(0) scale(1);
     }
+}
+
+/* Glassmorphic Admin Authorization Modal */
+.admin-modal-card {
+    background: rgba(10, 10, 10, 0.45) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(25px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(223, 255, 0, 0.05);
+    max-width: 440px !important;
+    padding: 3rem !important;
+    border-radius: 16px !important;
+    width: 90%;
+}
+
+.admin-modal-header {
+    margin-bottom: 2.2rem;
+}
+
+.admin-modal-subtitle {
+    font-family: var(--font-mono);
+    color: var(--color-neon);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.admin-modal-title {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+
+.admin-login-form .form-group {
+    margin-bottom: 1.6rem;
+}
+
+.admin-login-form label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--color-text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 0.6rem;
+    display: block;
+}
+
+.admin-login-form input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+    padding: 0.85rem 1rem;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    transition: var(--transition-fast);
+    outline: none;
+    box-sizing: border-box;
+}
+
+.admin-login-form input:focus {
+    border-color: var(--color-neon);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 0 15px rgba(223, 255, 0, 0.1);
+}
+
+.admin-error-msg {
+    font-family: var(--font-mono);
+    color: #ff3333;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.admin-submit-btn {
+    width: 100%;
+    margin-top: 1rem;
 }

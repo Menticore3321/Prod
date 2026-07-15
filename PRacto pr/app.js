@@ -23,6 +23,7 @@ class App {
         this.initVideos();
         this.initContactForm();
         this.initReviewsSlider();
+        this.initAdminLogin();
     }
 
     initLenis() {
@@ -79,7 +80,7 @@ class App {
 
         // 1. Hero text reveal animations
         const revealTimeline = gsap.timeline();
-        revealTimeline.from('.reveal-text', {
+        revealTimeline.from('.hero-title .reveal-text', {
             y: '100%',
             opacity: 0,
             duration: 1.2,
@@ -103,157 +104,231 @@ class App {
             ease: 'power3.out'
         }, "-=0.6");
 
-        // 2. Pin horizontal track scroll with dynamic velocity skews (Speed Blur) - Desktop Only
+        // 2. Pin horizontal track scroll with dynamic velocity skews (Speed Blur) - Responsive
+        const mm = gsap.matchMedia();
         const track = document.querySelector('.horizontal-scroll-track');
-        let longformTween;
-        const isDesktop = window.innerWidth > 1024;
-        
-        if (track && isDesktop) {
-            longformTween = gsap.to(track, {
-                x: () => -(track.scrollWidth - window.innerWidth + window.innerWidth * 0.1),
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '.longform-section',
-                    pin: true,
-                    scrub: 1.2,
-                    start: 'top top',
-                    end: () => `+=${track.scrollWidth - window.innerWidth + 300}`,
-                    invalidateOnRefresh: true,
-                    onUpdate: (self) => {
-                        // Calculate scroll velocity
-                        const velocity = self.getVelocity();
-                        // Clamp horizontal skew warp between -10 and 10 degrees
-                        const skew = gsap.utils.clamp(-10, 10, velocity * 0.005);
-                        // Slightly scale height down to simulate vertical speed compression
-                        const scaleY = 1 - Math.min(Math.abs(velocity) * 0.0001, 0.04);
-
-                        gsap.to(track.querySelectorAll('.video-card'), {
-                            skewX: skew,
-                            scaleY: scaleY,
-                            duration: 0.4,
-                            ease: 'power1.out',
-                            overwrite: 'auto'
-                        });
-                    },
-                    onToggle: (self) => {
-                        // Cleanly settle back to flat when leaving section bounds
-                        if (!self.isActive) {
-                            gsap.to(track.querySelectorAll('.video-card'), {
-                                skewX: 0,
-                                scaleY: 1,
-                                duration: 0.5,
-                                ease: 'power2.out',
-                                overwrite: 'auto'
-                            });
-                        }
-                    }
-                }
-            });
-
-            // Emerging plant animation for longform cards
-            const longCards = track.querySelectorAll('.video-card-wrapper');
-            longCards.forEach(card => {
-                gsap.fromTo(card,
-                    {
-                        y: 120,
-                        scaleY: 0.2,
-                        scaleX: 0.9,
-                        rotation: -3,
-                        opacity: 0,
-                        transformOrigin: "bottom center"
-                    },
-                    {
-                        y: 0,
-                        scaleY: 1,
-                        scaleX: 1,
-                        rotation: 0,
-                        opacity: 1,
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: card,
-                            containerAnimation: longformTween,
-                            start: "left 100%",
-                            end: "left 75%",
-                            scrub: 1.2
-                        }
-                    }
-                );
-            });
-        }
-
-        // 3. Pin horizontal track scroll for Viral Shorts (10 phone mockups) - Desktop Only
         const shortsTrack = document.querySelector('.shorts-slider-track');
-        let shortsTween;
-        if (shortsTrack && isDesktop) {
-            shortsTween = gsap.to(shortsTrack, {
-                x: () => -(shortsTrack.scrollWidth - window.innerWidth + window.innerWidth * 0.1),
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '.shorts-section',
-                    pin: true,
-                    scrub: 1.2,
-                    start: 'top top',
-                    end: () => `+=${shortsTrack.scrollWidth - window.innerWidth + 300}`,
-                    invalidateOnRefresh: true,
-                    onUpdate: (self) => {
-                        // Apply dynamic speed-blur skew to shorts cards on scroll
-                        const velocity = self.getVelocity();
-                        const skew = gsap.utils.clamp(-8, 8, velocity * 0.004);
-                        const scaleY = 1 - Math.min(Math.abs(velocity) * 0.0001, 0.03);
 
-                        gsap.to(shortsTrack.querySelectorAll('.phone-mockup'), {
-                            skewX: skew,
-                            scaleY: scaleY,
-                            duration: 0.4,
-                            ease: 'power1.out',
-                            overwrite: 'auto'
-                        });
-                    },
-                    onToggle: (self) => {
-                        // Cleanly reset coordinates when scrolling out of bounds
-                        if (!self.isActive) {
-                            gsap.to(shortsTrack.querySelectorAll('.phone-mockup'), {
-                                skewX: 0,
-                                scaleY: 1,
-                                duration: 0.5,
-                                ease: 'power2.out',
-                                overwrite: 'auto'
-                            });
-                        }
-                    }
-                }
-            });
-
-            // Emerging plant animation for short cards
-            const shortCards = shortsTrack.querySelectorAll('.video-card-wrapper');
-            shortCards.forEach(card => {
-                gsap.fromTo(card,
-                    {
-                        y: 120,
-                        scaleY: 0.2,
-                        scaleX: 0.9,
-                        rotation: 3,
-                        opacity: 0,
-                        transformOrigin: "bottom center"
-                    },
-                    {
-                        y: 0,
-                        scaleY: 1,
-                        scaleX: 1,
-                        rotation: 0,
-                        opacity: 1,
-                        ease: "power2.out",
+        mm.add("(min-width: 1025px)", () => {
+            let longformTween;
+            if (track) {
+                // Check if horizontal scrolling is actually needed based on track size
+                if (track.scrollWidth > window.innerWidth) {
+                    longformTween = gsap.to(track, {
+                        x: () => -(track.scrollWidth - window.innerWidth + window.innerWidth * 0.1),
+                        ease: 'none',
                         scrollTrigger: {
-                            trigger: card,
-                            containerAnimation: shortsTween,
-                            start: "left 100%",
-                            end: "left 75%",
-                            scrub: 1.2
+                            trigger: '.longform-section',
+                            pin: true,
+                            scrub: 1.2,
+                            start: 'top top',
+                            end: () => `+=${track.scrollWidth - window.innerWidth + 300}`,
+                            invalidateOnRefresh: true,
+                            onUpdate: (self) => {
+                                // Calculate scroll velocity
+                                const velocity = self.getVelocity();
+                                // Clamp horizontal skew warp between -10 and 10 degrees
+                                const skew = gsap.utils.clamp(-10, 10, velocity * 0.005);
+                                // Slightly scale height down to simulate vertical speed compression
+                                const scaleY = 1 - Math.min(Math.abs(velocity) * 0.0001, 0.04);
+
+                                gsap.to(track.querySelectorAll('.video-card'), {
+                                    skewX: skew,
+                                    scaleY: scaleY,
+                                    duration: 0.4,
+                                    ease: 'power1.out',
+                                    overwrite: 'auto'
+                                });
+                            },
+                            onToggle: (self) => {
+                                // Cleanly settle back to flat when leaving section bounds
+                                if (!self.isActive) {
+                                    gsap.to(track.querySelectorAll('.video-card'), {
+                                        skewX: 0,
+                                        scaleY: 1,
+                                        duration: 0.5,
+                                        ease: 'power2.out',
+                                        overwrite: 'auto'
+                                    });
+                                }
+                            }
                         }
-                    }
-                );
-            });
-        }
+                    });
+
+                    // Emerging plant animation for longform cards
+                    const longCards = track.querySelectorAll('.video-card-wrapper');
+                    longCards.forEach(card => {
+                        gsap.fromTo(card,
+                            {
+                                y: 120,
+                                scaleY: 0.2,
+                                scaleX: 0.9,
+                                rotation: -3,
+                                opacity: 0,
+                                transformOrigin: "bottom center"
+                            },
+                            {
+                                y: 0,
+                                scaleY: 1,
+                                scaleX: 1,
+                                rotation: 0,
+                                opacity: 1,
+                                ease: "power2.out",
+                                scrollTrigger: {
+                                    trigger: card,
+                                    containerAnimation: longformTween,
+                                    start: "left 100%",
+                                    end: "left 75%",
+                                    scrub: 1.2
+                                }
+                            }
+                        );
+                    });
+                } else {
+                    // If items fit on the desktop viewport, center them and use standard vertical reveals
+                    track.style.justifyContent = 'center';
+                    const longCards = track.querySelectorAll('.video-card-wrapper');
+                    longCards.forEach(card => {
+                        gsap.fromTo(card,
+                            {
+                                y: 80,
+                                scaleY: 0.5,
+                                scaleX: 0.95,
+                                rotation: -2,
+                                opacity: 0,
+                                transformOrigin: "bottom center"
+                            },
+                            {
+                                y: 0,
+                                scaleY: 1,
+                                scaleX: 1,
+                                rotation: 0,
+                                opacity: 1,
+                                ease: "power2.out",
+                                scrollTrigger: {
+                                    trigger: card,
+                                    start: "top 95%",
+                                    end: "top 75%",
+                                    scrub: 1.2
+                                }
+                            }
+                        );
+                    });
+                }
+            }
+
+            // 3. Pin horizontal track scroll for Viral Shorts (phone mockups)
+            let shortsTween;
+            if (shortsTrack) {
+                // Check if horizontal scrolling is actually needed based on track size
+                if (shortsTrack.scrollWidth > window.innerWidth) {
+                    shortsTween = gsap.to(shortsTrack, {
+                        x: () => -(shortsTrack.scrollWidth - window.innerWidth + window.innerWidth * 0.1),
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: '.shorts-section',
+                            pin: true,
+                            scrub: 1.2,
+                            start: 'top top',
+                            end: () => `+=${shortsTrack.scrollWidth - window.innerWidth + 300}`,
+                            invalidateOnRefresh: true,
+                            onUpdate: (self) => {
+                                // Apply dynamic speed-blur skew to shorts cards on scroll
+                                const velocity = self.getVelocity();
+                                const skew = gsap.utils.clamp(-8, 8, velocity * 0.004);
+                                const scaleY = 1 - Math.min(Math.abs(velocity) * 0.0001, 0.03);
+
+                                gsap.to(shortsTrack.querySelectorAll('.phone-mockup'), {
+                                    skewX: skew,
+                                    scaleY: scaleY,
+                                    duration: 0.4,
+                                    ease: 'power1.out',
+                                    overwrite: 'auto'
+                                });
+                            },
+                            onToggle: (self) => {
+                                // Cleanly reset coordinates when scrolling out of bounds
+                                if (!self.isActive) {
+                                    gsap.to(shortsTrack.querySelectorAll('.phone-mockup'), {
+                                        skewX: 0,
+                                        scaleY: 1,
+                                        duration: 0.5,
+                                        ease: 'power2.out',
+                                        overwrite: 'auto'
+                                    });
+                                }
+                            }
+                        }
+                    });
+
+                    // Emerging plant animation for short cards
+                    const shortCards = shortsTrack.querySelectorAll('.video-card-wrapper');
+                    shortCards.forEach(card => {
+                        gsap.fromTo(card,
+                            {
+                                y: 120,
+                                scaleY: 0.2,
+                                scaleX: 0.9,
+                                rotation: 3,
+                                opacity: 0,
+                                transformOrigin: "bottom center"
+                            },
+                            {
+                                y: 0,
+                                scaleY: 1,
+                                scaleX: 1,
+                                rotation: 0,
+                                opacity: 1,
+                                ease: "power2.out",
+                                scrollTrigger: {
+                                    trigger: card,
+                                    containerAnimation: shortsTween,
+                                    start: "left 100%",
+                                    end: "left 75%",
+                                    scrub: 1.2
+                                }
+                            }
+                        );
+                    });
+                } else {
+                    // If items fit on the desktop viewport, center them and use standard vertical reveals
+                    shortsTrack.style.justifyContent = 'center';
+                    const shortCards = shortsTrack.querySelectorAll('.video-card-wrapper');
+                    shortCards.forEach(card => {
+                        gsap.fromTo(card,
+                            {
+                                y: 80,
+                                scaleY: 0.5,
+                                scaleX: 0.95,
+                                rotation: 2,
+                                opacity: 0,
+                                transformOrigin: "bottom center"
+                            },
+                            {
+                                y: 0,
+                                scaleY: 1,
+                                scaleX: 1,
+                                rotation: 0,
+                                opacity: 1,
+                                ease: "power2.out",
+                                scrollTrigger: {
+                                    trigger: card,
+                                    start: "top 95%",
+                                    end: "top 75%",
+                                    scrub: 1.2
+                                }
+                            }
+                        );
+                    });
+                }
+            }
+        });
+
+        mm.add("(max-width: 1024px)", () => {
+            // Clean up desktop layout styles when sizing down
+            if (track) track.style.justifyContent = '';
+            if (shortsTrack) shortsTrack.style.justifyContent = '';
+        });
 
         // 4. Emerging plant animation for Showreel (vertical scroll)
         const showreelWrapper = document.querySelector('.showreel-wrapper');
@@ -416,6 +491,32 @@ class App {
         const initialWidth = initialRect.width || 320;
         const initialHeight = initialRect.height || 350;
 
+        // Cache layout dimensions to prevent thrashed reflow calculations on scroll
+        let wrapperRectAt0 = null;
+        let dockRect = null;
+
+        const cacheBounds = () => {
+            const wRect = logoWrapper.getBoundingClientRect();
+            const dRect = logoDock.getBoundingClientRect();
+            const currentScroll = window.scrollY;
+            
+            wrapperRectAt0 = {
+                left: wRect.left,
+                top: wRect.top + currentScroll,
+                width: wRect.width,
+                height: wRect.height
+            };
+            
+            dockRect = {
+                left: dRect.left,
+                top: dRect.top,
+                width: dRect.width,
+                height: dRect.height
+            };
+        };
+
+        cacheBounds();
+
         const updateLogoPosition = (progress) => {
             // Restore static absolute position when scroll is at zero to allow hover glitching in place
             if (progress < 0.005 && window.scrollY < 10) {
@@ -428,16 +529,14 @@ class App {
                 return;
             }
 
-            const wrapperRect = logoWrapper.getBoundingClientRect();
-            const dockRect = logoDock.getBoundingClientRect();
-
             // Target scale (relative to starting dynamic layout dimensions)
             const targetScaleX = dockRect.width / initialWidth;
             const targetScaleY = dockRect.height / initialHeight;
 
-            // Start coordinates (centered inside hero-logo-wrapper)
-            const startX = wrapperRect.left + (wrapperRect.width - initialWidth) / 2;
-            const startY = wrapperRect.top + (wrapperRect.height - initialHeight) / 2;
+            // Start coordinates (centered inside hero-logo-wrapper, offset by current viewport scroll)
+            const currentScroll = window.scrollY;
+            const startX = wrapperRectAt0.left + (wrapperRectAt0.width - initialWidth) / 2;
+            const startY = (wrapperRectAt0.top - currentScroll) + (wrapperRectAt0.height - initialHeight) / 2;
 
             // Target coordinates (inside header logo-dock)
             const endX = dockRect.left;
@@ -492,6 +591,12 @@ class App {
 
         // Responsive re-alignment
         window.addEventListener('resize', () => {
+            cacheBounds();
+            updateLogoPosition(window.scrollY > window.innerHeight * 0.4 ? 1 : 0);
+        });
+
+        ScrollTrigger.addEventListener('refresh', () => {
+            cacheBounds();
             updateLogoPosition(window.scrollY > window.innerHeight * 0.4 ? 1 : 0);
         });
     }
@@ -509,9 +614,6 @@ class App {
             this.cursorPos.x += (this.mouse.x - this.cursorPos.x) * 0.22;
             this.cursorPos.y += (this.mouse.y - this.cursorPos.y) * 0.22;
 
-            this.cursor.style.left = `${this.cursorPos.x}px`;
-            this.cursor.style.top = `${this.cursorPos.y}px`;
-
             // Lerp follower ring
             const dx = this.mouse.x - this.followerPos.x;
             const dy = this.mouse.y - this.followerPos.y;
@@ -519,8 +621,7 @@ class App {
             this.followerPos.x += dx * 0.08;
             this.followerPos.y += dy * 0.08;
 
-            this.follower.style.left = `${this.followerPos.x}px`;
-            this.follower.style.top = `${this.followerPos.y}px`;
+            this.follower.style.transform = `translate3d(${this.followerPos.x}px, ${this.followerPos.y}px, 0) translate(-50%, -50%)`;
 
             // Elastic stretch effect
             const dist = Math.sqrt(dx * dx + dy * dy);
@@ -529,9 +630,9 @@ class App {
             const angle = Math.atan2(dy, dx) * 180 / Math.PI;
 
             if (dist > 3) {
-                this.cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(${scaleX}, ${scaleY})`;
+                this.cursor.style.transform = `translate3d(${this.cursorPos.x}px, ${this.cursorPos.y}px, 0) translate(-50%, -50%) rotate(${angle}deg) scale(${scaleX}, ${scaleY})`;
             } else {
-                this.cursor.style.transform = `translate(-50%, -50%) scale(1)`;
+                this.cursor.style.transform = `translate3d(${this.cursorPos.x}px, ${this.cursorPos.y}px, 0) translate(-50%, -50%) scale(1)`;
             }
 
             requestAnimationFrame(updateTick);
@@ -616,11 +717,48 @@ class App {
             const submitText = form.querySelector('.submit-btn-text');
             const submitIcon = form.querySelector('.submit-btn-icon');
 
+            // Collect form input elements
+            const nameInput = document.getElementById('booking-name');
+            const emailInput = document.getElementById('booking-email');
+            const formatInput = document.getElementById('booking-format');
+            const visionInput = document.getElementById('booking-vision');
+
+            if (!nameInput || !emailInput || !formatInput || !visionInput) return;
+
+            const payload = {
+                name: nameInput.value,
+                email: emailInput.value,
+                format: formatInput.value,
+                vision: visionInput.value
+            };
+
+            // Update UI to sending state
             submitText.textContent = "SENDING BRIEF...";
             submitBtn.style.backgroundColor = 'var(--color-border-focus)';
             submitBtn.style.color = '#fff';
+            submitBtn.disabled = true;
 
-            setTimeout(() => {
+            // Construct absolute URL if page is loaded via file:/// protocol, otherwise use relative path
+            const targetUrl = window.location.protocol === 'file:' 
+                ? 'http://localhost:8000/api/booking' 
+                : '/api/booking';
+
+            // Perform booking HTTP API POST request
+            fetch(targetUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Server responded with an error status: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Success feedback UI update
                 submitText.textContent = "BRIEF RECEIVED! ⚡";
                 submitIcon.textContent = "✓";
                 submitBtn.style.backgroundColor = 'var(--color-white)';
@@ -630,10 +768,26 @@ class App {
                     form.reset();
                     submitText.textContent = "SUBMIT BRIEF";
                     submitIcon.textContent = "◢";
+                    submitBtn.disabled = false;
+                }, 2500);
+            })
+            .catch(err => {
+                console.error("Booking submission error:", err);
+                
+                // Error feedback UI update
+                submitText.textContent = "ERROR. TRY AGAIN! ✕";
+                submitIcon.textContent = "✕";
+                submitBtn.style.backgroundColor = '#ff3333';
+                submitBtn.style.color = '#fff';
+
+                setTimeout(() => {
+                    submitText.textContent = "SUBMIT BRIEF";
+                    submitIcon.textContent = "◢";
                     submitBtn.style.backgroundColor = 'var(--color-white)';
                     submitBtn.style.color = '#000';
-                }, 2500);
-            }, 1200);
+                    submitBtn.disabled = false;
+                }, 3000);
+            });
         });
     }
 
@@ -657,15 +811,46 @@ class App {
 
     splitTextToSpans(element) {
         if (!element) return;
-        const text = element.textContent.trim();
-        const words = text.split(' ');
-
-        element.innerHTML = words.map(word => {
-            const chars = word.split('').map(char => {
-                return `<span class="char-span">${char}</span>`;
-            }).join('');
-            return `<span class="word-span" style="display: inline-block; white-space: nowrap;">${chars}</span>`;
-        }).join(' ');
+        
+        const recurse = (node) => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const text = node.textContent;
+                if (!text.trim()) return;
+                
+                const parent = node.parentNode;
+                const words = text.split(/(\s+)/);
+                const fragment = document.createDocumentFragment();
+                
+                words.forEach(word => {
+                    if (/\s+/.test(word)) {
+                        fragment.appendChild(document.createTextNode(word));
+                    } else if (word) {
+                        const wordSpan = document.createElement('span');
+                        wordSpan.className = 'word-span';
+                        wordSpan.style.display = 'inline-block';
+                        wordSpan.style.whiteSpace = 'nowrap';
+                        
+                        const chars = word.split('');
+                        chars.forEach(char => {
+                            const charSpan = document.createElement('span');
+                            charSpan.className = 'char-span';
+                            charSpan.textContent = char;
+                            charSpan.style.display = 'inline-block';
+                            charSpan.style.willChange = 'transform, opacity';
+                            wordSpan.appendChild(charSpan);
+                        });
+                        fragment.appendChild(wordSpan);
+                    }
+                });
+                
+                parent.replaceChild(fragment, node);
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+                const children = Array.from(node.childNodes);
+                children.forEach(child => recurse(child));
+            }
+        };
+        
+        recurse(element);
     }
 
     initReviewsSlider() {
@@ -708,6 +893,56 @@ class App {
 
         // Initialize first review display
         showReview(0);
+    }
+
+    initAdminLogin() {
+        const trigger = document.getElementById('admin-trigger');
+        const modal = document.getElementById('admin-modal');
+        if (!trigger || !modal) return;
+
+        const closeBtn = document.getElementById('admin-modal-close');
+        const backdrop = document.getElementById('admin-modal-backdrop');
+        const loginForm = document.getElementById('admin-login-form');
+        const usernameInput = document.getElementById('admin-username-input');
+        const passwordInput = document.getElementById('admin-password-input');
+        const errorMsg = document.getElementById('admin-login-error');
+
+        const openModal = () => {
+            modal.classList.add('active');
+            errorMsg.style.display = 'none';
+            loginForm.reset();
+            setTimeout(() => usernameInput.focus(), 100);
+            if (this.lenis) this.lenis.stop(); // Stop scroll when modal is open
+        };
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            if (this.lenis) this.lenis.start(); // Resume scroll
+        };
+
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        backdrop.addEventListener('click', closeModal);
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
+
+            if (username === "Deepak" && password === "3321") {
+                sessionStorage.setItem("admin_auth", "true");
+                closeModal();
+                window.location.href = "bookings.html";
+            } else {
+                errorMsg.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        });
     }
 }
 

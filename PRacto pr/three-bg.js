@@ -40,13 +40,16 @@ class WebGLBackground {
             this.targetMouse.y = e.clientY;
         });
 
-        // Track touch swipe coordinates for mobile compatibility
-        window.addEventListener('touchmove', (e) => {
+        const updateTouch = (e) => {
             if (e.touches && e.touches[0]) {
                 this.targetMouse.x = e.touches[0].clientX;
                 this.targetMouse.y = e.touches[0].clientY;
             }
-        });
+        };
+
+        // Track touch coordinates for mobile compatibility
+        window.addEventListener('touchstart', updateTouch);
+        window.addEventListener('touchmove', updateTouch);
     }
 
     updateScroll(progress, velocity) {

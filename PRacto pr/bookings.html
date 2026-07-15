@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEE J PRODUCTIONS | Bookings Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="index.css?v=2.1.8">
+    <style>
+        .dashboard-body {
+            background-color: var(--color-bg-deep);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            padding: 120px 5vw 60px 5vw;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 2.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .dashboard-subtitle {
+            font-family: var(--font-mono);
+            color: var(--color-neon);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .dashboard-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .btn-back {
+            text-decoration: none;
+            font-family: var(--font-mono);
+            color: var(--color-text-secondary);
+            font-size: 0.8rem;
+            border: 1px solid var(--color-border);
+            padding: 0.7rem 1.4rem;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.02);
+            transition: var(--transition-fast);
+        }
+
+        .btn-back:hover {
+            border-color: var(--color-neon);
+            color: var(--color-bg-deep);
+            background: var(--color-neon);
+            box-shadow: 0 0 15px rgba(223, 255, 0, 0.25);
+        }
+
+        /* KPI Metric Cards Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .metric-card {
+            background: rgba(13, 13, 13, 0.55);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 1.8rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+            transition: var(--transition-smooth);
+        }
+
+        .metric-card:hover {
+            border-color: rgba(223, 255, 0, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .metric-card:hover::before {
+            background: var(--color-neon);
+            box-shadow: 0 0 10px var(--color-neon);
+        }
+
+        .metric-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--color-text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+
+        .metric-value {
+            font-family: var(--font-heading);
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--color-white);
+            line-height: 1;
+        }
+
+        .metric-card:hover .metric-value {
+            color: var(--color-neon);
+        }
+
+        /* Filter Controls */
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex-grow: 1;
+            max-width: 480px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(18, 18, 18, 0.7);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            outline: none;
+            transition: var(--transition-fast);
+        }
+
+        .search-input:focus {
+            border-color: var(--color-neon);
+            box-shadow: 0 0 10px rgba(223, 255, 0, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        .filter-select {
+            background: rgba(18, 18, 18, 0.7);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 0.8rem 2rem 0.8rem 1rem;
+            color: #fff;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            outline: none;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem top 50%;
+            background-size: 1.2rem;
+        }
+
+        .filter-select:focus {
+            border-color: var(--color-neon);
+        }
+
+        /* Bookings List Layout */
+        .bookings-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .booking-item {
+            background: rgba(13, 13, 13, 0.45);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 2.2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
+        }
+
+        .booking-item:hover {
+            border-color: rgba(255, 255, 255, 0.08);
+            background: rgba(15, 15, 18, 0.6);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .booking-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .client-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .client-name {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-white);
+            letter-spacing: -0.4px;
+        }
+
+        .client-email {
+            font-family: var(--font-mono);
+            color: var(--color-text-secondary);
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            width: fit-content;
+        }
+
+        .client-email:hover {
+            color: var(--color-neon);
+        }
+
+        .booking-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .format-badge {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.3rem 0.7rem;
+            border-radius: 3px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .badge-commercial {
+            background: rgba(0, 242, 254, 0.1);
+            color: #00f2fe;
+            border: 1px solid rgba(0, 242, 254, 0.25);
+        }
+
+        .badge-longform {
+            background: rgba(189, 0, 255, 0.1);
+            color: #bd00ff;
+            border: 1px solid rgba(189, 0, 255, 0.25);
+        }
+
+        .badge-shorts {
+            background: rgba(223, 255, 0, 0.08);
+            color: var(--color-neon);
+            border: 1px solid rgba(223, 255, 0, 0.25);
+        }
+
+        .badge-other {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-gray-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .booking-date {
+            font-family: var(--font-mono);
+            color: var(--color-text-muted);
+            font-size: 0.72rem;
+        }
+
+        .booking-vision {
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 1.2rem;
+            margin-top: 0.8rem;
+        }
+
+        .vision-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        .vision-text {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--color-text-secondary);
+            font-style: italic;
+        }
+
+        /* Empty & Loading States */
+        .empty-state {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            border: 1px dashed var(--color-border);
+            border-radius: 12px;
+            text-align: center;
+            background: rgba(10, 10, 10, 0.2);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1.2rem;
+            color: var(--color-text-muted);
+        }
+
+        .empty-title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-desc {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            max-width: 320px;
+        }
+
+        .loading-state {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 6rem 0;
+            font-family: var(--font-mono);
+            color: var(--color-neon);
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            gap: 0.6rem;
+        }
+
+        .spinner {
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid var(--color-neon);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Glassmorphic Admin Authorization Modal */
+        .admin-modal-card {
+            background: rgba(10, 10, 10, 0.45) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            backdrop-filter: blur(25px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(223, 255, 0, 0.05);
+            max-width: 440px !important;
+            padding: 3rem !important;
+            border-radius: 16px !important;
+            width: 90%;
+        }
+
+        .admin-modal-header {
+            margin-bottom: 2.2rem;
+            text-align: left;
+        }
+
+        .admin-modal-subtitle {
+            font-family: var(--font-mono);
+            color: var(--color-neon);
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-modal-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--color-white);
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        .admin-login-form {
+            text-align: left;
+        }
+
+        .admin-login-form .form-group {
+            margin-bottom: 1.6rem;
+        }
+
+        .admin-login-form label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--color-text-muted);
+            letter-spacing: 1px;
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+
+        .admin-login-form input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            padding: 0.85rem 1rem;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: var(--transition-fast);
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .admin-login-form input:focus {
+            border-color: var(--color-neon);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 15px rgba(223, 255, 0, 0.1);
+        }
+
+        .admin-error-msg {
+            font-family: var(--font-mono);
+            color: #ff3333;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .admin-submit-btn {
+            width: 100%;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <!-- Film Grain / Noise Overlay -->
+    <div class="grain-overlay"></div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor">
+        <span class="cursor-text">GO</span>
+    </div>
+    <div class="custom-cursor-follower"></div>
+
+    <!-- Background Canvas Spotlights -->
+    <div id="webgl-container"></div>
+
+    <!-- Glassmorphic Admin Modal -->
+    <div class="modal" id="admin-modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content admin-modal-card">
+            <a href="index.html" class="modal-close" style="text-decoration: none;">✕ CANCEL</a>
+            <div class="admin-modal-header">
+                <span class="admin-modal-subtitle">SECURITY SYSTEM</span>
+                <h2 class="admin-modal-title">ADMIN AUTHORIZATION</h2>
+            </div>
+            <form id="admin-login-form" class="admin-login-form">
+                <div class="form-group">
+                    <label>ADMIN ID</label>
+                    <input type="text" id="admin-username-input" placeholder="Enter Admin ID" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>PASSWORD</label>
+                    <input type="password" id="admin-password-input" placeholder="••••" required>
+                </div>
+                <div class="admin-error-msg" id="admin-login-error" style="display: none;">ACCESS DENIED: INVALID CREDENTIALS</div>
+                <button type="submit" class="submit-btn admin-submit-btn">
+                    <span class="submit-btn-text">AUTHORIZE</span>
+                    <span class="submit-btn-icon">◢</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <main class="dashboard-container">
+        <!-- HEADER -->
+        <header class="dashboard-header">
+            <div>
+                <div class="dashboard-subtitle">Control Room</div>
+                <h1 class="dashboard-title">BRIEFINGS & BOOKINGS</h1>
+            </div>
+            <a href="index.html" class="btn-back">⟵ BACK TO REEL</a>
+        </header>
+
+        <!-- KPI METRICS SUMMARY -->
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-label">Total Submissions</span>
+                <div class="metric-value" id="metric-total">0</div>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">Cinematic / Docs</span>
+                <div class="metric-value" id="metric-longform">0</div>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">Viral Shorts</span>
+                <div class="metric-value" id="metric-shorts">0</div>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">Commercial / Ads</span>
+                <div class="metric-value" id="metric-commercial">0</div>
+            </div>
+        </section>
+
+        <!-- CONTROLS -->
+        <section class="controls-row">
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-bar" class="search-input" placeholder="Search by name, email, or brief keywords...">
+            </div>
+            <select id="format-filter" class="filter-select">
+                <option value="all">ALL FORMATS</option>
+                <option value="commercial">COMMERCIALS / ADS</option>
+                <option value="longform">CINEMATIC / DOCS</option>
+                <option value="shorts">VIRAL SHORTS</option>
+                <option value="other">RETAINER / OTHER</option>
+            </select>
+        </section>
+
+        <!-- BOOKINGS DATA STACK -->
+        <section>
+            <div class="loading-state" id="loading-view">
+                <div class="spinner"></div>
+                <span>FETCHING SECURE DATA RECORDINGS...</span>
+            </div>
+
+            <div class="empty-state" id="empty-view">
+                <div class="empty-icon">📭</div>
+                <h3 class="empty-title">NO MATCHING BRIEFS</h3>
+                <p class="empty-desc">We couldn't find any submissions matching your search criteria.</p>
+            </div>
+
+            <div class="bookings-stack" id="bookings-list" style="display: none;">
+                <!-- Cards will render dynamically here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Script Interactions -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('admin-modal');
+            const loginForm = document.getElementById('admin-login-form');
+            const usernameInput = document.getElementById('admin-username-input');
+            const passwordInput = document.getElementById('admin-password-input');
+            const errorMsg = document.getElementById('admin-login-error');
+
+            let bookingsData = [];
+            const listContainer = document.getElementById('bookings-list');
+            const loadingView = document.getElementById('loading-view');
+            const emptyView = document.getElementById('empty-view');
+            const searchBar = document.getElementById('search-bar');
+            const formatFilter = document.getElementById('format-filter');
+
+            const initDashboardData = () => {
+                // 1. Fetch Bookings JSON from API
+                const targetUrl = window.location.protocol === 'file:' 
+                    ? 'http://localhost:8000/api/bookings' 
+                    : '/api/bookings';
+
+                fetch(targetUrl)
+                    .then(res => {
+                        if (!res.ok) throw new Error('Status: ' + res.status);
+                        return res.json();
+                    })
+                    .then(data => {
+                        bookingsData = data;
+                        loadingView.style.display = 'none';
+                        listContainer.style.display = 'flex';
+                        
+                        updateMetrics(data);
+                        renderBookings(data);
+                    })
+                    .catch(err => {
+                        console.error("Dashboard metrics load error:", err);
+                        loadingView.innerHTML = `<span>✕ DATA LOADING BLOCKED OR OFFLINE. STATUS: ${err.message}</span>`;
+                    });
+            };
+
+            // Page-level access guard
+            if (sessionStorage.getItem("admin_auth") !== "true") {
+                modal.classList.add('active');
+                setTimeout(() => usernameInput.focus(), 100);
+
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const username = usernameInput.value.trim();
+                    const password = passwordInput.value;
+
+                    if (username === "Deepak" && password === "3321") {
+                        sessionStorage.setItem("admin_auth", "true");
+                        modal.classList.remove('active');
+                        initDashboardData();
+                    } else {
+                        errorMsg.style.display = 'block';
+                        passwordInput.value = '';
+                        passwordInput.focus();
+                    }
+                });
+            } else {
+                initDashboardData();
+            }
+
+            // 2. Metrics Updater
+            const updateMetrics = (data) => {
+                const total = data.length;
+                const longform = data.filter(b => b.format === 'longform').length;
+                const shorts = data.filter(b => b.format === 'shorts').length;
+                const commercial = data.filter(b => b.format === 'commercial').length;
+
+                document.getElementById('metric-total').textContent = total;
+                document.getElementById('metric-longform').textContent = longform;
+                document.getElementById('metric-shorts').textContent = shorts;
+                document.getElementById('metric-commercial').textContent = commercial;
+            };
+
+            // 3. Category format string mapper
+            const formatLabel = (val) => {
+                const map = {
+                    'commercial': 'Commercial / Ad',
+                    'longform': 'Cinematic / Doc',
+                    'shorts': 'Viral Short',
+                    'other': 'Partner / Other'
+                };
+                return map[val] || val;
+            };
+
+            // 4. Date formatter helper
+            const formatDate = (isoString) => {
+                if (!isoString) return 'N/A';
+                const date = new Date(isoString.replace(' ', 'T') + 'Z'); // parse SQL timestamp correctly in local time
+                if (isNaN(date.getTime())) return isoString;
+                return date.toLocaleDateString(undefined, { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            };
+
+            // 5. Render list logic
+            const renderBookings = (list) => {
+                listContainer.innerHTML = '';
+                
+                if (list.length === 0) {
+                    emptyView.style.display = 'flex';
+                    return;
+                }
+                emptyView.style.display = 'none';
+
+                list.forEach(item => {
+                    const card = document.createElement('article');
+                    card.className = 'booking-item';
+                    
+                    const escName = escapeHtml(item.name);
+                    const escEmail = escapeHtml(item.email);
+                    const escVision = escapeHtml(item.vision || 'No brief details provided.');
+                    const fBadgeClass = `badge-${item.format}`;
+                    const fLabel = formatLabel(item.format);
+                    const fDate = formatDate(item.timestamp);
+
+                    card.innerHTML = `
+                        <div class="booking-top-row">
+                            <div class="client-info">
+                                <h2 class="client-name">${escName}</h2>
+                                <a href="mailto:${escEmail}" class="client-email">✉ ${escEmail}</a>
+                            </div>
+                            <div class="booking-meta">
+                                <span class="format-badge ${fBadgeClass}">${fLabel}</span>
+                                <span class="booking-date">${fDate}</span>
+                            </div>
+                        </div>
+                        <div class="booking-vision">
+                            <span class="vision-label">Project Vision Brief</span>
+                            <p class="vision-text">"${escVision}"</p>
+                        </div>
+                    `;
+                    listContainer.appendChild(card);
+                });
+
+                // Bind hover listener on the newly created cards for custom cursor triggers
+                bindCardCursorHovers();
+            };
+
+            // 6. Security Sanitizer Helper
+            function escapeHtml(str) {
+                if (!str) return '';
+                return str
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            // 7. Search & Filter Input triggers
+            const applyFilter = () => {
+                const query = searchBar.value.toLowerCase().trim();
+                const selectedFormat = formatFilter.value;
+
+                const filtered = bookingsData.filter(item => {
+                    const matchQuery = 
+                        (item.name && item.name.toLowerCase().includes(query)) ||
+                        (item.email && item.email.toLowerCase().includes(query)) ||
+                        (item.vision && item.vision.toLowerCase().includes(query));
+                    
+                    const matchFormat = selectedFormat === 'all' || item.format === selectedFormat;
+
+                    return matchQuery && matchFormat;
+                });
+
+                renderBookings(filtered);
+            };
+
+            searchBar.addEventListener('input', applyFilter);
+            formatFilter.addEventListener('change', applyFilter);
+
+            // 8. Custom cursor positioning loop
+            const cursor = document.querySelector('.custom-cursor');
+            const follower = document.querySelector('.custom-cursor-follower');
+            let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+            let cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+            let followerPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+
+            const updateCursorTick = () => {
+                cursorPos.x += (mouse.x - cursorPos.x) * 0.22;
+                cursorPos.y += (mouse.y - cursorPos.y) * 0.22;
+                
+                const dx = mouse.x - followerPos.x;
+                const dy = mouse.y - followerPos.y;
+                followerPos.x += dx * 0.08;
+                followerPos.y += dy * 0.08;
+
+                follower.style.transform = `translate3d(${followerPos.x}px, ${followerPos.y}px, 0) translate(-50%, -50%)`;
+
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const scaleX = 1 + Math.min(dist * 0.015, 0.85);
+                const scaleY = 1 - Math.min(dist * 0.01, 0.45);
+                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+                if (dist > 3) {
+                    cursor.style.transform = `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0) translate(-50%, -50%) rotate(${angle}deg) scale(${scaleX}, ${scaleY})`;
+                } else {
+                    cursor.style.transform = `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0) translate(-50%, -50%) scale(1)`;
+                }
+
+                requestAnimationFrame(updateCursorTick);
+            };
+            requestAnimationFrame(updateCursorTick);
+
+            // 9. Bind custom cursor scaling on hoverable items
+            const bindCardCursorHovers = () => {
+                document.querySelectorAll('a, select, input, .booking-item, .metric-card').forEach(el => {
+                    // Check to avoid adding duplicate handlers
+                    if (el.dataset.cursorBound) return;
+                    el.dataset.cursorBound = "true";
+
+                    el.addEventListener('mouseenter', () => {
+                        follower.classList.add('hover-link');
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        follower.classList.remove('hover-link');
+                    });
+                });
+            };
+
+            bindCardCursorHovers();
+        });
+    </script>
+</body>
+</html>
