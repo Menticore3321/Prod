@@ -258,6 +258,7 @@ body {
     from {
         filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.45)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
     }
+
     to {
         filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.75)) drop-shadow(0 0 12px rgba(255, 255, 255, 0.95));
     }
@@ -1351,6 +1352,7 @@ section {
     .shorts-slider-track {
         gap: 2.5rem;
     }
+
     .nav-links {
         gap: 1.2rem;
     }
@@ -1717,7 +1719,7 @@ section {
 .reviews-controls {
     display: flex;
     gap: 1.2rem;
-    margin-top: 2rem;
+    margin-top: 3rem;
     padding-left: 0.5rem;
 }
 
@@ -1767,7 +1769,7 @@ section {
 
     .reviews-stack {
         height: auto;
-        min-height: 240px;
+        min-height: 280px;
     }
 
     .review-card {
@@ -1794,14 +1796,15 @@ section {
     }
 
     .reviews-stack {
-        min-height: 260px;
+        min-height: 300px;
     }
 }
 
 /* Floating Audio Panel Controls */
 .audio-panel-wrapper {
     position: fixed;
-    bottom: 24px; /* Dock at bottom-right on desktop */
+    bottom: 24px;
+    /* Dock at bottom-right on desktop */
     right: 24px;
     z-index: 1000;
     font-family: var(--font-mono);
@@ -1841,7 +1844,8 @@ section {
 
 #audio-settings-menu {
     position: absolute;
-    bottom: calc(100% + 12px); /* Slide up on desktop */
+    bottom: calc(100% + 12px);
+    /* Slide up on desktop */
     right: 0;
     width: 260px;
     background: rgba(10, 10, 12, 0.65);
@@ -1960,16 +1964,17 @@ section {
 
 @media (max-width: 1024px) {
     .audio-panel-wrapper {
-        bottom: 95px; /* Dock right above the bottom menu dock on mobile */
+        bottom: 95px;
+        /* Dock right above the bottom menu dock on mobile */
         right: 16px;
     }
-    
+
     #audio-settings-menu {
         bottom: calc(100% + 12px);
         right: 0;
         transform: translateY(10px) scale(0.95);
     }
-    
+
     .audio-panel-wrapper.expanded #audio-settings-menu {
         transform: translateY(0) scale(1);
     }
