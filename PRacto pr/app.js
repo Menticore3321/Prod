@@ -895,14 +895,35 @@ class App {
     }
 }
 
-// Instantiate on load
-window.addEventListener('DOMContentLoaded', () => {
+// ─── Initialisation ───────────────────────────────────────────────────
+// content-loader.js fetches videos + reviews from the API and injects them
+// into the DOM, then dispatches 'contentLoaded'. We wait for that event so
+// GSAP ScrollTrigger and video-card tilt operate on the final DOM.
+//
+// If the event never fires (e.g., content-loader.js fails to load), we fall
+// back to plain DOMContentLoaded after a short timeout.
+
+let appInitialised = false;
+
+function initApp() {
+    if (appInitialised) return;
+    appInitialised = true;
     window.app = new App();
+}
+
+// Primary: wait for content-loader.js signal
+window.addEventListener('contentLoaded', initApp);
+
+// Safety fallback: if content-loader fires before this listener is attached,
+// or the fetch fails silently, still boot the app after DOM is ready.
+window.addEventListener('DOMContentLoaded', () => {
+    // Give content-loader.js up to 4 s to resolve; then force-init.
+    setTimeout(initApp, 4000);
 });
 
 // Refresh ScrollTrigger positions once all resources (images/styles) are fully loaded
 window.addEventListener('load', () => {
     setTimeout(() => {
         ScrollTrigger.refresh();
-    }, 100);
+    }, 300);
 });

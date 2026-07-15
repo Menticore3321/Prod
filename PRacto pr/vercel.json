@@ -5,6 +5,12 @@
     { "source": "/api/delete_booking", "destination": "/api/delete_booking.py" },
     { "source": "/api/deleted_bookings", "destination": "/api/deleted_bookings.py" },
     { "source": "/api/permanent_delete", "destination": "/api/permanent_delete.py" },
-    { "source": "/api/restore_booking", "destination": "/api/restore_booking.py" }
+    { "source": "/api/restore_booking", "destination": "/api/restore_booking.py" },
+    { "source": "/api/videos", "destination": "/api/videos.py" },
+    { "source": "/api/add_video", "destination": "/api/add_video.py" },
+    { "source": "/api/delete_video", "destination": "/api/delete_video.py" },
+    { "source": "/api/reviews", "destination": "/api/reviews.py" },
+    { "source": "/api/add_review", "destination": "/api/add_review.py" },
+    { "source": "/api/delete_review", "destination": "/api/delete_review.py" }
   ]
 }
