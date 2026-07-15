@@ -200,13 +200,8 @@ body {
 
 .logo-text {
     font-weight: 800;
-    opacity: 0;
-    /* Animated in app.js once logo docks */
-    transition: opacity 0.5s ease;
-}
-
-.logo-text.visible {
     opacity: 1;
+    transition: opacity 0.5s ease;
 }
 
 .nav-links {
