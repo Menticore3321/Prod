@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="index.css?v=2.2.4">
+    <link rel="stylesheet" href="index.css?v=2.2.5">
     <style>
         .dashboard-body {
             background-color: var(--color-bg-deep);
@@ -473,30 +473,40 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 6rem 2rem;
-            border: 1px dashed var(--color-border);
-            border-radius: 12px;
+            padding: 5rem 2rem;
+            border: 1px dashed rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
             text-align: center;
-            background: rgba(10, 10, 10, 0.2);
+            background: rgba(255, 255, 255, 0.005);
+            box-sizing: border-box;
+            width: 100%;
         }
 
         .empty-icon {
             font-size: 3rem;
             margin-bottom: 1.2rem;
-            color: var(--color-text-muted);
+            color: var(--color-neon);
+            opacity: 0.85;
+            filter: drop-shadow(0 0 10px rgba(223, 255, 0, 0.25));
         }
 
         .empty-title {
             font-family: var(--font-heading);
             font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
             margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .empty-desc {
             font-family: var(--font-body);
             font-size: 0.85rem;
-            color: var(--color-text-secondary);
+            color: var(--color-text-muted);
             max-width: 320px;
+            line-height: 1.5;
+            margin: 0;
         }
 
         .loading-state {
@@ -747,44 +757,7 @@
             }
         }
 
-        /* Empty state override */
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 5rem 2rem;
-            text-align: center;
-            border: 1px dashed rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.005);
-            box-sizing: border-box;
-            width: 100%;
-        }
-        .empty-icon {
-            font-size: 3rem !important;
-            color: var(--color-neon);
-            margin-bottom: 1.2rem;
-            opacity: 0.85;
-            filter: drop-shadow(0 0 10px rgba(223, 255, 0, 0.25));
-        }
-        .empty-title {
-            font-family: var(--font-heading);
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .empty-desc {
-            font-family: var(--font-body);
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-            max-width: 320px;
-            line-height: 1.5;
-            margin: 0;
-        }
+
 
         /* Undo toast notification */
         .undo-toast {
