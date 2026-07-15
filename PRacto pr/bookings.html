@@ -1017,6 +1017,15 @@
                 }
             };
 
+            // Authenticated Fetch Helper
+            const authFetch = (url, options = {}) => {
+                if (!options.headers) {
+                    options.headers = {};
+                }
+                options.headers['Authorization'] = 'Basic RGVlcGFrOjMzMjE=';
+                return fetch(url, options);
+            };
+
             // 1. Fetch Data
             const fetchDashboardData = () => {
                 loadingView.style.display = 'flex';
@@ -1029,11 +1038,11 @@
 
                 // Parallel fetch active and deleted bookings
                 Promise.all([
-                    fetch(`${apiBase}/api/bookings`).then(res => {
+                    authFetch(`${apiBase}/api/bookings`).then(res => {
                         if (!res.ok) throw new Error('Active fetch error');
                         return res.json();
                     }),
-                    fetch(`${apiBase}/api/deleted_bookings`).then(res => {
+                    authFetch(`${apiBase}/api/deleted_bookings`).then(res => {
                         if (!res.ok) throw new Error('Deleted fetch error');
                         return res.json();
                     })
@@ -1278,7 +1287,7 @@
                         e.target.disabled = true;
                         e.target.textContent = 'Recycling...';
 
-                        fetch(`${apiBase}/api/delete_booking`, {
+                        authFetch(`${apiBase}/api/delete_booking`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ id })
@@ -1315,7 +1324,7 @@
                         e.target.disabled = true;
                         e.target.textContent = 'Restoring...';
 
-                        fetch(`${apiBase}/api/restore_booking`, {
+                        authFetch(`${apiBase}/api/restore_booking`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ id })
@@ -1359,7 +1368,7 @@
                     ? 'http://localhost:8000' 
                     : '';
 
-                fetch(`${apiBase}/api/restore_booking`, {
+                authFetch(`${apiBase}/api/restore_booking`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id: lastRecycledId })
@@ -1398,7 +1407,7 @@
                 confirmDeleteBtn.disabled = true;
                 confirmDeleteBtn.innerHTML = '<span>Purging...</span>◢';
 
-                fetch(`${apiBase}/api/permanent_delete`, {
+                authFetch(`${apiBase}/api/permanent_delete`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id: pendingDeleteId })

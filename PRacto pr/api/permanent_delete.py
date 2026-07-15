@@ -9,7 +9,7 @@ class handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
         self.end_headers()
 
     def _respond(self, code, body):
@@ -20,6 +20,11 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write(json.dumps(body).encode('utf-8'))
 
     def do_POST(self):
+        auth_header = self.headers.get('Authorization')
+        if auth_header != 'Basic RGVlcGFrOjMzMjE=':
+            self._respond(401, {'status': 'error', 'message': 'Unauthorized access.'})
+            return
+
         project_id = os.environ.get('FIREBASE_PROJECT_ID')
         if not project_id:
             self._respond(500, {'status': 'error', 'message': 'FIREBASE_PROJECT_ID not configured.'})
