@@ -234,6 +234,35 @@ body {
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.45);
 }
 
+/* Header Logo White Neon & Hover Glitch Overrides */
+#logo-paths-nav .logo-path {
+    stroke: #ffffff !important;
+    fill: none !important;
+}
+
+#logo-dock .logo-main {
+    stroke: #ffffff !important;
+    animation: glowPulseWhite 4s infinite alternate ease-in-out !important;
+}
+
+#logo-dock .logo-glitch {
+    opacity: 0 !important;
+    transition: opacity 0.3s ease;
+}
+
+#admin-trigger:hover #logo-dock .logo-glitch {
+    opacity: 0.85 !important;
+}
+
+@keyframes glowPulseWhite {
+    from {
+        filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.45)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+    }
+    to {
+        filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.75)) drop-shadow(0 0 12px rgba(255, 255, 255, 0.95));
+    }
+}
+
 .nav-links {
     display: flex;
     align-items: center;
