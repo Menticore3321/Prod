@@ -1,6 +1,10 @@
 {
   "rewrites": [
     { "source": "/api/booking", "destination": "/api/booking.py" },
-    { "source": "/api/bookings", "destination": "/api/bookings.py" }
+    { "source": "/api/bookings", "destination": "/api/bookings.py" },
+    { "source": "/api/delete_booking", "destination": "/api/delete_booking.py" },
+    { "source": "/api/deleted_bookings", "destination": "/api/deleted_bookings.py" },
+    { "source": "/api/permanent_delete", "destination": "/api/permanent_delete.py" },
+    { "source": "/api/restore_booking", "destination": "/api/restore_booking.py" }
   ]
 }

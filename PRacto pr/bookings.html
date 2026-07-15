@@ -136,6 +136,60 @@
             color: var(--color-neon);
         }
 
+        /* Tabs Selection bar */
+        .tabs-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 0.2rem;
+            width: 100%;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--color-text-muted);
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0.8rem 1.5rem;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition-fast);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            outline: none;
+        }
+
+        .tab-btn:hover {
+            color: var(--color-white);
+        }
+
+        .tab-btn.active {
+            color: var(--color-neon);
+            border-bottom-color: var(--color-neon);
+        }
+
+        .tab-count {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--color-border);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            color: var(--color-text-secondary);
+        }
+
+        .tab-btn.active .tab-count {
+            background: rgba(223, 255, 0, 0.1);
+            border-color: rgba(223, 255, 0, 0.3);
+            color: var(--color-neon);
+        }
+
         /* Filter Controls */
         .controls-row {
             display: flex;
@@ -163,6 +217,7 @@
             font-size: 0.88rem;
             outline: none;
             transition: var(--transition-fast);
+            box-sizing: border-box;
         }
 
         .search-input:focus {
@@ -336,6 +391,82 @@
             font-style: italic;
         }
 
+        /* Active Card Action Rows */
+        .booking-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .action-btn {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border: 1px solid var(--color-border);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--color-text-secondary);
+        }
+
+        .action-btn-recycle {
+            color: #ffaa00;
+            border-color: rgba(255, 170, 0, 0.3);
+        }
+
+        .action-btn-recycle:hover {
+            background: #ffaa00;
+            color: #050505;
+            border-color: #ffaa00;
+            box-shadow: 0 0 12px rgba(255, 170, 0, 0.35);
+        }
+
+        .action-btn-restore {
+            color: #00f2fe;
+            border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        .action-btn-restore:hover {
+            background: #00f2fe;
+            color: #050505;
+            border-color: #00f2fe;
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.35);
+        }
+
+        .action-btn-purge {
+            color: #ff3333;
+            border-color: rgba(255, 51, 51, 0.3);
+        }
+
+        .action-btn-purge:hover {
+            background: #ff3333;
+            color: #ffffff;
+            border-color: #ff3333;
+            box-shadow: 0 0 12px rgba(255, 51, 51, 0.35);
+        }
+
+        .timer-badge {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: #ffaa00;
+            background: rgba(255, 170, 0, 0.08);
+            border: 1px solid rgba(255, 170, 0, 0.25);
+            padding: 0.3rem 0.7rem;
+            border-radius: 3px;
+            margin-right: auto; /* Push buttons to the right */
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
         /* Empty & Loading States */
         .empty-state {
             display: none;
@@ -404,6 +535,7 @@
             padding: 3rem !important;
             border-radius: 16px !important;
             width: 90%;
+            box-sizing: border-box;
         }
 
         .admin-modal-header {
@@ -480,6 +612,140 @@
             width: 100%;
             margin-top: 1rem;
         }
+
+        /* Confirm Delete Modal Layout Customizations */
+        .btn-modal-cancel {
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.8rem 1.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .btn-modal-cancel:hover {
+            color: var(--color-white);
+            border-color: var(--color-white);
+        }
+
+        .btn-modal-confirm {
+            background: #ff3333;
+            border: 1px solid #ff3333;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.8rem 1.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-modal-confirm:hover {
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            background: #ff1a1a;
+            border-color: #ff1a1a;
+        }
+
+        /* RESPONSIVE LAYOUT OVERRIDES */
+        @media (max-width: 900px) {
+            .dashboard-body {
+                padding: 100px 4vw 40px 4vw;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+                padding-bottom: 2rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .btn-back {
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .controls-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+
+            .search-wrapper {
+                max-width: 100%;
+            }
+
+            .filter-select {
+                width: 100%;
+            }
+
+            .tabs-bar {
+                margin-bottom: 2rem;
+            }
+
+            .tab-btn {
+                flex-grow: 1;
+                justify-content: center;
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-item {
+                padding: 1.5rem;
+            }
+
+            .booking-top-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+
+            .booking-meta {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .booking-actions {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.8rem;
+            }
+
+            .timer-badge {
+                width: 100%;
+                box-sizing: border-box;
+                justify-content: center;
+                margin-bottom: 0.2rem;
+            }
+
+            .action-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body class="dashboard-body">
@@ -522,6 +788,27 @@
         </div>
     </div>
 
+    <!-- Permanent Delete Warning Confirmation Modal -->
+    <div class="modal" id="delete-warning-modal">
+        <div class="modal-backdrop" id="delete-warning-backdrop"></div>
+        <div class="modal-content admin-modal-card">
+            <div class="admin-modal-header">
+                <span class="admin-modal-subtitle" style="color: #ff3333;">⚠️ WARNING: PERMANENT DELETION</span>
+                <h2 class="admin-modal-title">PURGE DATABASE RECORD?</h2>
+            </div>
+            <p style="font-family: var(--font-body); font-size: 0.88rem; color: var(--color-text-secondary); margin-bottom: 2.2rem; line-height: 1.6;">
+                Are you absolutely sure you want to permanently delete this booking? This action completely purges the document from the cloud database and cannot be undone.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end; flex-wrap: wrap;">
+                <button id="cancel-delete-btn" class="btn-modal-cancel">CANCEL</button>
+                <button id="confirm-delete-btn" class="btn-modal-confirm">
+                    <span>PURGE RECORD</span>
+                    <span>◢</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <main class="dashboard-container" id="dashboard-main" style="display: none;">
         <!-- HEADER -->
         <header class="dashboard-header">
@@ -535,7 +822,7 @@
         <!-- KPI METRICS SUMMARY -->
         <section class="metrics-grid">
             <div class="metric-card">
-                <span class="metric-label">Total Submissions</span>
+                <span class="metric-label">Total Active</span>
                 <div class="metric-value" id="metric-total">0</div>
             </div>
             <div class="metric-card">
@@ -551,6 +838,18 @@
                 <div class="metric-value" id="metric-commercial">0</div>
             </div>
         </section>
+
+        <!-- TABS BAR -->
+        <div class="tabs-bar">
+            <button class="tab-btn active" id="tab-active-btn">
+                <span>ACTIVE BRIEFINGS</span>
+                <span class="tab-count" id="active-count">0</span>
+            </button>
+            <button class="tab-btn" id="tab-deleted-btn">
+                <span>RECYCLE BIN</span>
+                <span class="tab-count" id="deleted-count">0</span>
+            </button>
+        </div>
 
         <!-- CONTROLS -->
         <section class="controls-row">
@@ -595,39 +894,71 @@
             const passwordInput = document.getElementById('admin-password-input');
             const errorMsg = document.getElementById('admin-login-error');
 
-            let bookingsData = [];
+            let activeBookings = [];
+            let deletedBookings = [];
+            let currentTab = 'active'; // 'active' or 'deleted'
+            let pendingDeleteId = null;
+
             const listContainer = document.getElementById('bookings-list');
             const loadingView = document.getElementById('loading-view');
             const emptyView = document.getElementById('empty-view');
             const searchBar = document.getElementById('search-bar');
             const formatFilter = document.getElementById('format-filter');
 
+            const tabActiveBtn = document.getElementById('tab-active-btn');
+            const tabDeletedBtn = document.getElementById('tab-deleted-btn');
+            const activeCount = document.getElementById('active-count');
+            const deletedCount = document.getElementById('deleted-count');
+
+            const deleteWarningModal = document.getElementById('delete-warning-modal');
+            const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+            const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+            const deleteWarningBackdrop = document.getElementById('delete-warning-backdrop');
+
+            // 1. Fetch Data
+            const fetchDashboardData = () => {
+                loadingView.style.display = 'flex';
+                listContainer.style.display = 'none';
+                emptyView.style.display = 'none';
+
+                const apiBase = window.location.protocol === 'file:' 
+                    ? 'http://localhost:8000' 
+                    : '';
+
+                // Parallel fetch active and deleted bookings
+                Promise.all([
+                    fetch(`${apiBase}/api/bookings`).then(res => {
+                        if (!res.ok) throw new Error('Active fetch error');
+                        return res.json();
+                    }),
+                    fetch(`${apiBase}/api/deleted_bookings`).then(res => {
+                        if (!res.ok) throw new Error('Deleted fetch error');
+                        return res.json();
+                    })
+                ])
+                .then(([activeData, deletedData]) => {
+                    activeBookings = activeData;
+                    deletedBookings = deletedData;
+
+                    activeCount.textContent = activeBookings.length;
+                    deletedCount.textContent = deletedBookings.length;
+
+                    loadingView.style.display = 'none';
+                    listContainer.style.display = 'flex';
+
+                    updateMetrics(activeBookings);
+                    applyFilter();
+                })
+                .catch(err => {
+                    console.error("Dashboard data load error:", err);
+                    loadingView.innerHTML = `<span>✕ DATA LOADING BLOCKED OR OFFLINE. STATUS: ${err.message}</span>`;
+                });
+            };
+
             const initDashboardData = () => {
                 const mainDashboard = document.getElementById('dashboard-main');
                 if (mainDashboard) mainDashboard.style.display = 'block';
-
-                // 1. Fetch Bookings JSON from API
-                const targetUrl = window.location.protocol === 'file:' 
-                    ? 'http://localhost:8000/api/bookings' 
-                    : '/api/bookings';
-
-                fetch(targetUrl)
-                    .then(res => {
-                        if (!res.ok) throw new Error('Status: ' + res.status);
-                        return res.json();
-                    })
-                    .then(data => {
-                        bookingsData = data;
-                        loadingView.style.display = 'none';
-                        listContainer.style.display = 'flex';
-                        
-                        updateMetrics(data);
-                        renderBookings(data);
-                    })
-                    .catch(err => {
-                        console.error("Dashboard metrics load error:", err);
-                        loadingView.innerHTML = `<span>✕ DATA LOADING BLOCKED OR OFFLINE. STATUS: ${err.message}</span>`;
-                    });
+                fetchDashboardData();
             };
 
             // Page-level access guard
@@ -681,18 +1012,36 @@
             // 4. Date formatter helper
             const formatDate = (isoString) => {
                 if (!isoString) return 'N/A';
-                const date = new Date(isoString.replace(' ', 'T') + 'Z'); // parse SQL timestamp correctly in local time
+                const date = new Date(isoString.replace(' ', 'T') + 'Z'); 
                 if (isNaN(date.getTime())) return isoString;
                 return date.toLocaleDateString(undefined, { 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                     year: 'numeric', 
+                     month: 'short', 
+                     day: 'numeric',
+                     hour: '2-digit',
+                     minute: '2-digit'
                 });
             };
 
-            // 5. Render list logic
+            // 5. Countdown timer helper (60-day expiry)
+            const calculateTimeRemaining = (expiresAt) => {
+                if (!expiresAt) return '60d left';
+                const expiry = new Date(expiresAt.replace(' ', 'T') + 'Z');
+                const diff = expiry - new Date();
+                if (diff <= 0) return 'Expired / Purging';
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                
+                if (days > 0) {
+                    return `${days}d ${hours}h left`;
+                } else {
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    return `${hours}h ${minutes}m left`;
+                }
+            };
+
+            // 6. Render list logic
             const renderBookings = (list) => {
                 listContainer.innerHTML = '';
                 
@@ -713,6 +1062,24 @@
                     const fLabel = formatLabel(item.format);
                     const fDate = formatDate(item.timestamp);
 
+                    let actionHtml = '';
+                    if (currentTab === 'active') {
+                        actionHtml = `
+                            <div class="booking-actions">
+                                <button class="action-btn action-btn-recycle" data-id="${item.id}">🗑️ Recycle</button>
+                            </div>
+                        `;
+                    } else {
+                        const timeText = calculateTimeRemaining(item.expires_at);
+                        actionHtml = `
+                            <div class="booking-actions">
+                                <span class="timer-badge">⏳ ${timeText}</span>
+                                <button class="action-btn action-btn-restore" data-id="${item.id}">🔄 Restore</button>
+                                <button class="action-btn action-btn-purge" data-id="${item.id}">❌ Purge</button>
+                            </div>
+                        `;
+                    }
+
                     card.innerHTML = `
                         <div class="booking-top-row">
                             <div class="client-info">
@@ -728,15 +1095,17 @@
                             <span class="vision-label">Project Vision Brief</span>
                             <p class="vision-text">"${escVision}"</p>
                         </div>
+                        ${actionHtml}
                     `;
                     listContainer.appendChild(card);
                 });
 
-                // Bind hover listener on the newly created cards for custom cursor triggers
+                // Attach button event listeners
+                attachActionListeners();
                 bindCardCursorHovers();
             };
 
-            // 6. Security Sanitizer Helper
+            // 7. Security Sanitizer Helper
             function escapeHtml(str) {
                 if (!str) return '';
                 return str
@@ -747,12 +1116,13 @@
                     .replace(/'/g, "&#039;");
             }
 
-            // 7. Search & Filter Input triggers
+            // 8. Search & Filter Input triggers
             const applyFilter = () => {
                 const query = searchBar.value.toLowerCase().trim();
                 const selectedFormat = formatFilter.value;
+                const sourceList = currentTab === 'active' ? activeBookings : deletedBookings;
 
-                const filtered = bookingsData.filter(item => {
+                const filtered = sourceList.filter(item => {
                     const matchQuery = 
                         (item.name && item.name.toLowerCase().includes(query)) ||
                         (item.email && item.email.toLowerCase().includes(query)) ||
@@ -769,7 +1139,148 @@
             searchBar.addEventListener('input', applyFilter);
             formatFilter.addEventListener('change', applyFilter);
 
-            // 8. Custom cursor positioning loop
+            // 9. Action Buttons Logic
+            const attachActionListeners = () => {
+                const apiBase = window.location.protocol === 'file:' 
+                    ? 'http://localhost:8000' 
+                    : '';
+
+                // Soft Delete (Recycle)
+                document.querySelectorAll('.action-btn-recycle').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.dataset.id;
+                        e.target.disabled = true;
+                        e.target.textContent = 'Recycling...';
+
+                        fetch(`${apiBase}/api/delete_booking`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                fetchDashboardData();
+                            } else {
+                                alert('Error recycling document: ' + data.message);
+                                e.target.disabled = false;
+                                e.target.textContent = '🗑️ Recycle';
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            alert('Network error recycling document.');
+                            e.target.disabled = false;
+                            e.target.textContent = '🗑️ Recycle';
+                        });
+                    });
+                });
+
+                // Restore
+                document.querySelectorAll('.action-btn-restore').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.dataset.id;
+                        e.target.disabled = true;
+                        e.target.textContent = 'Restoring...';
+
+                        fetch(`${apiBase}/api/restore_booking`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                fetchDashboardData();
+                            } else {
+                                alert('Error restoring document: ' + data.message);
+                                e.target.disabled = false;
+                                e.target.textContent = '🔄 Restore';
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            alert('Network error restoring document.');
+                            e.target.disabled = false;
+                            e.target.textContent = '🔄 Restore';
+                        });
+                    });
+                });
+
+                // Hard Delete Warning Trigger (Purge)
+                document.querySelectorAll('.action-btn-purge').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        pendingDeleteId = e.target.dataset.id;
+                        deleteWarningModal.classList.add('active');
+                    });
+                });
+            };
+
+            // Confirm Permanent Delete
+            confirmDeleteBtn.addEventListener('click', () => {
+                if (!pendingDeleteId) return;
+
+                const apiBase = window.location.protocol === 'file:' 
+                    ? 'http://localhost:8000' 
+                    : '';
+
+                confirmDeleteBtn.disabled = true;
+                confirmDeleteBtn.innerHTML = '<span>Purging...</span>◢';
+
+                fetch(`${apiBase}/api/permanent_delete`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: pendingDeleteId })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    confirmDeleteBtn.disabled = false;
+                    confirmDeleteBtn.innerHTML = '<span>PURGE RECORD</span>◢';
+                    deleteWarningModal.classList.remove('active');
+                    pendingDeleteId = null;
+
+                    if (data.status === 'success') {
+                        fetchDashboardData();
+                    } else {
+                        alert('Error purging document: ' + data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    confirmDeleteBtn.disabled = false;
+                    confirmDeleteBtn.innerHTML = '<span>PURGE RECORD</span>◢';
+                    deleteWarningModal.classList.remove('active');
+                    pendingDeleteId = null;
+                    alert('Network error purging document.');
+                });
+            });
+
+            // Cancel Permanent Delete
+            const closeDeleteModal = () => {
+                deleteWarningModal.classList.remove('active');
+                pendingDeleteId = null;
+            };
+            cancelDeleteBtn.addEventListener('click', closeDeleteModal);
+            deleteWarningBackdrop.addEventListener('click', closeDeleteModal);
+
+            // Tab Switching
+            tabActiveBtn.addEventListener('click', () => {
+                if (currentTab === 'active') return;
+                currentTab = 'active';
+                tabActiveBtn.classList.add('active');
+                tabDeletedBtn.classList.remove('active');
+                applyFilter();
+            });
+
+            tabDeletedBtn.addEventListener('click', () => {
+                if (currentTab === 'deleted') return;
+                currentTab = 'deleted';
+                tabDeletedBtn.classList.add('active');
+                tabActiveBtn.classList.remove('active');
+                applyFilter();
+            });
+
+            // 10. Custom cursor positioning loop
             const cursor = document.querySelector('.custom-cursor');
             const follower = document.querySelector('.custom-cursor-follower');
             let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
@@ -807,10 +1318,9 @@
             };
             requestAnimationFrame(updateCursorTick);
 
-            // 9. Bind custom cursor scaling on hoverable items
+            // 11. Bind custom cursor scaling on hoverable items
             const bindCardCursorHovers = () => {
-                document.querySelectorAll('a, select, input, .booking-item, .metric-card').forEach(el => {
-                    // Check to avoid adding duplicate handlers
+                document.querySelectorAll('a, select, input, .booking-item, .metric-card, button').forEach(el => {
                     if (el.dataset.cursorBound) return;
                     el.dataset.cursorBound = "true";
 
