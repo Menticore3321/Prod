@@ -1767,7 +1767,7 @@ section {
 
     .reviews-stack {
         height: auto;
-        min-height: 380px;
+        min-height: 240px;
     }
 
     .review-card {
@@ -1794,7 +1794,7 @@ section {
     }
 
     .reviews-stack {
-        min-height: 420px;
+        min-height: 260px;
     }
 }
 
