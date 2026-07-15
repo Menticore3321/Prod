@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="index.css?v=2.1.8">
+    <link rel="stylesheet" href="index.css?v=2.2.4">
     <style>
         .dashboard-body {
             background-color: var(--color-bg-deep);
@@ -746,6 +746,109 @@
                 text-align: center;
             }
         }
+
+        /* Empty state override */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 2rem;
+            text-align: center;
+            border: 1px dashed rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.005);
+            box-sizing: border-box;
+            width: 100%;
+        }
+        .empty-icon {
+            font-size: 3rem !important;
+            color: var(--color-neon);
+            margin-bottom: 1.2rem;
+            opacity: 0.85;
+            filter: drop-shadow(0 0 10px rgba(223, 255, 0, 0.25));
+        }
+        .empty-title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .empty-desc {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            max-width: 320px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Undo toast notification */
+        .undo-toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(10, 10, 12, 0.88);
+            border: 1px solid var(--color-neon);
+            border-radius: 8px;
+            padding: 0.95rem 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(223, 255, 0, 0.05);
+            z-index: 1001;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .undo-toast.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        .undo-toast-text {
+            font-family: var(--font-body);
+            color: #fff;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        .undo-toast-btn {
+            font-family: var(--font-mono);
+            background: none;
+            border: none;
+            color: var(--color-neon);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            padding: 0;
+            text-transform: uppercase;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        .undo-toast-btn:hover {
+            color: #fff;
+            text-shadow: 0 0 8px var(--color-neon);
+        }
+
+        /* Search highlights */
+        .search-highlight {
+            background: rgba(223, 255, 0, 0.2);
+            color: var(--color-neon);
+            border-radius: 2px;
+            padding: 0 2px;
+            font-weight: inherit;
+        }
+
+        .tab-count {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.4s ease;
+        }
     </style>
 </head>
 <body class="dashboard-body">
@@ -882,8 +985,13 @@
             <div class="bookings-stack" id="bookings-list" style="display: none;">
                 <!-- Cards will render dynamically here -->
             </div>
-        </section>
     </main>
+
+    <!-- Accidental Deletion Undo Toast -->
+    <div id="undo-toast" class="undo-toast">
+        <span class="undo-toast-text">Briefing moved to Recycle Bin.</span>
+        <button id="undo-toast-btn" class="undo-toast-btn">UNDO</button>
+    </div>
 
     <!-- Script Interactions -->
     <script>
@@ -915,6 +1023,27 @@
             const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
             const deleteWarningBackdrop = document.getElementById('delete-warning-backdrop');
 
+            // Undo toast variables
+            let lastRecycledId = null;
+            let toastTimeout = null;
+            const undoToast = document.getElementById('undo-toast');
+            const undoToastBtn = document.getElementById('undo-toast-btn');
+
+            // Badge count scale pops
+            const updateBadgeWithPop = (el, value) => {
+                if (!el) return;
+                const oldValue = el.textContent;
+                el.textContent = value;
+                if (oldValue !== String(value)) {
+                    el.style.transform = 'scale(1.35)';
+                    el.style.color = 'var(--color-neon)';
+                    setTimeout(() => {
+                        el.style.transform = 'scale(1)';
+                        el.style.color = '';
+                    }, 200);
+                }
+            };
+
             // 1. Fetch Data
             const fetchDashboardData = () => {
                 loadingView.style.display = 'flex';
@@ -940,8 +1069,8 @@
                     activeBookings = activeData;
                     deletedBookings = deletedData;
 
-                    activeCount.textContent = activeBookings.length;
-                    deletedCount.textContent = deletedBookings.length;
+                    updateBadgeWithPop(activeCount, activeBookings.length);
+                    updateBadgeWithPop(deletedCount, deletedBookings.length);
 
                     loadingView.style.display = 'none';
                     listContainer.style.display = 'flex';
@@ -1041,23 +1170,47 @@
                 }
             };
 
+            // 5.5 Highlight search query matches
+            const highlightText = (text, searchWord) => {
+                if (!text) return '';
+                const escapedText = escapeHtml(text);
+                if (!searchWord) return escapedText;
+                const escapedSearch = escapeHtml(searchWord).trim();
+                if (!escapedSearch) return escapedText;
+                
+                const regexEscaped = escapedSearch.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                const regex = new RegExp(`(${regexEscaped})`, 'gi');
+                return escapedText.replace(regex, '<mark class="search-highlight">$1</mark>');
+            };
+
             // 6. Render list logic
             const renderBookings = (list) => {
                 listContainer.innerHTML = '';
                 
                 if (list.length === 0) {
                     emptyView.style.display = 'flex';
+                    if (currentTab === 'active') {
+                        emptyView.querySelector('.empty-icon').textContent = '📭';
+                        emptyView.querySelector('.empty-title').textContent = 'ALL CLEAR';
+                        emptyView.querySelector('.empty-desc').textContent = 'No active project briefings currently on record.';
+                    } else {
+                        emptyView.querySelector('.empty-icon').textContent = '🗑️';
+                        emptyView.querySelector('.empty-title').textContent = 'RECYCLE BIN EMPTY';
+                        emptyView.querySelector('.empty-desc').textContent = 'Your recycled briefings list is clean.';
+                    }
                     return;
                 }
                 emptyView.style.display = 'none';
+
+                const query = searchBar.value;
 
                 list.forEach(item => {
                     const card = document.createElement('article');
                     card.className = 'booking-item';
                     
-                    const escName = escapeHtml(item.name);
-                    const escEmail = escapeHtml(item.email);
-                    const escVision = escapeHtml(item.vision || 'No brief details provided.');
+                    const escName = highlightText(item.name, query);
+                    const escEmail = highlightText(item.email, query);
+                    const escVision = highlightText(item.vision || 'No brief details provided.', query);
                     const fBadgeClass = `badge-${item.format}`;
                     const fLabel = formatLabel(item.format);
                     const fDate = formatDate(item.timestamp);
@@ -1160,6 +1313,12 @@
                         .then(res => res.json())
                         .then(data => {
                             if (data.status === 'success') {
+                                lastRecycledId = id;
+                                undoToast.classList.add('show');
+                                clearTimeout(toastTimeout);
+                                toastTimeout = setTimeout(() => {
+                                    undoToast.classList.remove('show');
+                                }, 6000);
                                 fetchDashboardData();
                             } else {
                                 alert('Error recycling document: ' + data.message);
@@ -1215,6 +1374,45 @@
                     });
                 });
             };
+
+            // Undo toast button click handler
+            undoToastBtn.addEventListener('click', () => {
+                if (!lastRecycledId) return;
+
+                undoToastBtn.disabled = true;
+                undoToastBtn.textContent = 'Restoring...';
+
+                const apiBase = window.location.protocol === 'file:' 
+                    ? 'http://localhost:8000' 
+                    : '';
+
+                fetch(`${apiBase}/api/restore_booking`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: lastRecycledId })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    undoToastBtn.disabled = false;
+                    undoToastBtn.textContent = 'UNDO';
+                    undoToast.classList.remove('show');
+                    lastRecycledId = null;
+
+                    if (data.status === 'success') {
+                        fetchDashboardData();
+                    } else {
+                        alert('Error undoing delete: ' + data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    undoToastBtn.disabled = false;
+                    undoToastBtn.textContent = 'UNDO';
+                    undoToast.classList.remove('show');
+                    lastRecycledId = null;
+                    alert('Network error undoing delete.');
+                });
+            });
 
             // Confirm Permanent Delete
             confirmDeleteBtn.addEventListener('click', () => {

@@ -23,6 +23,7 @@ class App {
         this.initVideos();
         this.initContactForm();
         this.initReviewsSlider();
+        this.initVideoCardTilt();
         this.initAdminLogin();
     }
 
@@ -781,8 +782,73 @@ class App {
             showReview(index);
         });
 
+        // Touch events for mobile swipe gesture
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        const sliderContainer = document.querySelector('.reviews-stack');
+        if (sliderContainer) {
+            sliderContainer.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            
+            sliderContainer.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+        }
+        
+        const handleSwipe = () => {
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) { // Swipe threshold of 50px
+                if (diff > 0) {
+                    nextBtn.click(); // Swipe left -> next
+                } else {
+                    prevBtn.click(); // Swipe right -> prev
+                }
+            }
+        };
+
         // Initialize first review display
         showReview(0);
+    }
+
+    initVideoCardTilt() {
+        if (window.matchMedia('(hover: hover)').matches) {
+            document.querySelectorAll('.video-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const xc = rect.width / 2;
+                    const yc = rect.height / 2;
+                    const dx = x - xc;
+                    const dy = y - yc;
+                    
+                    const tiltX = -(dy / yc) * 8; // Max 8 degrees tilt
+                    const tiltY = (dx / xc) * 8;
+                    
+                    gsap.to(card, {
+                        y: -8, // Hover up
+                        rotateX: tiltX,
+                        rotateY: tiltY,
+                        transformPerspective: 1000,
+                        ease: 'power2.out',
+                        duration: 0.3
+                    });
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        y: 0,
+                        rotateX: 0,
+                        rotateY: 0,
+                        ease: 'power2.out',
+                        duration: 0.5
+                    });
+                });
+            });
+        }
     }
 
     initAdminLogin() {

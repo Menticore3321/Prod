@@ -788,7 +788,7 @@ section {
     border: 1px solid rgba(223, 255, 0, 0.1);
     border-radius: 4px;
     overflow: hidden;
-    transition: var(--transition-smooth);
+    transition: border-color var(--transition-smooth), box-shadow var(--transition-smooth);
     cursor: pointer;
     flex-shrink: 0;
     position: relative;
@@ -802,7 +802,6 @@ section {
 
 .video-card:hover {
     border-color: var(--color-neon);
-    transform: translateY(-6px);
     box-shadow: 0 15px 35px rgba(223, 255, 0, 0.18);
 }
 
@@ -1503,6 +1502,7 @@ section {
         max-width: 90vw;
         justify-content: center;
         align-items: center;
+        animation: menuBounce 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
 
     .nav-link {
@@ -2061,4 +2061,20 @@ section {
 .admin-submit-btn {
     width: 100%;
     margin-top: 1rem;
+}
+
+/* Mobile floating capsule menu load entrance animation */
+@keyframes menuBounce {
+    0% {
+        transform: translate(-50%, 80px) scale(0.9);
+        opacity: 0;
+    }
+    60% {
+        transform: translate(-50%, -8px) scale(1.03);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, 0) scale(1);
+        opacity: 1;
+    }
 }
