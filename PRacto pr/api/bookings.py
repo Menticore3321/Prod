@@ -24,10 +24,12 @@ class handler(BaseHTTPRequestHandler):
             return
 
         try:
+            # URL to list documents in 'bookings' collection
             url = f"https://firestore.googleapis.com/v1/projects/{project_id}/databases/(default)/documents/bookings"
 
             req = urllib.request.Request(url, method='GET')
 
+            # Perform call
             with urllib.request.urlopen(req) as res:
                 res_body = res.read().decode('utf-8')
                 data = json.loads(res_body)
@@ -49,8 +51,10 @@ class handler(BaseHTTPRequestHandler):
                     'timestamp': fields.get('timestamp', {}).get('stringValue', '')
                 })
             
+            # Sort bookings_list by timestamp descending (newest first)
             bookings_list.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
 
+            # Send JSON success response
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate')
@@ -59,6 +63,7 @@ class handler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(bookings_list).encode('utf-8'))
 
         except urllib.error.HTTPError as e:
+            # Handle if the collection does not exist yet (returns 404), which is normal for a fresh database
             if e.code == 404:
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')

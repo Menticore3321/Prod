@@ -43,8 +43,10 @@ class handler(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps(response).encode('utf-8'))
                 return
             
+            # Timestamp (ISO 8601 UTC)
             timestamp = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
 
+            # Firestore Document Schema Format
             firestore_doc = {
                 "fields": {
                     "name": {"stringValue": name},
@@ -55,6 +57,7 @@ class handler(BaseHTTPRequestHandler):
                 }
             }
 
+            # URL for creating document inside 'bookings' collection
             url = f"https://firestore.googleapis.com/v1/projects/{project_id}/databases/(default)/documents/bookings"
 
             req = urllib.request.Request(
@@ -64,9 +67,11 @@ class handler(BaseHTTPRequestHandler):
                 method='POST'
             )
 
+            # Perform call
             with urllib.request.urlopen(req) as res:
                 res.read()
             
+            # Send JSON success response
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
