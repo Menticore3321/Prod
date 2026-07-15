@@ -1539,6 +1539,12 @@ section {
         text-align: center;
         padding: 2rem 0;
     }
+
+    .logo-admin-tag {
+        opacity: 1 !important;
+        transform: translateX(0) !important;
+        pointer-events: auto !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1570,6 +1576,15 @@ section {
 
     .shorts-slider-track {
         gap: 1.5rem;
+    }
+
+    .admin-modal-card {
+        padding: 1.8rem !important;
+        width: 95% !important;
+    }
+
+    .admin-modal-title {
+        font-size: 1.4rem !important;
     }
 }
 
