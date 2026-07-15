@@ -474,130 +474,20 @@ class App {
 
     initLogoDocking() {
         const logoContainer = document.getElementById('hero-logo-container');
-        const logoDock = document.getElementById('logo-dock');
-        const logoWrapper = document.getElementById('hero-logo-wrapper');
-        const logoText = document.querySelector('.logo-text');
+        if (!logoContainer) return;
 
-        if (!logoContainer || !logoDock || !logoWrapper) return;
-
-        // Set starting state
-        logoContainer.style.position = 'absolute';
-        logoContainer.style.left = '50%';
-        logoContainer.style.top = '50%';
-        logoContainer.style.transform = 'translate(-50%, -50%)';
-
-        // Get initial rendered dimensions for responsive coordinate math
-        const initialRect = logoContainer.getBoundingClientRect();
-        const initialWidth = initialRect.width || 320;
-        const initialHeight = initialRect.height || 350;
-
-        // Cache layout dimensions to prevent thrashed reflow calculations on scroll
-        let wrapperRectAt0 = null;
-        let dockRect = null;
-
-        const cacheBounds = () => {
-            const wRect = logoWrapper.getBoundingClientRect();
-            const dRect = logoDock.getBoundingClientRect();
-            const currentScroll = window.scrollY;
-            
-            wrapperRectAt0 = {
-                left: wRect.left,
-                top: wRect.top + currentScroll,
-                width: wRect.width,
-                height: wRect.height
-            };
-            
-            dockRect = {
-                left: dRect.left,
-                top: dRect.top,
-                width: dRect.width,
-                height: dRect.height
-            };
-        };
-
-        cacheBounds();
-
-        const updateLogoPosition = (progress) => {
-            // Restore static absolute position when scroll is at zero to allow hover glitching in place
-            if (progress < 0.005 && window.scrollY < 10) {
-                logoContainer.style.position = 'absolute';
-                logoContainer.style.left = '50%';
-                logoContainer.style.top = '50%';
-                logoContainer.style.transform = 'translate(-50%, -50%)';
-                logoContainer.style.margin = '0';
-                logoText.classList.remove('visible');
-                return;
+        // Simple smooth scroll fade out for the giant hero logo to prevent jittery scroll jumping
+        gsap.to(logoContainer, {
+            opacity: 0,
+            y: -80,
+            scale: 0.85,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#hero',
+                start: 'top top',
+                end: 'bottom 40%',
+                scrub: true
             }
-
-            // Target scale (relative to starting dynamic layout dimensions)
-            const targetScaleX = dockRect.width / initialWidth;
-            const targetScaleY = dockRect.height / initialHeight;
-
-            // Start coordinates (centered inside hero-logo-wrapper, offset by current viewport scroll)
-            const currentScroll = window.scrollY;
-            const startX = wrapperRectAt0.left + (wrapperRectAt0.width - initialWidth) / 2;
-            const startY = (wrapperRectAt0.top - currentScroll) + (wrapperRectAt0.height - initialHeight) / 2;
-
-            // Target coordinates (inside header logo-dock)
-            const endX = dockRect.left;
-            const endY = dockRect.top;
-
-            // Linear interpolation based on scroll progress
-            const curX = startX + (endX - startX) * progress;
-            const curY = startY + (endY - startY) * progress;
-            const curScaleX = 1 + (targetScaleX - 1) * progress;
-            const curScaleY = 1 + (targetScaleY - 1) * progress;
-
-            // Lock to fixed viewport positions during scroll
-            logoContainer.style.position = 'fixed';
-            logoContainer.style.left = `${curX}px`;
-            logoContainer.style.top = `${curY}px`;
-            logoContainer.style.margin = '0';
-
-            // Modern Futuristic 3D Scroll Rotation (720 degree Y coin-spin, 360 degree Z spin)
-            const rotY = progress * 720;
-            const rotZ = progress * 360;
-            logoContainer.style.transform = `scale(${curScaleX}, ${curScaleY}) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
-
-            // Show logo branding text once docked
-            if (progress > 0.85) {
-                logoText.classList.add('visible');
-                logoContainer.classList.add('docked');
-            } else {
-                logoText.classList.remove('visible');
-                logoContainer.classList.remove('docked');
-            }
-        };
-
-        // ScrollTrigger sequence
-        ScrollTrigger.create({
-            trigger: "#hero",
-            start: "top top",
-            end: "bottom 30%",
-            scrub: true,
-            onUpdate: (self) => {
-                updateLogoPosition(self.progress);
-            },
-            onLeave: () => {
-                updateLogoPosition(1);
-            },
-            onEnterBack: () => {
-                updateLogoPosition(0);
-            }
-        });
-
-        // Initialize state on load
-        updateLogoPosition(0);
-
-        // Responsive re-alignment
-        window.addEventListener('resize', () => {
-            cacheBounds();
-            updateLogoPosition(window.scrollY > window.innerHeight * 0.4 ? 1 : 0);
-        });
-
-        ScrollTrigger.addEventListener('refresh', () => {
-            cacheBounds();
-            updateLogoPosition(window.scrollY > window.innerHeight * 0.4 ? 1 : 0);
         });
     }
 

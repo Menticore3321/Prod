@@ -446,34 +446,29 @@ section {
 
 /* Hologram Glitch and Chromatic Aberration - Multi-Color Spectrum */
 .logo-glitch {
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    opacity: 0.85;
     mix-blend-mode: screen;
     transform-origin: center;
 }
 
-#hero-logo-container:hover .logo-glitch {
-    opacity: 0.85;
+.logo-glitch.cyan {
+    animation: glitchCyan 0.2s steps(2, end) infinite !important;
 }
 
-#hero-logo-container:hover .logo-glitch.cyan {
-    animation: glitchCyan 0.2s steps(2, end) infinite;
+.logo-glitch.magenta {
+    animation: glitchMagenta 0.25s steps(2, end) infinite !important;
 }
 
-#hero-logo-container:hover .logo-glitch.magenta {
-    animation: glitchMagenta 0.25s steps(2, end) infinite;
+.logo-glitch.neon {
+    animation: glitchNeon 0.15s steps(2, end) infinite !important;
 }
 
-#hero-logo-container:hover .logo-glitch.neon {
-    animation: glitchNeon 0.15s steps(2, end) infinite;
+.logo-glitch.purple {
+    animation: glitchPurple 0.3s steps(2, end) infinite !important;
 }
 
-#hero-logo-container:hover .logo-glitch.purple {
-    animation: glitchPurple 0.3s steps(2, end) infinite;
-}
-
-#hero-logo-container:hover .logo-glitch.orange {
-    animation: glitchOrange 0.22s steps(2, end) infinite;
+.logo-glitch.orange {
+    animation: glitchOrange 0.22s steps(2, end) infinite !important;
 }
 
 @keyframes glitchCyan {
