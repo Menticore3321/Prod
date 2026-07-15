@@ -1752,7 +1752,17 @@ section {
 
     .reviews-container {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2.5rem;
+    }
+
+    .reviews-left {
+        order: 1 !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+    }
+
+    .reviews-right {
+        order: 2 !important;
     }
 
     .reviews-stack {
