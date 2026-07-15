@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/api/booking", "destination": "/api/booking.py" },
+    { "source": "/api/bookings", "destination": "/api/bookings.py" }
+  ]
+}
