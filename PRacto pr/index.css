@@ -267,6 +267,10 @@ body {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    position: fixed;
+    top: 1.6rem;
+    right: 4vw;
+    z-index: 101;
 }
 
 .nav-link {
@@ -1479,8 +1483,10 @@ section {
     .nav-links {
         display: flex;
         position: fixed;
+        top: auto;
         bottom: 1.5rem;
         left: 50%;
+        right: auto;
         transform: translateX(-50%);
         background: rgba(5, 5, 5, 0.85);
         backdrop-filter: blur(16px);
