@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <!-- Stylesheets -->
     <link rel="stylesheet" href="index.css?v=2.2.5">
     <style>
@@ -462,7 +465,8 @@
             border: 1px solid rgba(255, 170, 0, 0.25);
             padding: 0.3rem 0.7rem;
             border-radius: 3px;
-            margin-right: auto; /* Push buttons to the right */
+            margin-right: auto;
+            /* Push buttons to the right */
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
@@ -532,7 +536,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Glassmorphic Admin Authorization Modal */
@@ -781,17 +787,20 @@
             transform: translateY(20px);
             transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
+
         .undo-toast.show {
             opacity: 1;
             pointer-events: auto;
             transform: translateY(0);
         }
+
         .undo-toast-text {
             font-family: var(--font-body);
             color: #fff;
             font-size: 0.85rem;
             letter-spacing: 0.5px;
         }
+
         .undo-toast-btn {
             font-family: var(--font-mono);
             background: none;
@@ -806,6 +815,7 @@
             outline: none;
             transition: all 0.2s ease;
         }
+
         .undo-toast-btn:hover {
             color: #fff;
             text-shadow: 0 0 8px var(--color-neon);
@@ -825,7 +835,10 @@
         }
 
         /* ─── CMS: Content Manager ─────────────────────────────── */
-        .cms-badge { color: var(--color-neon); font-size: 0.95rem; }
+        .cms-badge {
+            color: var(--color-neon);
+            font-size: 0.95rem;
+        }
 
         /* Sub-tabs */
         .cms-subtabs {
@@ -834,6 +847,7 @@
             margin-bottom: 2.5rem;
             flex-wrap: wrap;
         }
+
         .cms-subtab {
             background: transparent;
             border: 1px solid var(--color-border);
@@ -847,7 +861,12 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .cms-subtab:hover { border-color: var(--color-neon); color: var(--color-neon); }
+
+        .cms-subtab:hover {
+            border-color: var(--color-neon);
+            color: var(--color-neon);
+        }
+
         .cms-subtab.active {
             background: var(--color-neon);
             border-color: var(--color-neon);
@@ -856,8 +875,13 @@
         }
 
         /* Tab panel visibility */
-        .cms-tab-panel { display: none; }
-        .cms-tab-panel.active { display: block; }
+        .cms-tab-panel {
+            display: none;
+        }
+
+        .cms-tab-panel.active {
+            display: block;
+        }
 
         /* Split layout */
         .cms-split {
@@ -866,17 +890,21 @@
             gap: 2.5rem;
             align-items: start;
         }
+
         @media (max-width: 900px) {
-            .cms-split { grid-template-columns: 1fr; }
+            .cms-split {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Form box */
         .cms-form-box {
-            background: rgba(255,255,255,0.025);
+            background: rgba(255, 255, 255, 0.025);
             border: 1px solid var(--color-border);
             border-radius: 8px;
             padding: 2rem;
         }
+
         .cms-form-title {
             font-family: var(--font-mono);
             font-size: 0.8rem;
@@ -885,9 +913,19 @@
             margin-bottom: 1.8rem;
             text-transform: uppercase;
         }
-        .cms-form { display: flex; flex-direction: column; gap: 1.2rem; }
 
-        .cms-field { display: flex; flex-direction: column; gap: 0.4rem; }
+        .cms-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .cms-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
         .cms-field label {
             font-family: var(--font-mono);
             font-size: 0.75rem;
@@ -895,13 +933,17 @@
             color: var(--color-text-secondary);
             text-transform: uppercase;
         }
+
         .cms-field small {
             font-family: var(--font-body);
             font-size: 0.73rem;
-            color: rgba(255,255,255,0.35);
+            color: rgba(255, 255, 255, 0.35);
         }
-        .cms-field input, .cms-field textarea, .cms-field select {
-            background: rgba(255,255,255,0.04);
+
+        .cms-field input,
+        .cms-field textarea,
+        .cms-field select {
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--color-border);
             border-radius: 5px;
             padding: 0.75rem 1rem;
@@ -911,30 +953,37 @@
             transition: border-color 0.2s ease;
             resize: vertical;
         }
-        .cms-field input:focus, .cms-field textarea:focus {
+
+        .cms-field input:focus,
+        .cms-field textarea:focus {
             outline: none;
             border-color: var(--color-neon);
-            box-shadow: 0 0 0 3px rgba(223,255,0,0.08);
+            box-shadow: 0 0 0 3px rgba(223, 255, 0, 0.08);
         }
-        .cms-required { color: var(--color-neon); }
+
+        .cms-required {
+            color: var(--color-neon);
+        }
 
         /* Thumbnail preview */
         .cms-thumb-preview {
             display: flex;
             align-items: center;
             gap: 1rem;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--color-border);
             border-radius: 6px;
             padding: 0.8rem;
         }
+
         .cms-thumb-preview img {
             width: 90px;
             height: 60px;
             object-fit: cover;
             border-radius: 4px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         .cms-thumb-preview span {
             font-family: var(--font-mono);
             font-size: 0.75rem;
@@ -948,8 +997,14 @@
             letter-spacing: 1px;
             min-height: 1.5rem;
         }
-        .cms-status.success { color: var(--color-neon); }
-        .cms-status.error { color: #ff4455; }
+
+        .cms-status.success {
+            color: var(--color-neon);
+        }
+
+        .cms-status.error {
+            color: #ff4455;
+        }
 
         /* Submit button */
         .cms-submit-btn {
@@ -971,16 +1026,26 @@
             transition: all 0.2s ease;
             margin-top: 0.5rem;
         }
-        .cms-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(223,255,0,0.25); }
-        .cms-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .cms-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(223, 255, 0, 0.25);
+        }
+
+        .cms-submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
 
         /* List box */
         .cms-list-box {
-            background: rgba(255,255,255,0.02);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--color-border);
             border-radius: 8px;
             padding: 2rem;
         }
+
         .cms-list-title {
             font-family: var(--font-mono);
             font-size: 0.8rem;
@@ -992,15 +1057,24 @@
             align-items: center;
             gap: 0.8rem;
         }
+
         .cms-list-count {
-            background: rgba(223,255,0,0.12);
+            background: rgba(223, 255, 0, 0.12);
             color: var(--color-neon);
             border-radius: 20px;
             padding: 0.1rem 0.7rem;
             font-size: 0.75rem;
             font-weight: 700;
         }
-        .cms-item-list { display: flex; flex-direction: column; gap: 0.8rem; max-height: 520px; overflow-y: auto; }
+
+        .cms-item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            max-height: 520px;
+            overflow-y: auto;
+        }
+
         .cms-loading {
             display: flex;
             align-items: center;
@@ -1016,30 +1090,40 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 6px;
             padding: 0.9rem 1rem;
             transition: border-color 0.2s ease;
         }
-        .cms-item-card:hover { border-color: rgba(255,255,255,0.15); }
+
+        .cms-item-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
         .cms-item-thumb {
             width: 72px;
             height: 48px;
             object-fit: cover;
             border-radius: 4px;
             flex-shrink: 0;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
+
         .cms-item-thumb-sq {
             width: 44px;
             height: 72px;
             object-fit: cover;
             border-radius: 4px;
             flex-shrink: 0;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .cms-item-info { flex: 1; min-width: 0; }
+
+        .cms-item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
         .cms-item-title {
             font-family: var(--font-mono);
             font-size: 0.82rem;
@@ -1049,6 +1133,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
         .cms-item-meta {
             font-family: var(--font-body);
             font-size: 0.75rem;
@@ -1058,10 +1143,11 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
         .cms-delete-btn {
             background: transparent;
-            border: 1px solid rgba(255,60,60,0.25);
-            color: rgba(255,80,80,0.7);
+            border: 1px solid rgba(255, 60, 60, 0.25);
+            color: rgba(255, 80, 80, 0.7);
             border-radius: 4px;
             padding: 0.4rem 0.7rem;
             font-family: var(--font-mono);
@@ -1071,43 +1157,43 @@
             transition: all 0.2s ease;
             flex-shrink: 0;
         }
+
         .cms-delete-btn:hover {
-            background: rgba(255,60,60,0.15);
+            background: rgba(255, 60, 60, 0.15);
             border-color: #ff4455;
             color: #ff4455;
         }
+
         .cms-empty-list {
             text-align: center;
             padding: 2.5rem 1rem;
-            color: rgba(255,255,255,0.25);
+            color: rgba(255, 255, 255, 0.25);
             font-family: var(--font-mono);
             font-size: 0.82rem;
             letter-spacing: 1px;
         }
+
         .cms-item-card[draggable="true"] {
             cursor: grab;
+            user-select: none;
+            -webkit-user-drag: element;
             transition: border-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
         }
         .cms-item-card[draggable="true"]:active {
             cursor: grabbing;
         }
-        .cms-item-thumb, .cms-item-thumb-sq, .cms-item-info, .cms-item-title, .cms-item-meta {
-            pointer-events: none;
-            user-select: none;
-        }
-        .cms-item-card button, .cms-item-card a {
-            pointer-events: auto;
-        }
+
         .cms-item-card.dragging {
             opacity: 0.5;
             border-color: var(--color-neon);
             background: rgba(223, 255, 0, 0.05);
             box-shadow: 0 0 15px rgba(223, 255, 0, 0.15);
         }
+
         .cms-edit-btn {
             background: transparent;
-            border: 1px solid rgba(223,255,0,0.25);
-            color: rgba(223,255,0,0.8);
+            border: 1px solid rgba(223, 255, 0, 0.25);
+            color: rgba(223, 255, 0, 0.8);
             border-radius: 4px;
             padding: 0.4rem 0.7rem;
             font-family: var(--font-mono);
@@ -1118,13 +1204,15 @@
             flex-shrink: 0;
             margin-right: 0.4rem;
         }
+
         .cms-edit-btn:hover {
-            background: rgba(223,255,0,0.15);
+            background: rgba(223, 255, 0, 0.15);
             border-color: var(--color-neon);
             color: var(--color-neon);
         }
     </style>
 </head>
+
 <body class="dashboard-body">
     <!-- Film Grain / Noise Overlay -->
     <div class="grain-overlay"></div>
@@ -1150,13 +1238,15 @@
             <form id="admin-login-form" class="admin-login-form">
                 <div class="form-group">
                     <label>ADMIN ID</label>
-                    <input type="text" id="admin-username-input" placeholder="Enter Admin ID" required autocomplete="off">
+                    <input type="text" id="admin-username-input" placeholder="Enter Admin ID" required
+                        autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label>PASSWORD</label>
                     <input type="password" id="admin-password-input" placeholder="••••" required>
                 </div>
-                <div class="admin-error-msg" id="admin-login-error" style="display: none;">ACCESS DENIED: INVALID CREDENTIALS</div>
+                <div class="admin-error-msg" id="admin-login-error" style="display: none;">ACCESS DENIED: INVALID
+                    CREDENTIALS</div>
                 <button type="submit" class="submit-btn admin-submit-btn">
                     <span class="submit-btn-text">AUTHORIZE</span>
                     <span class="submit-btn-icon">◢</span>
@@ -1173,8 +1263,10 @@
                 <span class="admin-modal-subtitle" style="color: #ff3333;">⚠️ WARNING: PERMANENT DELETION</span>
                 <h2 class="admin-modal-title">PURGE DATABASE RECORD?</h2>
             </div>
-            <p style="font-family: var(--font-body); font-size: 0.88rem; color: var(--color-text-secondary); margin-bottom: 2.2rem; line-height: 1.6;">
-                Are you absolutely sure you want to permanently delete this booking? This action completely purges the document from the cloud database and cannot be undone.
+            <p
+                style="font-family: var(--font-body); font-size: 0.88rem; color: var(--color-text-secondary); margin-bottom: 2.2rem; line-height: 1.6;">
+                Are you absolutely sure you want to permanently delete this booking? This action completely purges the
+                document from the cloud database and cannot be undone.
             </p>
             <div style="display: flex; gap: 1rem; justify-content: flex-end; flex-wrap: wrap;">
                 <button id="cancel-delete-btn" class="btn-modal-cancel">CANCEL</button>
@@ -1236,7 +1328,8 @@
         <section class="controls-row">
             <div class="search-wrapper">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="search-bar" class="search-input" placeholder="Search by name, email, or brief keywords...">
+                <input type="text" id="search-bar" class="search-input"
+                    placeholder="Search by name, email, or brief keywords...">
             </div>
             <select id="format-filter" class="filter-select">
                 <option value="all">ALL FORMATS</option>
@@ -1289,8 +1382,12 @@
                             <div class="cms-field">
                                 <label>YouTube Link or ID <span class="cms-required">*</span></label>
                                 <div style="display: flex; gap: 0.5rem; align-items: stretch;">
-                                    <input type="text" name="youtube_id" id="cin-ytid" placeholder="e.g. https://www.youtube.com/watch?v=ScMzIvxBSi4" required style="flex: 1; min-width: 0;">
-                                    <button type="button" class="action-btn" id="cin-fetch-btn" style="padding: 0.5rem 1rem; border-color: rgba(223,255,0,0.3); color: var(--color-neon); font-size: 0.72rem; white-space: nowrap;">FETCH INFO</button>
+                                    <input type="text" name="youtube_id" id="cin-ytid"
+                                        placeholder="e.g. https://www.youtube.com/watch?v=ScMzIvxBSi4" required
+                                        style="flex: 1; min-width: 0;">
+                                    <button type="button" class="action-btn" id="cin-fetch-btn"
+                                        style="padding: 0.5rem 1rem; border-color: rgba(223,255,0,0.3); color: var(--color-neon); font-size: 0.72rem; white-space: nowrap;">FETCH
+                                        INFO</button>
                                 </div>
                                 <small>Paste the full YouTube URL or the 11-character video ID.</small>
                             </div>
@@ -1300,7 +1397,8 @@
                             </div>
                             <div class="cms-field">
                                 <label>Title <span class="cms-required">*</span></label>
-                                <input type="text" name="title" id="cin-title" placeholder="e.g. CHASING HORIZONS // ICELAND" required>
+                                <input type="text" name="title" id="cin-title"
+                                    placeholder="e.g. CHASING HORIZONS // ICELAND" required>
                             </div>
                             <div class="cms-field">
                                 <label>Genre Tag</label>
@@ -1308,7 +1406,8 @@
                             </div>
                             <div class="cms-field">
                                 <label>Description</label>
-                                <textarea name="description" id="cin-desc" rows="3" placeholder="Short description of the work..."></textarea>
+                                <textarea name="description" id="cin-desc" rows="3"
+                                    placeholder="Short description of the work..."></textarea>
                             </div>
                             <div class="cms-field">
                                 <label>Display Order</label>
@@ -1316,11 +1415,13 @@
                             </div>
                             <div id="cin-form-status" class="cms-status"></div>
                             <div style="display: flex; gap: 1rem;">
-                                <button type="submit" class="cms-submit-btn" id="add-cinematic-btn" style="flex: 1; margin-top: 0.5rem;">
+                                <button type="submit" class="cms-submit-btn" id="add-cinematic-btn"
+                                    style="flex: 1; margin-top: 0.5rem;">
                                     <span id="cin-submit-text">ADD TO PORTFOLIO</span>
                                     <span>◢</span>
                                 </button>
-                                <button type="button" class="action-btn" id="cancel-cinematic-edit" style="display: none; height: auto; align-self: stretch; padding: 1rem 1.5rem; margin-top: 0.5rem; text-transform: uppercase;">
+                                <button type="button" class="action-btn" id="cancel-cinematic-edit"
+                                    style="display: none; height: auto; align-self: stretch; padding: 1rem 1.5rem; margin-top: 0.5rem; text-transform: uppercase;">
                                     CANCEL
                                 </button>
                             </div>
@@ -1328,10 +1429,15 @@
                     </div>
                     <!-- LIVE LIST -->
                     <div class="cms-list-box">
-                        <h3 class="cms-list-title">CURRENT CINEMATIC VIDEOS <span id="cin-list-count" class="cms-list-count">0</span></h3>
-                        <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-text-muted); margin-bottom: 0.8rem;">💡 Drag items vertically to reorder.</div>
+                        <h3 class="cms-list-title">CURRENT CINEMATIC VIDEOS <span id="cin-list-count"
+                                class="cms-list-count">0</span></h3>
+                        <div
+                            style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-text-muted); margin-bottom: 0.8rem;">
+                            💡 Drag items vertically to reorder.</div>
                         <div id="cin-list" class="cms-item-list">
-                            <div class="cms-loading"><div class="spinner"></div><span>Loading...</span></div>
+                            <div class="cms-loading">
+                                <div class="spinner"></div><span>Loading...</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1348,8 +1454,12 @@
                             <div class="cms-field">
                                 <label>YouTube Link or ID <span class="cms-required">*</span></label>
                                 <div style="display: flex; gap: 0.5rem; align-items: stretch;">
-                                    <input type="text" name="youtube_id" id="sht-ytid" placeholder="e.g. https://youtube.com/shorts/NRYuZX7bJ_Q" required style="flex: 1; min-width: 0;">
-                                    <button type="button" class="action-btn" id="sht-fetch-btn" style="padding: 0.5rem 1rem; border-color: rgba(223,255,0,0.3); color: var(--color-neon); font-size: 0.72rem; white-space: nowrap;">FETCH INFO</button>
+                                    <input type="text" name="youtube_id" id="sht-ytid"
+                                        placeholder="e.g. https://youtube.com/shorts/NRYuZX7bJ_Q" required
+                                        style="flex: 1; min-width: 0;">
+                                    <button type="button" class="action-btn" id="sht-fetch-btn"
+                                        style="padding: 0.5rem 1rem; border-color: rgba(223,255,0,0.3); color: var(--color-neon); font-size: 0.72rem; white-space: nowrap;">FETCH
+                                        INFO</button>
                                 </div>
                                 <small>Paste the Shorts URL or the 11-character video ID.</small>
                             </div>
@@ -1359,7 +1469,8 @@
                             </div>
                             <div class="cms-field">
                                 <label>Title <span class="cms-required">*</span></label>
-                                <input type="text" name="title" id="sht-title" placeholder="e.g. Cinematic Camera Roll" required>
+                                <input type="text" name="title" id="sht-title" placeholder="e.g. Cinematic Camera Roll"
+                                    required>
                             </div>
                             <div class="cms-field">
                                 <label>Views</label>
@@ -1379,11 +1490,13 @@
                             </div>
                             <div id="sht-form-status" class="cms-status"></div>
                             <div style="display: flex; gap: 1rem;">
-                                <button type="submit" class="cms-submit-btn" id="add-short-btn" style="flex: 1; margin-top: 0.5rem;">
+                                <button type="submit" class="cms-submit-btn" id="add-short-btn"
+                                    style="flex: 1; margin-top: 0.5rem;">
                                     <span id="sht-submit-text">ADD TO SHORTS</span>
                                     <span>◢</span>
                                 </button>
-                                <button type="button" class="action-btn" id="cancel-shorts-edit" style="display: none; height: auto; align-self: stretch; padding: 1rem 1.5rem; margin-top: 0.5rem; text-transform: uppercase;">
+                                <button type="button" class="action-btn" id="cancel-shorts-edit"
+                                    style="display: none; height: auto; align-self: stretch; padding: 1rem 1.5rem; margin-top: 0.5rem; text-transform: uppercase;">
                                     CANCEL
                                 </button>
                             </div>
@@ -1391,10 +1504,15 @@
                     </div>
                     <!-- LIVE LIST -->
                     <div class="cms-list-box">
-                        <h3 class="cms-list-title">CURRENT VIRAL SHORTS <span id="sht-list-count" class="cms-list-count">0</span></h3>
-                        <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-text-muted); margin-bottom: 0.8rem;">💡 Drag items vertically to reorder.</div>
+                        <h3 class="cms-list-title">CURRENT VIRAL SHORTS <span id="sht-list-count"
+                                class="cms-list-count">0</span></h3>
+                        <div
+                            style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-text-muted); margin-bottom: 0.8rem;">
+                            💡 Drag items vertically to reorder.</div>
                         <div id="sht-list" class="cms-item-list">
-                            <div class="cms-loading"><div class="spinner"></div><span>Loading...</span></div>
+                            <div class="cms-loading">
+                                <div class="spinner"></div><span>Loading...</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1410,8 +1528,12 @@
                             <div class="cms-field">
                                 <label>YouTube Link or ID <span class="cms-required">*</span></label>
                                 <div style="display: flex; gap: 0.5rem; align-items: stretch;">
-                                    <input type="text" name="youtube_id" id="shw-ytid" placeholder="e.g. https://www.youtube.com/watch?v=ScMzIvxBSi4" required style="flex: 1; min-width: 0;">
-                                    <button type="button" class="action-btn" id="shw-fetch-btn" style="padding: 0.5rem 1rem; border-color: rgba(223,255,0,0.3); color: var(--color-neon); font-size: 0.72rem; white-space: nowrap;">FETCH INFO</button>
+                                    <input type="text" name="youtube_id" id="shw-ytid"
+                                        placeholder="e.g. https://www.youtube.com/watch?v=ScMzIvxBSi4" required
+                                        style="flex: 1; min-width: 0;">
+                                    <button type="button" class="action-btn" id="shw-fetch-btn"
+                                        style="padding: 0.5rem 1rem; border-color: rgba(223,255,0,0.3); color: var(--color-neon); font-size: 0.72rem; white-space: nowrap;">FETCH
+                                        INFO</button>
                                 </div>
                                 <small>Paste the main showreel YouTube URL or the 11-character video ID.</small>
                             </div>
@@ -1432,7 +1554,8 @@
                                 <input type="text" name="description" id="shw-desc" placeholder="e.g. 2026 EDITION">
                             </div>
                             <div id="shw-form-status" class="cms-status"></div>
-                            <button type="submit" class="cms-submit-btn" id="update-showreel-btn" style="width: 100%; margin-top: 0.5rem;">
+                            <button type="submit" class="cms-submit-btn" id="update-showreel-btn"
+                                style="width: 100%; margin-top: 0.5rem;">
                                 <span>UPDATE SHOWREEL</span>
                                 <span>◢</span>
                             </button>
@@ -1442,7 +1565,9 @@
                     <div class="cms-list-box">
                         <h3 class="cms-list-title">CURRENT LIVE SHOWREEL</h3>
                         <div id="shw-current-card-container">
-                            <div class="cms-loading"><div class="spinner"></div><span>Loading...</span></div>
+                            <div class="cms-loading">
+                                <div class="spinner"></div><span>Loading...</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1457,22 +1582,26 @@
                         <form id="add-review-form" class="cms-form" autocomplete="off">
                             <div class="cms-field">
                                 <label>Review Text <span class="cms-required">*</span></label>
-                                <textarea name="text" id="rev-text" rows="5" placeholder="What the client said about the work..." required></textarea>
+                                <textarea name="text" id="rev-text" rows="5"
+                                    placeholder="What the client said about the work..." required></textarea>
                             </div>
                             <div class="cms-field">
                                 <label>Client Name <span class="cms-required">*</span></label>
-                                <input type="text" name="author_name" id="rev-author" placeholder="e.g. Alex Rivera" required>
+                                <input type="text" name="author_name" id="rev-author" placeholder="e.g. Alex Rivera"
+                                    required>
                             </div>
                             <div class="cms-field">
                                 <label>Title / Company / Project</label>
-                                <input type="text" name="author_details" id="rev-details" placeholder="e.g. Director, Rivera Films — The Lost Canvas">
+                                <input type="text" name="author_details" id="rev-details"
+                                    placeholder="e.g. Director, Rivera Films — The Lost Canvas">
                             </div>
                             <div class="cms-field">
                                 <label>Display Order</label>
                                 <input type="number" name="order" id="rev-order" placeholder="1" min="1" value="99">
                             </div>
                             <div id="rev-form-status" class="cms-status"></div>
-                            <button type="submit" class="cms-submit-btn" id="add-review-btn" style="width: 100%; margin-top: 0.5rem;">
+                            <button type="submit" class="cms-submit-btn" id="add-review-btn"
+                                style="width: 100%; margin-top: 0.5rem;">
                                 <span>PUBLISH REVIEW</span>
                                 <span>◢</span>
                             </button>
@@ -1480,9 +1609,12 @@
                     </div>
                     <!-- LIVE LIST -->
                     <div class="cms-list-box">
-                        <h3 class="cms-list-title">PUBLISHED REVIEWS <span id="rev-list-count" class="cms-list-count">0</span></h3>
+                        <h3 class="cms-list-title">PUBLISHED REVIEWS <span id="rev-list-count"
+                                class="cms-list-count">0</span></h3>
                         <div id="rev-list" class="cms-item-list">
-                            <div class="cms-loading"><div class="spinner"></div><span>Loading...</span></div>
+                            <div class="cms-loading">
+                                <div class="spinner"></div><span>Loading...</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1553,8 +1685,7 @@
                 if (!options.headers) {
                     options.headers = {};
                 }
-                const token = sessionStorage.getItem("admin_token") || '';
-                options.headers['Authorization'] = 'Basic ' + token;
+                options.headers['Authorization'] = 'Basic RGVlcGFrOjMzMjE=';
                 return fetch(url, options);
             };
 
@@ -1564,47 +1695,38 @@
                 listContainer.style.display = 'none';
                 emptyView.style.display = 'none';
 
-                const apiBase = window.location.protocol === 'file:' 
-                    ? 'http://localhost:8000' 
+                const apiBase = window.location.protocol === 'file:'
+                    ? 'http://localhost:8000'
                     : '';
 
                 // Parallel fetch active and deleted bookings
                 Promise.all([
                     authFetch(`${apiBase}/api/bookings`).then(res => {
-                        if (res.status === 401) throw new Error('Unauthorized');
                         if (!res.ok) throw new Error('Active fetch error');
                         return res.json();
                     }),
                     authFetch(`${apiBase}/api/deleted_bookings`).then(res => {
-                        if (res.status === 401) throw new Error('Unauthorized');
                         if (!res.ok) throw new Error('Deleted fetch error');
                         return res.json();
                     })
                 ])
-                .then(([activeData, deletedData]) => {
-                    activeBookings = activeData;
-                    deletedBookings = deletedData;
+                    .then(([activeData, deletedData]) => {
+                        activeBookings = activeData;
+                        deletedBookings = deletedData;
 
-                    updateBadgeWithPop(activeCount, activeBookings.length);
-                    updateBadgeWithPop(deletedCount, deletedBookings.length);
+                        updateBadgeWithPop(activeCount, activeBookings.length);
+                        updateBadgeWithPop(deletedCount, deletedBookings.length);
 
-                    loadingView.style.display = 'none';
-                    listContainer.style.display = 'flex';
+                        loadingView.style.display = 'none';
+                        listContainer.style.display = 'flex';
 
-                    updateMetrics(activeBookings);
-                    applyFilter();
-                })
-                .catch(err => {
-                    console.error("Dashboard data load error:", err);
-                    if (err.message === 'Unauthorized') {
-                        sessionStorage.removeItem("admin_auth");
-                        sessionStorage.removeItem("admin_token");
-                        alert('Session has expired or is unauthorized. Please log in again.');
-                        window.location.reload();
-                    } else {
+                        updateMetrics(activeBookings);
+                        applyFilter();
+                    })
+                    .catch(err => {
+                        console.error("Dashboard data load error:", err);
                         loadingView.innerHTML = `<span>✕ DATA LOADING BLOCKED OR OFFLINE. STATUS: ${err.message}</span>`;
-                    }
-                });
+                    });
             };
 
             const initDashboardData = () => {
@@ -1622,40 +1744,16 @@
                     e.preventDefault();
                     const username = usernameInput.value.trim();
                     const password = passwordInput.value;
-                    const token = btoa(username + ':' + password);
 
-                    const testBtn = loginForm.querySelector('button[type="submit"]');
-                    const origText = testBtn.textContent;
-                    testBtn.disabled = true;
-                    testBtn.textContent = 'AUTHENTICATING...';
-                    errorMsg.style.display = 'none';
-
-                    const apiBase = window.location.protocol === 'file:' 
-                        ? 'http://localhost:8000' 
-                        : '';
-
-                    fetch(`${apiBase}/api/bookings`, {
-                        headers: { 'Authorization': 'Basic ' + token }
-                    })
-                    .then(res => {
-                        if (!res.ok) throw new Error('Unauthorized');
-                        return res.json();
-                    })
-                    .then(() => {
-                        sessionStorage.setItem("admin_token", token);
+                    if (username === "Deepak" && password === "3321") {
                         sessionStorage.setItem("admin_auth", "true");
                         modal.classList.remove('active');
                         initDashboardData();
-                    })
-                    .catch(() => {
+                    } else {
                         errorMsg.style.display = 'block';
                         passwordInput.value = '';
                         passwordInput.focus();
-                    })
-                    .finally(() => {
-                        testBtn.disabled = false;
-                        testBtn.textContent = origText;
-                    });
+                    }
                 });
             } else {
                 initDashboardData();
@@ -1688,14 +1786,14 @@
             // 4. Date formatter helper
             const formatDate = (isoString) => {
                 if (!isoString) return 'N/A';
-                const date = new Date(isoString.replace(' ', 'T') + 'Z'); 
+                const date = new Date(isoString.replace(' ', 'T') + 'Z');
                 if (isNaN(date.getTime())) return isoString;
-                return date.toLocaleDateString(undefined, { 
-                     year: 'numeric', 
-                     month: 'short', 
-                     day: 'numeric',
-                     hour: '2-digit',
-                     minute: '2-digit'
+                return date.toLocaleDateString(undefined, {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
                 });
             };
 
@@ -1705,10 +1803,10 @@
                 const expiry = new Date(expiresAt.replace(' ', 'T') + 'Z');
                 const diff = expiry - new Date();
                 if (diff <= 0) return 'Expired / Purging';
-                
+
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                
+
                 if (days > 0) {
                     return `${days}d ${hours}h left`;
                 } else {
@@ -1724,7 +1822,7 @@
                 if (!searchWord) return escapedText;
                 const escapedSearch = escapeHtml(searchWord).trim();
                 if (!escapedSearch) return escapedText;
-                
+
                 const regexEscaped = escapedSearch.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
                 const regex = new RegExp(`(${regexEscaped})`, 'gi');
                 return escapedText.replace(regex, '<mark class="search-highlight">$1</mark>');
@@ -1733,7 +1831,7 @@
             // 6. Render list logic
             const renderBookings = (list) => {
                 listContainer.innerHTML = '';
-                
+
                 if (list.length === 0) {
                     emptyView.style.display = 'flex';
                     if (currentTab === 'active') {
@@ -1754,7 +1852,7 @@
                 list.forEach(item => {
                     const card = document.createElement('article');
                     card.className = 'booking-item';
-                    
+
                     const escName = highlightText(item.name, query);
                     const escEmail = highlightText(item.email, query);
                     const escVision = highlightText(item.vision || 'No brief details provided.', query);
@@ -1823,11 +1921,11 @@
                 const sourceList = currentTab === 'active' ? activeBookings : deletedBookings;
 
                 const filtered = sourceList.filter(item => {
-                    const matchQuery = 
+                    const matchQuery =
                         (item.name && item.name.toLowerCase().includes(query)) ||
                         (item.email && item.email.toLowerCase().includes(query)) ||
                         (item.vision && item.vision.toLowerCase().includes(query));
-                    
+
                     const matchFormat = selectedFormat === 'all' || item.format === selectedFormat;
 
                     return matchQuery && matchFormat;
@@ -1841,8 +1939,8 @@
 
             // 9. Action Buttons Logic
             const attachActionListeners = () => {
-                const apiBase = window.location.protocol === 'file:' 
-                    ? 'http://localhost:8000' 
+                const apiBase = window.location.protocol === 'file:'
+                    ? 'http://localhost:8000'
                     : '';
 
                 // Soft Delete (Recycle)
@@ -1857,28 +1955,28 @@
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ id })
                         })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.status === 'success') {
-                                lastRecycledId = id;
-                                undoToast.classList.add('show');
-                                clearTimeout(toastTimeout);
-                                toastTimeout = setTimeout(() => {
-                                    undoToast.classList.remove('show');
-                                }, 6000);
-                                fetchDashboardData();
-                            } else {
-                                alert('Error recycling document: ' + data.message);
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    lastRecycledId = id;
+                                    undoToast.classList.add('show');
+                                    clearTimeout(toastTimeout);
+                                    toastTimeout = setTimeout(() => {
+                                        undoToast.classList.remove('show');
+                                    }, 6000);
+                                    fetchDashboardData();
+                                } else {
+                                    alert('Error recycling document: ' + data.message);
+                                    e.target.disabled = false;
+                                    e.target.textContent = '🗑️ Recycle';
+                                }
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                alert('Network error recycling document.');
                                 e.target.disabled = false;
                                 e.target.textContent = '🗑️ Recycle';
-                            }
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            alert('Network error recycling document.');
-                            e.target.disabled = false;
-                            e.target.textContent = '🗑️ Recycle';
-                        });
+                            });
                     });
                 });
 
@@ -1894,22 +1992,22 @@
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ id })
                         })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.status === 'success') {
-                                fetchDashboardData();
-                            } else {
-                                alert('Error restoring document: ' + data.message);
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    fetchDashboardData();
+                                } else {
+                                    alert('Error restoring document: ' + data.message);
+                                    e.target.disabled = false;
+                                    e.target.textContent = '🔄 Restore';
+                                }
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                alert('Network error restoring document.');
                                 e.target.disabled = false;
                                 e.target.textContent = '🔄 Restore';
-                            }
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            alert('Network error restoring document.');
-                            e.target.disabled = false;
-                            e.target.textContent = '🔄 Restore';
-                        });
+                            });
                     });
                 });
 
@@ -1929,8 +2027,8 @@
                 undoToastBtn.disabled = true;
                 undoToastBtn.textContent = 'Restoring...';
 
-                const apiBase = window.location.protocol === 'file:' 
-                    ? 'http://localhost:8000' 
+                const apiBase = window.location.protocol === 'file:'
+                    ? 'http://localhost:8000'
                     : '';
 
                 authFetch(`${apiBase}/api/restore_booking`, {
@@ -1938,35 +2036,35 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id: lastRecycledId })
                 })
-                .then(res => res.json())
-                .then(data => {
-                    undoToastBtn.disabled = false;
-                    undoToastBtn.textContent = 'UNDO';
-                    undoToast.classList.remove('show');
-                    lastRecycledId = null;
+                    .then(res => res.json())
+                    .then(data => {
+                        undoToastBtn.disabled = false;
+                        undoToastBtn.textContent = 'UNDO';
+                        undoToast.classList.remove('show');
+                        lastRecycledId = null;
 
-                    if (data.status === 'success') {
-                        fetchDashboardData();
-                    } else {
-                        alert('Error undoing delete: ' + data.message);
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    undoToastBtn.disabled = false;
-                    undoToastBtn.textContent = 'UNDO';
-                    undoToast.classList.remove('show');
-                    lastRecycledId = null;
-                    alert('Network error undoing delete.');
-                });
+                        if (data.status === 'success') {
+                            fetchDashboardData();
+                        } else {
+                            alert('Error undoing delete: ' + data.message);
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        undoToastBtn.disabled = false;
+                        undoToastBtn.textContent = 'UNDO';
+                        undoToast.classList.remove('show');
+                        lastRecycledId = null;
+                        alert('Network error undoing delete.');
+                    });
             });
 
             // Confirm Permanent Delete
             confirmDeleteBtn.addEventListener('click', () => {
                 if (!pendingDeleteId) return;
 
-                const apiBase = window.location.protocol === 'file:' 
-                    ? 'http://localhost:8000' 
+                const apiBase = window.location.protocol === 'file:'
+                    ? 'http://localhost:8000'
                     : '';
 
                 confirmDeleteBtn.disabled = true;
@@ -1977,27 +2075,27 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id: pendingDeleteId })
                 })
-                .then(res => res.json())
-                .then(data => {
-                    confirmDeleteBtn.disabled = false;
-                    confirmDeleteBtn.innerHTML = '<span>PURGE RECORD</span>◢';
-                    deleteWarningModal.classList.remove('active');
-                    pendingDeleteId = null;
+                    .then(res => res.json())
+                    .then(data => {
+                        confirmDeleteBtn.disabled = false;
+                        confirmDeleteBtn.innerHTML = '<span>PURGE RECORD</span>◢';
+                        deleteWarningModal.classList.remove('active');
+                        pendingDeleteId = null;
 
-                    if (data.status === 'success') {
-                        fetchDashboardData();
-                    } else {
-                        alert('Error purging document: ' + data.message);
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    confirmDeleteBtn.disabled = false;
-                    confirmDeleteBtn.innerHTML = '<span>PURGE RECORD</span>◢';
-                    deleteWarningModal.classList.remove('active');
-                    pendingDeleteId = null;
-                    alert('Network error purging document.');
-                });
+                        if (data.status === 'success') {
+                            fetchDashboardData();
+                        } else {
+                            alert('Error purging document: ' + data.message);
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        confirmDeleteBtn.disabled = false;
+                        confirmDeleteBtn.innerHTML = '<span>PURGE RECORD</span>◢';
+                        deleteWarningModal.classList.remove('active');
+                        pendingDeleteId = null;
+                        alert('Network error purging document.');
+                    });
             });
 
             // Cancel Permanent Delete
@@ -2071,7 +2169,7 @@
             const updateCursorTick = () => {
                 cursorPos.x += (mouse.x - cursorPos.x) * 0.22;
                 cursorPos.y += (mouse.y - cursorPos.y) * 0.22;
-                
+
                 const dx = mouse.x - followerPos.x;
                 const dy = mouse.y - followerPos.y;
                 followerPos.x += dx * 0.08;
@@ -2154,36 +2252,63 @@
 
             const bindCmsDragAndDrop = (listId, type) => {
                 const list = document.getElementById(listId);
-                
+
                 list.addEventListener('dragstart', (e) => {
                     const card = e.target.closest('.cms-item-card');
                     if (!card) return;
                     card.classList.add('dragging');
                     card.style.opacity = '0.4';
                     e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', card.dataset.id);
                 });
-                
+
                 list.addEventListener('dragover', (e) => {
                     e.preventDefault();
                     e.dataTransfer.dropEffect = 'move';
-                    
-                    const draggingCard = list.querySelector('.dragging');
-                    if (!draggingCard) return;
-                    
-                    const cards = [...list.querySelectorAll('.cms-item-card:not(.dragging)')];
-                    const nextCard = cards.find(card => {
-                        const box = card.getBoundingClientRect();
-                        const offset = e.clientY - box.top - box.height / 2;
-                        return offset < 0;
+
+                    const card = e.target.closest('.cms-item-card');
+                    if (!card || card.classList.contains('dragging')) return;
+
+                    list.querySelectorAll('.cms-item-card').forEach(c => {
+                        if (c !== card) c.style.borderTop = '';
                     });
-                    
-                    if (nextCard == null) {
-                        list.appendChild(draggingCard);
+
+                    const rect = card.getBoundingClientRect();
+                    const midpoint = rect.top + rect.height / 2;
+                    if (e.clientY < midpoint) {
+                        card.style.borderTop = '2px solid var(--color-neon)';
                     } else {
-                        list.insertBefore(draggingCard, nextCard);
+                        card.style.borderTop = '';
                     }
                 });
-                
+
+                list.addEventListener('dragleave', (e) => {
+                    const card = e.target.closest('.cms-item-card');
+                    if (card) {
+                        card.style.borderTop = '';
+                    }
+                });
+
+                list.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const card = e.target.closest('.cms-item-card');
+                    const draggingCard = list.querySelector('.dragging');
+
+                    list.querySelectorAll('.cms-item-card').forEach(c => {
+                        c.style.borderTop = '';
+                    });
+
+                    if (!draggingCard || !card || card === draggingCard) return;
+
+                    const rect = card.getBoundingClientRect();
+                    const midpoint = rect.top + rect.height / 2;
+                    if (e.clientY < midpoint) {
+                        list.insertBefore(draggingCard, card);
+                    } else {
+                        list.insertBefore(draggingCard, card.nextSibling);
+                    }
+                });
+
                 list.addEventListener('dragend', (e) => {
                     const card = e.target.closest('.cms-item-card');
                     if (card) {
@@ -2193,6 +2318,7 @@
                     list.querySelectorAll('.cms-item-card').forEach(c => {
                         c.classList.remove('dragging');
                         c.style.opacity = '1';
+                        c.style.borderTop = '';
                     });
                     saveNewOrder(listId, type);
                 });
@@ -2208,21 +2334,21 @@
                         order: index + 1
                     });
                 });
-                
+
                 authFetch(`${apiBase}/api/update_order`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ updates })
                 })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.status !== 'success') {
-                        alert('Failed to save new order: ' + data.message);
-                    }
-                })
-                .catch(err => {
-                    console.error('Order update network error:', err);
-                });
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status !== 'success') {
+                            alert('Failed to save new order: ' + data.message);
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Order update network error:', err);
+                    });
             };
 
             // ── YouTube Helper & Scraper ───────────────────────────────
@@ -2258,7 +2384,7 @@
                 const titleEl = document.getElementById(titleId);
                 const descEl = document.getElementById(descId);
                 const fetchBtn = document.getElementById(fetchBtnId);
-                
+
                 const rawVal = inputEl.value.trim();
                 if (!rawVal) {
                     alert('Please enter a YouTube URL or Video ID first.');
@@ -2269,19 +2395,19 @@
                     alert('Could not extract a valid 11-character YouTube video ID.');
                     return;
                 }
-                
+
                 inputEl.value = ytId;
-                
+
                 // Update preview
                 const preview = document.getElementById(previewId);
                 const img = document.getElementById(imgId);
                 img.src = `https://img.youtube.com/vi/${ytId}/${quality}.jpg`;
                 preview.style.display = 'flex';
-                
+
                 fetchBtn.disabled = true;
                 const originalText = fetchBtn.textContent;
                 fetchBtn.textContent = 'FETCHING...';
-                
+
                 try {
                     const res = await authFetch(`${apiBase}/api/youtube_info?id=${ytId}`);
                     const data = await res.json();
@@ -2313,7 +2439,7 @@
                             const img = document.getElementById('cin-thumb-img');
                             img.src = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
                             preview.style.display = 'flex';
-                            
+
                             const titleEl = document.getElementById('cin-title');
                             const descEl = document.getElementById('cin-desc');
                             if (!titleEl.value.trim() && !descEl.value.trim()) {
@@ -2322,7 +2448,7 @@
                         }
                     });
                 }
-                
+
                 // Shorts auto-grab on blur
                 const shtYt = document.getElementById('sht-ytid');
                 if (shtYt) {
@@ -2335,7 +2461,7 @@
                             const img = document.getElementById('sht-thumb-img');
                             img.src = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
                             preview.style.display = 'flex';
-                            
+
                             const titleEl = document.getElementById('sht-title');
                             if (!titleEl.value.trim()) {
                                 fetchYoutubeInfo(ytId, titleEl, null, 'sht-form-status');
@@ -2356,7 +2482,7 @@
                             const img = document.getElementById('shw-thumb-img');
                             img.src = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
                             preview.style.display = 'flex';
-                            
+
                             const titleEl = document.getElementById('shw-title');
                             if (!titleEl.value.trim()) {
                                 fetchYoutubeInfo(ytId, titleEl, null, 'shw-form-status');
@@ -2417,7 +2543,7 @@
                                 <button class="cms-edit-btn" data-id="${v.id}">EDIT</button>
                                 <button class="cms-delete-btn" data-type="video" data-id="${v.id}">DELETE</button>
                             </div>`).join('');
-                        
+
                         list.querySelectorAll('.cms-edit-btn').forEach(btn => {
                             btn.addEventListener('click', () => {
                                 const id = btn.dataset.id;
@@ -2435,30 +2561,30 @@
             const loadCmsShowreel = () => {
                 const container = document.getElementById('shw-current-card-container');
                 container.innerHTML = '<div class="cms-loading"><div class="spinner"></div><span>Loading...</span></div>';
-                
+
                 fetch(`${apiBase}/api/videos?type=showreel&_t=${Date.now()}`)
-                .then(res => res.json())
-                .then(items => {
-                    if (!items.length) {
-                        container.innerHTML = '<div class="cms-empty-list">No showreel configured yet. Update it on the left.</div>';
-                        window.currentShowreel = null;
-                        return;
-                    }
-                    const s = items[0];
-                    window.currentShowreel = s;
-                    
-                    document.getElementById('shw-ytid').value = s.youtube_id;
-                    document.getElementById('shw-title').value = s.title;
-                    document.getElementById('shw-genre').value = s.genre || '';
-                    document.getElementById('shw-desc').value = s.description || '';
-                    
-                    // Show preview
-                    const preview = document.getElementById('shw-thumb-preview');
-                    const img = document.getElementById('shw-thumb-img');
-                    img.src = `https://img.youtube.com/vi/${s.youtube_id}/maxresdefault.jpg`;
-                    preview.style.display = 'flex';
-                    
-                    container.innerHTML = `
+                    .then(res => res.json())
+                    .then(items => {
+                        if (!items.length) {
+                            container.innerHTML = '<div class="cms-empty-list">No showreel configured yet. Update it on the left.</div>';
+                            window.currentShowreel = null;
+                            return;
+                        }
+                        const s = items[0];
+                        window.currentShowreel = s;
+
+                        document.getElementById('shw-ytid').value = s.youtube_id;
+                        document.getElementById('shw-title').value = s.title;
+                        document.getElementById('shw-genre').value = s.genre || '';
+                        document.getElementById('shw-desc').value = s.description || '';
+
+                        // Show preview
+                        const preview = document.getElementById('shw-thumb-preview');
+                        const img = document.getElementById('shw-thumb-img');
+                        img.src = `https://img.youtube.com/vi/${s.youtube_id}/maxresdefault.jpg`;
+                        preview.style.display = 'flex';
+
+                        container.innerHTML = `
                         <div class="cms-item-card" data-id="${s.id}">
                              <img class="cms-item-thumb" src="https://img.youtube.com/vi/${s.youtube_id}/mqdefault.jpg" alt="${s.title}" draggable="false">
                             <div class="cms-item-info">
@@ -2468,11 +2594,11 @@
                             </div>
                         </div>
                     `;
-                    bindCardCursorHovers();
-                })
-                .catch(() => {
-                    container.innerHTML = '<div class="cms-empty-list">Failed to load.</div>';
-                });
+                        bindCardCursorHovers();
+                    })
+                    .catch(() => {
+                        container.innerHTML = '<div class="cms-empty-list">Failed to load.</div>';
+                    });
             };
 
             const loadCmsReviews = () => {
@@ -2509,12 +2635,12 @@
                     document.getElementById('cin-genre').value = video.genre || '';
                     document.getElementById('cin-desc').value = video.description || '';
                     document.getElementById('cin-order').value = video.order || 99;
-                    
+
                     const preview = document.getElementById('cin-thumb-preview');
                     const img = document.getElementById('cin-thumb-img');
                     img.src = `https://img.youtube.com/vi/${video.youtube_id}/maxresdefault.jpg`;
                     preview.style.display = 'flex';
-                    
+
                     document.querySelector('#cms-cinematic .cms-form-title').textContent = 'EDIT CINEMATIC VIDEO';
                     document.getElementById('cin-submit-text').textContent = 'SAVE CHANGES';
                     document.getElementById('cancel-cinematic-edit').style.display = 'inline-block';
@@ -2526,12 +2652,12 @@
                     document.getElementById('sht-retention').value = video.retention || '';
                     document.getElementById('sht-tags').value = video.tags || '';
                     document.getElementById('sht-order').value = video.order || 99;
-                    
+
                     const preview = document.getElementById('sht-thumb-preview');
                     const img = document.getElementById('sht-thumb-img');
                     img.src = `https://img.youtube.com/vi/${video.youtube_id}/hqdefault.jpg`;
                     preview.style.display = 'flex';
-                    
+
                     document.querySelector('#cms-shorts .cms-form-title').textContent = 'EDIT VIRAL SHORT';
                     document.getElementById('sht-submit-text').textContent = 'SAVE CHANGES';
                     document.getElementById('cancel-shorts-edit').style.display = 'inline-block';
@@ -2571,24 +2697,24 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id })
                     })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            const card = btn.closest('.cms-item-card');
-                            if (card) card.remove();
-                            if (entityType === 'video') loadCmsVideos(videoType);
-                            else loadCmsReviews();
-                        } else {
-                            alert('Delete failed: ' + data.message);
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                const card = btn.closest('.cms-item-card');
+                                if (card) card.remove();
+                                if (entityType === 'video') loadCmsVideos(videoType);
+                                else loadCmsReviews();
+                            } else {
+                                alert('Delete failed: ' + data.message);
+                                btn.disabled = false;
+                                btn.textContent = 'DELETE';
+                            }
+                        })
+                        .catch(() => {
+                            alert('Network error deleting item.');
                             btn.disabled = false;
                             btn.textContent = 'DELETE';
-                        }
-                    })
-                    .catch(() => {
-                        alert('Network error deleting item.');
-                        btn.disabled = false;
-                        btn.textContent = 'DELETE';
-                    });
+                        });
                 });
             };
 
@@ -2623,21 +2749,21 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     })
-                    .then(res => res.json())
-                    .then(data => {
-                        btn.disabled = false;
-                        if (data.status === 'success') {
-                            setStatus('cin-form-status', editId ? '✓ Video saved!' : '✓ Video added!', 'success');
-                            exitEditMode('cinematic');
-                            loadCmsVideos('cinematic');
-                        } else {
-                            setStatus('cin-form-status', '✕ Error: ' + data.message, 'error');
-                        }
-                    })
-                    .catch(() => {
-                        btn.disabled = false;
-                        setStatus('cin-form-status', '✕ Network error.', 'error');
-                    });
+                        .then(res => res.json())
+                        .then(data => {
+                            btn.disabled = false;
+                            if (data.status === 'success') {
+                                setStatus('cin-form-status', editId ? '✓ Video saved!' : '✓ Video added!', 'success');
+                                exitEditMode('cinematic');
+                                loadCmsVideos('cinematic');
+                            } else {
+                                setStatus('cin-form-status', '✕ Error: ' + data.message, 'error');
+                            }
+                        })
+                        .catch(() => {
+                            btn.disabled = false;
+                            setStatus('cin-form-status', '✕ Network error.', 'error');
+                        });
                 });
 
                 // Shorts form
@@ -2666,21 +2792,21 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     })
-                    .then(res => res.json())
-                    .then(data => {
-                        btn.disabled = false;
-                        if (data.status === 'success') {
-                            setStatus('sht-form-status', editId ? '✓ Short saved!' : '✓ Short added!', 'success');
-                            exitEditMode('shorts');
-                            loadCmsVideos('shorts');
-                        } else {
-                            setStatus('sht-form-status', '✕ Error: ' + data.message, 'error');
-                        }
-                    })
-                    .catch(() => {
-                        btn.disabled = false;
-                        setStatus('sht-form-status', '✕ Network error.', 'error');
-                    });
+                        .then(res => res.json())
+                        .then(data => {
+                            btn.disabled = false;
+                            if (data.status === 'success') {
+                                setStatus('sht-form-status', editId ? '✓ Short saved!' : '✓ Short added!', 'success');
+                                exitEditMode('shorts');
+                                loadCmsVideos('shorts');
+                            } else {
+                                setStatus('sht-form-status', '✕ Error: ' + data.message, 'error');
+                            }
+                        })
+                        .catch(() => {
+                            btn.disabled = false;
+                            setStatus('sht-form-status', '✕ Network error.', 'error');
+                        });
                 });
 
                 // Showreel form
@@ -2708,20 +2834,20 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     })
-                    .then(res => res.json())
-                    .then(data => {
-                        btn.disabled = false;
-                        if (data.status === 'success') {
-                            setStatus('shw-form-status', '✓ Showreel updated!', 'success');
-                            loadCmsShowreel();
-                        } else {
-                            setStatus('shw-form-status', '✕ Error: ' + data.message, 'error');
-                        }
-                    })
-                    .catch(() => {
-                        btn.disabled = false;
-                        setStatus('shw-form-status', '✕ Network error.', 'error');
-                    });
+                        .then(res => res.json())
+                        .then(data => {
+                            btn.disabled = false;
+                            if (data.status === 'success') {
+                                setStatus('shw-form-status', '✓ Showreel updated!', 'success');
+                                loadCmsShowreel();
+                            } else {
+                                setStatus('shw-form-status', '✕ Error: ' + data.message, 'error');
+                            }
+                        })
+                        .catch(() => {
+                            btn.disabled = false;
+                            setStatus('shw-form-status', '✕ Network error.', 'error');
+                        });
                 });
 
                 // Reviews form
@@ -2741,25 +2867,26 @@
                             order: parseInt(document.getElementById('rev-order').value) || 99
                         })
                     })
-                    .then(res => res.json())
-                    .then(data => {
-                        btn.disabled = false;
-                        if (data.status === 'success') {
-                            setStatus('rev-form-status', '✓ Review published!', 'success');
-                            document.getElementById('add-review-form').reset();
-                            loadCmsReviews();
-                        } else {
-                            setStatus('rev-form-status', '✕ Error: ' + data.message, 'error');
-                        }
-                    })
-                    .catch(() => {
-                        btn.disabled = false;
-                        setStatus('rev-form-status', '✕ Network error.', 'error');
-                    });
+                        .then(res => res.json())
+                        .then(data => {
+                            btn.disabled = false;
+                            if (data.status === 'success') {
+                                setStatus('rev-form-status', '✓ Review published!', 'success');
+                                document.getElementById('add-review-form').reset();
+                                loadCmsReviews();
+                            } else {
+                                setStatus('rev-form-status', '✕ Error: ' + data.message, 'error');
+                            }
+                        })
+                        .catch(() => {
+                            btn.disabled = false;
+                            setStatus('rev-form-status', '✕ Network error.', 'error');
+                        });
                 });
             };
 
         });
     </script>
 </body>
+
 </html>
