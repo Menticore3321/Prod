@@ -42,9 +42,10 @@ class handler(BaseHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path.rstrip('/')
         params = urllib.parse.parse_qs(parsed.query)
+        action = params.get('action', [None])[0]
 
         # ── Route: /api/youtube_info ───────────────────────────
-        if path == '/api/youtube_info':
+        if action == 'youtube_info' or path == '/api/youtube_info':
             if not self._check_auth():
                 return
             youtube_id = params.get('id', [None])[0]
@@ -55,7 +56,7 @@ class handler(BaseHTTPRequestHandler):
             return
 
         # ── Route: /api/videos ─────────────────────────────────
-        elif path == '/api/videos':
+        elif action == 'list' or path == '/api/videos':
             video_type = params.get('type', [None])[0]
             self._handle_list_videos(video_type)
             return
@@ -69,6 +70,8 @@ class handler(BaseHTTPRequestHandler):
 
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path.rstrip('/')
+        params = urllib.parse.parse_qs(parsed.query)
+        action = params.get('action', [None])[0]
 
         try:
             content_length = int(self.headers.get('Content-Length', 0))
@@ -79,19 +82,19 @@ class handler(BaseHTTPRequestHandler):
             return
 
         # ── Route: /api/add_video ──────────────────────────────
-        if path == '/api/add_video':
+        if action == 'add' or path == '/api/add_video':
             self._handle_add_video(data)
 
         # ── Route: /api/delete_video ───────────────────────────
-        elif path == '/api/delete_video':
+        elif action == 'delete' or path == '/api/delete_video':
             self._handle_delete_video(data)
 
         # ── Route: /api/update_video ───────────────────────────
-        elif path == '/api/update_video':
+        elif action == 'update' or path == '/api/update_video':
             self._handle_update_video(data)
 
         # ── Route: /api/update_order ───────────────────────────
-        elif path == '/api/update_order':
+        elif action == 'update_order' or path == '/api/update_order':
             self._handle_update_order(data)
 
         else:
