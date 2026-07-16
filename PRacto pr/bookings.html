@@ -1553,7 +1553,8 @@
                 if (!options.headers) {
                     options.headers = {};
                 }
-                options.headers['Authorization'] = 'Basic RGVlcGFrOjMzMjE=';
+                const token = sessionStorage.getItem("admin_token") || '';
+                options.headers['Authorization'] = 'Basic ' + token;
                 return fetch(url, options);
             };
 
@@ -1570,10 +1571,12 @@
                 // Parallel fetch active and deleted bookings
                 Promise.all([
                     authFetch(`${apiBase}/api/bookings`).then(res => {
+                        if (res.status === 401) throw new Error('Unauthorized');
                         if (!res.ok) throw new Error('Active fetch error');
                         return res.json();
                     }),
                     authFetch(`${apiBase}/api/deleted_bookings`).then(res => {
+                        if (res.status === 401) throw new Error('Unauthorized');
                         if (!res.ok) throw new Error('Deleted fetch error');
                         return res.json();
                     })
@@ -1593,7 +1596,14 @@
                 })
                 .catch(err => {
                     console.error("Dashboard data load error:", err);
-                    loadingView.innerHTML = `<span>✕ DATA LOADING BLOCKED OR OFFLINE. STATUS: ${err.message}</span>`;
+                    if (err.message === 'Unauthorized') {
+                        sessionStorage.removeItem("admin_auth");
+                        sessionStorage.removeItem("admin_token");
+                        alert('Session has expired or is unauthorized. Please log in again.');
+                        window.location.reload();
+                    } else {
+                        loadingView.innerHTML = `<span>✕ DATA LOADING BLOCKED OR OFFLINE. STATUS: ${err.message}</span>`;
+                    }
                 });
             };
 
@@ -1612,16 +1622,40 @@
                     e.preventDefault();
                     const username = usernameInput.value.trim();
                     const password = passwordInput.value;
+                    const token = btoa(username + ':' + password);
 
-                    if (username === "Deepak" && password === "3321") {
+                    const testBtn = loginForm.querySelector('button[type="submit"]');
+                    const origText = testBtn.textContent;
+                    testBtn.disabled = true;
+                    testBtn.textContent = 'AUTHENTICATING...';
+                    errorMsg.style.display = 'none';
+
+                    const apiBase = window.location.protocol === 'file:' 
+                        ? 'http://localhost:8000' 
+                        : '';
+
+                    fetch(`${apiBase}/api/bookings`, {
+                        headers: { 'Authorization': 'Basic ' + token }
+                    })
+                    .then(res => {
+                        if (!res.ok) throw new Error('Unauthorized');
+                        return res.json();
+                    })
+                    .then(() => {
+                        sessionStorage.setItem("admin_token", token);
                         sessionStorage.setItem("admin_auth", "true");
                         modal.classList.remove('active');
                         initDashboardData();
-                    } else {
+                    })
+                    .catch(() => {
                         errorMsg.style.display = 'block';
                         passwordInput.value = '';
                         passwordInput.focus();
-                    }
+                    })
+                    .finally(() => {
+                        testBtn.disabled = false;
+                        testBtn.textContent = origText;
+                    });
                 });
             } else {
                 initDashboardData();
