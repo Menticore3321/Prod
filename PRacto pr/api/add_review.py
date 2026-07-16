@@ -50,7 +50,7 @@ class handler(BaseHTTPRequestHandler):
                     "text": {"stringValue": text},
                     "author_name": {"stringValue": author_name},
                     "author_details": {"stringValue": data.get('author_details', '').strip()},
-                    "order": {"integerValue": int(data.get('order', 99))},
+                    "order": {"integerValue": int(data.get('order')) if data.get('order') not in (None, '') and str(data.get('order')).strip().isdigit() else 99},
                     "created_at": {"stringValue": created_at},
                 }
             }

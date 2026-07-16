@@ -51,7 +51,7 @@ class handler(BaseHTTPRequestHandler):
                     'text': fields.get('text', {}).get('stringValue', ''),
                     'author_name': fields.get('author_name', {}).get('stringValue', ''),
                     'author_details': fields.get('author_details', {}).get('stringValue', ''),
-                    'order': int(fields.get('order', {}).get('integerValue', 99)),
+                    'order': int(fields.get('order', {}).get('integerValue')) if fields.get('order', {}).get('integerValue') is not None and str(fields.get('order', {}).get('integerValue')).strip().isdigit() else (int(fields.get('order', {}).get('stringValue')) if fields.get('order', {}).get('stringValue') is not None and str(fields.get('order', {}).get('stringValue')).strip().isdigit() else 99),
                     'created_at': fields.get('created_at', {}).get('stringValue', ''),
                 })
 

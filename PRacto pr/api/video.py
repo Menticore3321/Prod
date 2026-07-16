@@ -8,6 +8,14 @@ import re
 import html as html_lib
 from datetime import datetime
 
+def safe_int(val, default=99):
+    if val is None:
+        return default
+    try:
+        return int(str(val).strip())
+    except (ValueError, TypeError):
+        return default
+
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(200)
@@ -132,7 +140,7 @@ class handler(BaseHTTPRequestHandler):
                     'views': fields.get('views', {}).get('stringValue', ''),
                     'retention': fields.get('retention', {}).get('stringValue', ''),
                     'tags': fields.get('tags', {}).get('stringValue', ''),
-                    'order': int(fields.get('order', {}).get('integerValue', 99)),
+                    'order': safe_int(fields.get('order', {}).get('integerValue') or fields.get('order', {}).get('stringValue'), 99),
                     'created_at': fields.get('created_at', {}).get('stringValue', ''),
                 })
 
@@ -209,7 +217,7 @@ class handler(BaseHTTPRequestHandler):
                 "views": {"stringValue": data.get('views', '').strip()},
                 "retention": {"stringValue": data.get('retention', '').strip()},
                 "tags": {"stringValue": data.get('tags', '').strip()},
-                "order": {"integerValue": int(data.get('order', 99))},
+                "order": {"integerValue": safe_int(data.get('order'), 99)},
                 "created_at": {"stringValue": created_at},
             }
         }
@@ -284,7 +292,7 @@ class handler(BaseHTTPRequestHandler):
                 "views": {"stringValue": data.get('views', '').strip()},
                 "retention": {"stringValue": data.get('retention', '').strip()},
                 "tags": {"stringValue": data.get('tags', '').strip()},
-                "order": {"integerValue": int(data.get('order', 99))},
+                "order": {"integerValue": safe_int(data.get('order'), 99)},
             }
         }
 
@@ -330,7 +338,7 @@ class handler(BaseHTTPRequestHandler):
                     "update": {
                         "name": f"projects/{project_id}/databases/(default)/documents/videos/{video_id}",
                         "fields": {
-                            "order": {"integerValue": int(order)}
+                            "order": {"integerValue": safe_int(order, 99)}
                         }
                     },
                     "updateMask": {

@@ -1084,11 +1084,11 @@
             font-size: 0.82rem;
             letter-spacing: 1px;
         }
-        .cms-item-card {
+        .cms-item-card[draggable="true"] {
             cursor: grab;
             transition: border-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
         }
-        .cms-item-card:active {
+        .cms-item-card[draggable="true"]:active {
             cursor: grabbing;
         }
         .cms-item-card.dragging {
@@ -2359,7 +2359,7 @@
                             <div class="cms-item-card" data-id="${v.id}" draggable="true">
                                 <img class="${isShort ? 'cms-item-thumb-sq' : 'cms-item-thumb'}"
                                      src="https://img.youtube.com/vi/${v.youtube_id}/${isShort ? 'hqdefault' : 'mqdefault'}.jpg"
-                                     alt="${v.title}">
+                                     alt="${v.title}" draggable="false">
                                 <div class="cms-item-info">
                                     <div class="cms-item-title">${v.title}</div>
                                     <div class="cms-item-meta">${v.genre || v.views || ''} &bull; ${v.youtube_id}</div>
@@ -2410,7 +2410,7 @@
                     
                     container.innerHTML = `
                         <div class="cms-item-card" data-id="${s.id}">
-                            <img class="cms-item-thumb" src="https://img.youtube.com/vi/${s.youtube_id}/mqdefault.jpg" alt="${s.title}">
+                             <img class="cms-item-thumb" src="https://img.youtube.com/vi/${s.youtube_id}/mqdefault.jpg" alt="${s.title}" draggable="false">
                             <div class="cms-item-info">
                                 <div class="cms-item-title">${s.title}</div>
                                 <div class="cms-item-meta">Tag: ${s.genre || 'None'} &bull; Sub: ${s.description || 'None'}</div>
