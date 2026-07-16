@@ -74,10 +74,10 @@ async function loadContent() {
 
   try {
     const [cinematicRes, shortsRes, reviewsRes, showreelRes] = await Promise.all([
-      fetch(`${API_BASE}/videos?type=cinematic`),
-      fetch(`${API_BASE}/videos?type=shorts`),
-      fetch(`${API_BASE}/reviews`),
-      fetch(`${API_BASE}/videos?type=showreel`)
+      fetch(`${API_BASE}/videos?type=cinematic&_t=${Date.now()}`),
+      fetch(`${API_BASE}/videos?type=shorts&_t=${Date.now()}`),
+      fetch(`${API_BASE}/reviews?_t=${Date.now()}`),
+      fetch(`${API_BASE}/videos?type=showreel&_t=${Date.now()}`)
     ]);
 
     // ── Showreel Video ─────────────────────────────────────────

@@ -2359,7 +2359,7 @@
                 const list = document.getElementById(listId);
                 list.innerHTML = '<div class="cms-loading"><div class="spinner"></div><span>Loading...</span></div>';
 
-                fetch(`${apiBase}/api/videos?type=${type}`)
+                fetch(`${apiBase}/api/videos?type=${type}&_t=${Date.now()}`)
                     .then(res => res.json())
                     .then(items => {
                         if (type === 'cinematic') cinematicCache = items;
@@ -2402,7 +2402,7 @@
                 const container = document.getElementById('shw-current-card-container');
                 container.innerHTML = '<div class="cms-loading"><div class="spinner"></div><span>Loading...</span></div>';
                 
-                fetch(`${apiBase}/api/videos?type=showreel`)
+                fetch(`${apiBase}/api/videos?type=showreel&_t=${Date.now()}`)
                 .then(res => res.json())
                 .then(items => {
                     if (!items.length) {
@@ -2445,7 +2445,7 @@
                 const list = document.getElementById('rev-list');
                 list.innerHTML = '<div class="cms-loading"><div class="spinner"></div><span>Loading...</span></div>';
 
-                fetch(`${apiBase}/api/reviews`)
+                fetch(`${apiBase}/api/reviews?_t=${Date.now()}`)
                     .then(res => res.json())
                     .then(items => {
                         document.getElementById('rev-list-count').textContent = items.length;
