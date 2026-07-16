@@ -144,6 +144,7 @@
             border-bottom: 1px solid var(--color-border);
             padding-bottom: 0.2rem;
             width: 100%;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
@@ -1083,6 +1084,38 @@
             font-size: 0.82rem;
             letter-spacing: 1px;
         }
+        .cms-item-card {
+            cursor: grab;
+            transition: border-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+        }
+        .cms-item-card:active {
+            cursor: grabbing;
+        }
+        .cms-item-card.dragging {
+            opacity: 0.5;
+            border-color: var(--color-neon);
+            background: rgba(223, 255, 0, 0.05);
+            box-shadow: 0 0 15px rgba(223, 255, 0, 0.15);
+        }
+        .cms-edit-btn {
+            background: transparent;
+            border: 1px solid rgba(223,255,0,0.25);
+            color: rgba(223,255,0,0.8);
+            border-radius: 4px;
+            padding: 0.4rem 0.7rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            margin-right: 0.4rem;
+        }
+        .cms-edit-btn:hover {
+            background: rgba(223,255,0,0.15);
+            border-color: var(--color-neon);
+            color: var(--color-neon);
+        }
     </style>
 </head>
 <body class="dashboard-body">
@@ -1234,20 +1267,25 @@
             <div class="cms-subtabs">
                 <button class="cms-subtab active" data-cms-tab="cinematic">🎬 CINEMATIC WORKS</button>
                 <button class="cms-subtab" data-cms-tab="shorts">📱 VIRAL SHORTS</button>
+                <button class="cms-subtab" data-cms-tab="showreel">🎥 SHOWREEL</button>
                 <button class="cms-subtab" data-cms-tab="reviews">⭐ CLIENT REVIEWS</button>
             </div>
 
             <!-- ─── CINEMATIC TAB ─────────────────────────────── -->
             <div class="cms-tab-panel active" id="cms-cinematic">
                 <div class="cms-split">
-                    <!-- ADD FORM -->
+                    <!-- ADD/EDIT FORM -->
                     <div class="cms-form-box">
                         <h3 class="cms-form-title">ADD CINEMATIC VIDEO</h3>
                         <form id="add-cinematic-form" class="cms-form" autocomplete="off">
+                            <input type="hidden" id="cin-edit-id">
                             <div class="cms-field">
-                                <label>YouTube Video ID <span class="cms-required">*</span></label>
-                                <input type="text" name="youtube_id" id="cin-ytid" placeholder="e.g. ScMzIvxBSi4" required>
-                                <small>The ID from youtube.com/watch?v=<strong>THIS_PART</strong></small>
+                                <label>YouTube Link or ID <span class="cms-required">*</span></label>
+                                <div style="display: flex; gap: 0.5rem; align-items: stretch;">
+                                    <input type="text" name="youtube_id" id="cin-ytid" placeholder="e.g. https://www.youtube.com/watch?v=ScMzIvxBSi4" required style="flex: 1; min-width: 0;">
+                                    <button type="button" class="action-btn" id="cin-fetch-btn" style="padding: 0.5rem 1rem; border-color: rgba(223,255,0,0.3); color: var(--color-neon); font-size: 0.72rem; white-space: nowrap;">FETCH INFO</button>
+                                </div>
+                                <small>Paste the full YouTube URL or the 11-character video ID.</small>
                             </div>
                             <div class="cms-thumb-preview" id="cin-thumb-preview" style="display:none;">
                                 <img id="cin-thumb-img" src="" alt="Thumbnail preview">
@@ -1270,15 +1308,21 @@
                                 <input type="number" name="order" id="cin-order" placeholder="1" min="1" value="99">
                             </div>
                             <div id="cin-form-status" class="cms-status"></div>
-                            <button type="submit" class="cms-submit-btn" id="add-cinematic-btn">
-                                <span>ADD TO PORTFOLIO</span>
-                                <span>◢</span>
-                            </button>
+                            <div style="display: flex; gap: 1rem;">
+                                <button type="submit" class="cms-submit-btn" id="add-cinematic-btn" style="flex: 1; margin-top: 0.5rem;">
+                                    <span id="cin-submit-text">ADD TO PORTFOLIO</span>
+                                    <span>◢</span>
+                                </button>
+                                <button type="button" class="action-btn" id="cancel-cinematic-edit" style="display: none; height: auto; align-self: stretch; padding: 1rem 1.5rem; margin-top: 0.5rem; text-transform: uppercase;">
+                                    CANCEL
+                                </button>
+                            </div>
                         </form>
                     </div>
                     <!-- LIVE LIST -->
                     <div class="cms-list-box">
                         <h3 class="cms-list-title">CURRENT CINEMATIC VIDEOS <span id="cin-list-count" class="cms-list-count">0</span></h3>
+                        <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-text-muted); margin-bottom: 0.8rem;">💡 Drag items vertically to reorder.</div>
                         <div id="cin-list" class="cms-item-list">
                             <div class="cms-loading"><div class="spinner"></div><span>Loading...</span></div>
                         </div>
@@ -1289,14 +1333,18 @@
             <!-- ─── SHORTS TAB ──────────────────────────────────── -->
             <div class="cms-tab-panel" id="cms-shorts">
                 <div class="cms-split">
-                    <!-- ADD FORM -->
+                    <!-- ADD/EDIT FORM -->
                     <div class="cms-form-box">
                         <h3 class="cms-form-title">ADD VIRAL SHORT</h3>
                         <form id="add-shorts-form" class="cms-form" autocomplete="off">
+                            <input type="hidden" id="sht-edit-id">
                             <div class="cms-field">
-                                <label>YouTube Video ID <span class="cms-required">*</span></label>
-                                <input type="text" name="youtube_id" id="sht-ytid" placeholder="e.g. NRYuZX7bJ_Q" required>
-                                <small>Paste the ID from the YouTube Shorts URL</small>
+                                <label>YouTube Link or ID <span class="cms-required">*</span></label>
+                                <div style="display: flex; gap: 0.5rem; align-items: stretch;">
+                                    <input type="text" name="youtube_id" id="sht-ytid" placeholder="e.g. https://youtube.com/shorts/NRYuZX7bJ_Q" required style="flex: 1; min-width: 0;">
+                                    <button type="button" class="action-btn" id="sht-fetch-btn" style="padding: 0.5rem 1rem; border-color: rgba(223,255,0,0.3); color: var(--color-neon); font-size: 0.72rem; white-space: nowrap;">FETCH INFO</button>
+                                </div>
+                                <small>Paste the Shorts URL or the 11-character video ID.</small>
                             </div>
                             <div class="cms-thumb-preview" id="sht-thumb-preview" style="display:none;">
                                 <img id="sht-thumb-img" src="" alt="Thumbnail preview">
@@ -1323,16 +1371,70 @@
                                 <input type="number" name="order" id="sht-order" placeholder="1" min="1" value="99">
                             </div>
                             <div id="sht-form-status" class="cms-status"></div>
-                            <button type="submit" class="cms-submit-btn" id="add-short-btn">
-                                <span>ADD TO SHORTS</span>
-                                <span>◢</span>
-                            </button>
+                            <div style="display: flex; gap: 1rem;">
+                                <button type="submit" class="cms-submit-btn" id="add-short-btn" style="flex: 1; margin-top: 0.5rem;">
+                                    <span id="sht-submit-text">ADD TO SHORTS</span>
+                                    <span>◢</span>
+                                </button>
+                                <button type="button" class="action-btn" id="cancel-shorts-edit" style="display: none; height: auto; align-self: stretch; padding: 1rem 1.5rem; margin-top: 0.5rem; text-transform: uppercase;">
+                                    CANCEL
+                                </button>
+                            </div>
                         </form>
                     </div>
                     <!-- LIVE LIST -->
                     <div class="cms-list-box">
                         <h3 class="cms-list-title">CURRENT VIRAL SHORTS <span id="sht-list-count" class="cms-list-count">0</span></h3>
+                        <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-text-muted); margin-bottom: 0.8rem;">💡 Drag items vertically to reorder.</div>
                         <div id="sht-list" class="cms-item-list">
+                            <div class="cms-loading"><div class="spinner"></div><span>Loading...</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── SHOWREEL TAB ────────────────────────────────── -->
+            <div class="cms-tab-panel" id="cms-showreel">
+                <div class="cms-split">
+                    <!-- EDIT FORM -->
+                    <div class="cms-form-box">
+                        <h3 class="cms-form-title" id="shw-form-title">UPDATE SHOWREEL</h3>
+                        <form id="update-showreel-form" class="cms-form" autocomplete="off">
+                            <div class="cms-field">
+                                <label>YouTube Link or ID <span class="cms-required">*</span></label>
+                                <div style="display: flex; gap: 0.5rem; align-items: stretch;">
+                                    <input type="text" name="youtube_id" id="shw-ytid" placeholder="e.g. https://www.youtube.com/watch?v=ScMzIvxBSi4" required style="flex: 1; min-width: 0;">
+                                    <button type="button" class="action-btn" id="shw-fetch-btn" style="padding: 0.5rem 1rem; border-color: rgba(223,255,0,0.3); color: var(--color-neon); font-size: 0.72rem; white-space: nowrap;">FETCH INFO</button>
+                                </div>
+                                <small>Paste the main showreel YouTube URL or the 11-character video ID.</small>
+                            </div>
+                            <div class="cms-thumb-preview" id="shw-thumb-preview" style="display:none;">
+                                <img id="shw-thumb-img" src="" alt="Thumbnail preview">
+                                <span id="shw-thumb-label">Video Preview</span>
+                            </div>
+                            <div class="cms-field">
+                                <label>Title <span class="cms-required">*</span></label>
+                                <input type="text" name="title" id="shw-title" placeholder="e.g. THE SHOWREEL" required>
+                            </div>
+                            <div class="cms-field">
+                                <label>Header Tag (e.g. DIRECTOR'S CUT)</label>
+                                <input type="text" name="genre" id="shw-genre" placeholder="e.g. DIRECTOR'S CUT">
+                            </div>
+                            <div class="cms-field">
+                                <label>Subtitle (e.g. 2026 EDITION)</label>
+                                <input type="text" name="description" id="shw-desc" placeholder="e.g. 2026 EDITION">
+                            </div>
+                            <div id="shw-form-status" class="cms-status"></div>
+                            <button type="submit" class="cms-submit-btn" id="update-showreel-btn" style="width: 100%; margin-top: 0.5rem;">
+                                <span>UPDATE SHOWREEL</span>
+                                <span>◢</span>
+                            </button>
+                        </form>
+                    </div>
+                    <!-- CURRENT LIVE SHOWREEL -->
+                    <div class="cms-list-box">
+                        <h3 class="cms-list-title">CURRENT LIVE SHOWREEL</h3>
+                        <div id="shw-current-card-container">
                             <div class="cms-loading"><div class="spinner"></div><span>Loading...</span></div>
                         </div>
                     </div>
@@ -1363,7 +1465,7 @@
                                 <input type="number" name="order" id="rev-order" placeholder="1" min="1" value="99">
                             </div>
                             <div id="rev-form-status" class="cms-status"></div>
-                            <button type="submit" class="cms-submit-btn" id="add-review-btn">
+                            <button type="submit" class="cms-submit-btn" id="add-review-btn" style="width: 100%; margin-top: 0.5rem;">
                                 <span>PUBLISH REVIEW</span>
                                 <span>◢</span>
                             </button>
@@ -1976,6 +2078,8 @@
                 : '';
 
             let cmsInited = false;
+            let cinematicCache = [];
+            let shortsCache = [];
 
             const cmsInitIfNeeded = () => {
                 if (cmsInited) return;
@@ -1983,10 +2087,12 @@
                 initCmsSubtabs();
                 loadCmsVideos('cinematic');
                 loadCmsVideos('shorts');
+                loadCmsShowreel();
                 loadCmsReviews();
                 bindCmsForms();
-                bindThumbnailPreview('cin-ytid', 'cin-thumb-preview', 'cin-thumb-img', 'maxresdefault');
-                bindThumbnailPreview('sht-ytid', 'sht-thumb-preview', 'sht-thumb-img', 'hqdefault');
+                bindCmsDragAndDrop('cin-list', 'cinematic');
+                bindCmsDragAndDrop('sht-list', 'shorts');
+                bindAutoGrabEvents();
             };
 
             // ── Sub-tab switching ──────────────────────────────────────
@@ -2002,22 +2108,222 @@
                 });
             };
 
-            // ── Thumbnail preview on YouTube ID input ──────────────────
-            const bindThumbnailPreview = (inputId, previewId, imgId, quality) => {
-                const input = document.getElementById(inputId);
+            // ── Drag & Drop Reordering ─────────────────────────────────
+            let dragSourceEl = null;
+
+            const bindCmsDragAndDrop = (listId, type) => {
+                const list = document.getElementById(listId);
+                
+                list.addEventListener('dragstart', (e) => {
+                    const card = e.target.closest('.cms-item-card');
+                    if (!card) return;
+                    dragSourceEl = card;
+                    e.dataTransfer.effectAllowed = 'move';
+                    card.style.opacity = '0.4';
+                    card.classList.add('dragging');
+                });
+                
+                list.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    const card = e.target.closest('.cms-item-card');
+                    if (!card || card === dragSourceEl) return;
+                    
+                    const rect = card.getBoundingClientRect();
+                    const midpoint = rect.top + rect.height / 2;
+                    if (e.clientY < midpoint) {
+                        list.insertBefore(dragSourceEl, card);
+                    } else {
+                        list.insertBefore(dragSourceEl, card.nextSibling);
+                    }
+                });
+                
+                list.addEventListener('dragend', (e) => {
+                    const card = e.target.closest('.cms-item-card');
+                    if (card) {
+                        card.style.opacity = '1';
+                        card.classList.remove('dragging');
+                    }
+                    saveNewOrder(listId, type);
+                });
+            };
+
+            const saveNewOrder = (listId, type) => {
+                const list = document.getElementById(listId);
+                const cards = list.querySelectorAll('.cms-item-card');
+                const updates = [];
+                cards.forEach((card, index) => {
+                    updates.push({
+                        id: card.dataset.id,
+                        order: index + 1
+                    });
+                });
+                
+                authFetch(`${apiBase}/api/update_order`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ updates })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status !== 'success') {
+                        alert('Failed to save new order: ' + data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error('Order update network error:', err);
+                });
+            };
+
+            // ── YouTube Helper & Scraper ───────────────────────────────
+            const extractYoutubeId = (input) => {
+                if (!input) return '';
+                const trimmed = input.trim();
+                if (trimmed.length === 11) return trimmed;
+                const reg = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([^"&?\/ ]{11})/;
+                const match = trimmed.match(reg);
+                return match ? match[1] : '';
+            };
+
+            const fetchYoutubeInfo = async (ytId, titleEl, descEl, statusId) => {
+                try {
+                    const res = await authFetch(`${apiBase}/api/youtube_info?id=${ytId}`);
+                    const data = await res.json();
+                    if (data.status === 'success') {
+                        if (data.title && titleEl && !titleEl.value.trim()) {
+                            titleEl.value = data.title;
+                        }
+                        if (data.description && descEl && !descEl.value.trim()) {
+                            descEl.value = data.description;
+                        }
+                        setStatus(statusId, '✓ Auto-grabbed YouTube details!', 'success');
+                    }
+                } catch (err) {
+                    console.error('Auto grab error:', err);
+                }
+            };
+
+            const handleManualFetch = async (inputId, titleId, descId, statusId, quality, previewId, imgId, fetchBtnId) => {
+                const inputEl = document.getElementById(inputId);
+                const titleEl = document.getElementById(titleId);
+                const descEl = document.getElementById(descId);
+                const fetchBtn = document.getElementById(fetchBtnId);
+                
+                const rawVal = inputEl.value.trim();
+                if (!rawVal) {
+                    alert('Please enter a YouTube URL or Video ID first.');
+                    return;
+                }
+                const ytId = extractYoutubeId(rawVal);
+                if (!ytId) {
+                    alert('Could not extract a valid 11-character YouTube video ID.');
+                    return;
+                }
+                
+                inputEl.value = ytId;
+                
+                // Update preview
                 const preview = document.getElementById(previewId);
                 const img = document.getElementById(imgId);
-                if (!input) return;
-                let debounce;
-                input.addEventListener('input', () => {
-                    clearTimeout(debounce);
-                    const val = input.value.trim();
-                    if (!val) { preview.style.display = 'none'; return; }
-                    debounce = setTimeout(() => {
-                        img.src = `https://img.youtube.com/vi/${val}/${quality}.jpg`;
-                        img.onerror = () => { preview.style.display = 'none'; };
-                        img.onload = () => { preview.style.display = 'flex'; };
-                    }, 500);
+                img.src = `https://img.youtube.com/vi/${ytId}/${quality}.jpg`;
+                preview.style.display = 'flex';
+                
+                fetchBtn.disabled = true;
+                const originalText = fetchBtn.textContent;
+                fetchBtn.textContent = 'FETCHING...';
+                
+                try {
+                    const res = await authFetch(`${apiBase}/api/youtube_info?id=${ytId}`);
+                    const data = await res.json();
+                    if (data.status === 'success') {
+                        if (titleEl) titleEl.value = data.title || '';
+                        if (descEl) descEl.value = data.description || '';
+                        setStatus(statusId, '✓ Fetched video details!', 'success');
+                    } else {
+                        setStatus(statusId, '✕ Fetch failed: ' + data.message, 'error');
+                    }
+                } catch (err) {
+                    setStatus(statusId, '✕ Network error fetching details.', 'error');
+                } finally {
+                    fetchBtn.disabled = false;
+                    fetchBtn.textContent = originalText;
+                }
+            };
+
+            const bindAutoGrabEvents = () => {
+                // Cinematic auto-grab on blur
+                const cinYt = document.getElementById('cin-ytid');
+                if (cinYt) {
+                    cinYt.addEventListener('blur', () => {
+                        const val = cinYt.value.trim();
+                        const ytId = extractYoutubeId(val);
+                        if (ytId) {
+                            cinYt.value = ytId;
+                            const preview = document.getElementById('cin-thumb-preview');
+                            const img = document.getElementById('cin-thumb-img');
+                            img.src = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+                            preview.style.display = 'flex';
+                            
+                            const titleEl = document.getElementById('cin-title');
+                            const descEl = document.getElementById('cin-desc');
+                            if (!titleEl.value.trim() && !descEl.value.trim()) {
+                                fetchYoutubeInfo(ytId, titleEl, descEl, 'cin-form-status');
+                            }
+                        }
+                    });
+                }
+                
+                // Shorts auto-grab on blur
+                const shtYt = document.getElementById('sht-ytid');
+                if (shtYt) {
+                    shtYt.addEventListener('blur', () => {
+                        const val = shtYt.value.trim();
+                        const ytId = extractYoutubeId(val);
+                        if (ytId) {
+                            shtYt.value = ytId;
+                            const preview = document.getElementById('sht-thumb-preview');
+                            const img = document.getElementById('sht-thumb-img');
+                            img.src = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+                            preview.style.display = 'flex';
+                            
+                            const titleEl = document.getElementById('sht-title');
+                            if (!titleEl.value.trim()) {
+                                fetchYoutubeInfo(ytId, titleEl, null, 'sht-form-status');
+                            }
+                        }
+                    });
+                }
+
+                // Showreel auto-grab on blur
+                const shwYt = document.getElementById('shw-ytid');
+                if (shwYt) {
+                    shwYt.addEventListener('blur', () => {
+                        const val = shwYt.value.trim();
+                        const ytId = extractYoutubeId(val);
+                        if (ytId) {
+                            shwYt.value = ytId;
+                            const preview = document.getElementById('shw-thumb-preview');
+                            const img = document.getElementById('shw-thumb-img');
+                            img.src = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+                            preview.style.display = 'flex';
+                            
+                            const titleEl = document.getElementById('shw-title');
+                            if (!titleEl.value.trim()) {
+                                fetchYoutubeInfo(ytId, titleEl, null, 'shw-form-status');
+                            }
+                        }
+                    });
+                }
+
+                // Bind manual fetch buttons
+                document.getElementById('cin-fetch-btn').addEventListener('click', () => {
+                    handleManualFetch('cin-ytid', 'cin-title', 'cin-desc', 'cin-form-status', 'maxresdefault', 'cin-thumb-preview', 'cin-thumb-img', 'cin-fetch-btn');
+                });
+                document.getElementById('sht-fetch-btn').addEventListener('click', () => {
+                    handleManualFetch('sht-ytid', 'sht-title', null, 'sht-form-status', 'hqdefault', 'sht-thumb-preview', 'sht-thumb-img', 'sht-fetch-btn');
+                });
+                document.getElementById('shw-fetch-btn').addEventListener('click', () => {
+                    handleManualFetch('shw-ytid', 'shw-title', null, 'shw-form-status', 'maxresdefault', 'shw-thumb-preview', 'shw-thumb-img', 'shw-fetch-btn');
                 });
             };
 
@@ -2040,6 +2346,9 @@
                 fetch(`${apiBase}/api/videos?type=${type}`)
                     .then(res => res.json())
                     .then(items => {
+                        if (type === 'cinematic') cinematicCache = items;
+                        else shortsCache = items;
+
                         document.getElementById(countId).textContent = items.length;
                         if (!items.length) {
                             list.innerHTML = '<div class="cms-empty-list">No videos added yet.</div>';
@@ -2047,7 +2356,7 @@
                         }
                         const isShort = type === 'shorts';
                         list.innerHTML = items.map(v => `
-                            <div class="cms-item-card" data-id="${v.id}">
+                            <div class="cms-item-card" data-id="${v.id}" draggable="true">
                                 <img class="${isShort ? 'cms-item-thumb-sq' : 'cms-item-thumb'}"
                                      src="https://img.youtube.com/vi/${v.youtube_id}/${isShort ? 'hqdefault' : 'mqdefault'}.jpg"
                                      alt="${v.title}">
@@ -2055,11 +2364,65 @@
                                     <div class="cms-item-title">${v.title}</div>
                                     <div class="cms-item-meta">${v.genre || v.views || ''} &bull; ${v.youtube_id}</div>
                                 </div>
+                                <button class="cms-edit-btn" data-id="${v.id}">EDIT</button>
                                 <button class="cms-delete-btn" data-type="video" data-id="${v.id}">DELETE</button>
                             </div>`).join('');
+                        
+                        list.querySelectorAll('.cms-edit-btn').forEach(btn => {
+                            btn.addEventListener('click', () => {
+                                const id = btn.dataset.id;
+                                const item = items.find(v => v.id === id);
+                                if (item) enterEditMode(type, item);
+                            });
+                        });
+
                         list.querySelectorAll('.cms-delete-btn').forEach(btn => bindCmsDelete(btn, 'video', type));
+                        bindCardCursorHovers();
                     })
                     .catch(() => { list.innerHTML = '<div class="cms-empty-list">Failed to load.</div>'; });
+            };
+
+            const loadCmsShowreel = () => {
+                const container = document.getElementById('shw-current-card-container');
+                container.innerHTML = '<div class="cms-loading"><div class="spinner"></div><span>Loading...</span></div>';
+                
+                fetch(`${apiBase}/api/videos?type=showreel`)
+                .then(res => res.json())
+                .then(items => {
+                    if (!items.length) {
+                        container.innerHTML = '<div class="cms-empty-list">No showreel configured yet. Update it on the left.</div>';
+                        window.currentShowreel = null;
+                        return;
+                    }
+                    const s = items[0];
+                    window.currentShowreel = s;
+                    
+                    document.getElementById('shw-ytid').value = s.youtube_id;
+                    document.getElementById('shw-title').value = s.title;
+                    document.getElementById('shw-genre').value = s.genre || '';
+                    document.getElementById('shw-desc').value = s.description || '';
+                    
+                    // Show preview
+                    const preview = document.getElementById('shw-thumb-preview');
+                    const img = document.getElementById('shw-thumb-img');
+                    img.src = `https://img.youtube.com/vi/${s.youtube_id}/maxresdefault.jpg`;
+                    preview.style.display = 'flex';
+                    
+                    container.innerHTML = `
+                        <div class="cms-item-card" data-id="${s.id}">
+                            <img class="cms-item-thumb" src="https://img.youtube.com/vi/${s.youtube_id}/mqdefault.jpg" alt="${s.title}">
+                            <div class="cms-item-info">
+                                <div class="cms-item-title">${s.title}</div>
+                                <div class="cms-item-meta">Tag: ${s.genre || 'None'} &bull; Sub: ${s.description || 'None'}</div>
+                                <div class="cms-item-meta">ID: ${s.youtube_id}</div>
+                            </div>
+                        </div>
+                    `;
+                    bindCardCursorHovers();
+                })
+                .catch(() => {
+                    container.innerHTML = '<div class="cms-empty-list">Failed to load.</div>';
+                });
             };
 
             const loadCmsReviews = () => {
@@ -2085,6 +2448,63 @@
                         list.querySelectorAll('.cms-delete-btn').forEach(btn => bindCmsDelete(btn, 'review', null));
                     })
                     .catch(() => { list.innerHTML = '<div class="cms-empty-list">Failed to load.</div>'; });
+            };
+
+            // ── Edit Mode Handlers ─────────────────────────────────────
+            const enterEditMode = (type, video) => {
+                if (type === 'cinematic') {
+                    document.getElementById('cin-edit-id').value = video.id;
+                    document.getElementById('cin-ytid').value = video.youtube_id;
+                    document.getElementById('cin-title').value = video.title;
+                    document.getElementById('cin-genre').value = video.genre || '';
+                    document.getElementById('cin-desc').value = video.description || '';
+                    document.getElementById('cin-order').value = video.order || 99;
+                    
+                    const preview = document.getElementById('cin-thumb-preview');
+                    const img = document.getElementById('cin-thumb-img');
+                    img.src = `https://img.youtube.com/vi/${video.youtube_id}/maxresdefault.jpg`;
+                    preview.style.display = 'flex';
+                    
+                    document.querySelector('#cms-cinematic .cms-form-title').textContent = 'EDIT CINEMATIC VIDEO';
+                    document.getElementById('cin-submit-text').textContent = 'SAVE CHANGES';
+                    document.getElementById('cancel-cinematic-edit').style.display = 'inline-block';
+                } else if (type === 'shorts') {
+                    document.getElementById('sht-edit-id').value = video.id;
+                    document.getElementById('sht-ytid').value = video.youtube_id;
+                    document.getElementById('sht-title').value = video.title;
+                    document.getElementById('sht-views').value = video.views || '';
+                    document.getElementById('sht-retention').value = video.retention || '';
+                    document.getElementById('sht-tags').value = video.tags || '';
+                    document.getElementById('sht-order').value = video.order || 99;
+                    
+                    const preview = document.getElementById('sht-thumb-preview');
+                    const img = document.getElementById('sht-thumb-img');
+                    img.src = `https://img.youtube.com/vi/${video.youtube_id}/hqdefault.jpg`;
+                    preview.style.display = 'flex';
+                    
+                    document.querySelector('#cms-shorts .cms-form-title').textContent = 'EDIT VIRAL SHORT';
+                    document.getElementById('sht-submit-text').textContent = 'SAVE CHANGES';
+                    document.getElementById('cancel-shorts-edit').style.display = 'inline-block';
+                }
+                bindCardCursorHovers();
+            };
+
+            const exitEditMode = (type) => {
+                if (type === 'cinematic') {
+                    document.getElementById('cin-edit-id').value = '';
+                    document.getElementById('add-cinematic-form').reset();
+                    document.getElementById('cin-thumb-preview').style.display = 'none';
+                    document.querySelector('#cms-cinematic .cms-form-title').textContent = 'ADD CINEMATIC VIDEO';
+                    document.getElementById('cin-submit-text').textContent = 'ADD TO PORTFOLIO';
+                    document.getElementById('cancel-cinematic-edit').style.display = 'none';
+                } else if (type === 'shorts') {
+                    document.getElementById('sht-edit-id').value = '';
+                    document.getElementById('add-shorts-form').reset();
+                    document.getElementById('sht-thumb-preview').style.display = 'none';
+                    document.querySelector('#cms-shorts .cms-form-title').textContent = 'ADD VIRAL SHORT';
+                    document.getElementById('sht-submit-text').textContent = 'ADD TO SHORTS';
+                    document.getElementById('cancel-shorts-edit').style.display = 'none';
+                }
             };
 
             // ── DELETE binding ─────────────────────────────────────────
@@ -2124,32 +2544,41 @@
 
             // ── FORM bindings ──────────────────────────────────────────
             const bindCmsForms = () => {
+                // Form edit cancel buttons
+                document.getElementById('cancel-cinematic-edit').addEventListener('click', () => exitEditMode('cinematic'));
+                document.getElementById('cancel-shorts-edit').addEventListener('click', () => exitEditMode('shorts'));
+
                 // Cinematic form
                 document.getElementById('add-cinematic-form').addEventListener('submit', e => {
                     e.preventDefault();
+                    const editId = document.getElementById('cin-edit-id').value;
                     const btn = document.getElementById('add-cinematic-btn');
                     btn.disabled = true;
                     setStatus('cin-form-status', 'Saving...', '');
 
-                    authFetch(`${apiBase}/api/add_video`, {
+                    const payload = {
+                        type: 'cinematic',
+                        youtube_id: extractYoutubeId(document.getElementById('cin-ytid').value),
+                        title: document.getElementById('cin-title').value.trim(),
+                        genre: document.getElementById('cin-genre').value.trim(),
+                        description: document.getElementById('cin-desc').value.trim(),
+                        order: parseInt(document.getElementById('cin-order').value) || 99
+                    };
+
+                    const endpoint = editId ? '/api/update_video' : '/api/add_video';
+                    if (editId) payload.id = editId;
+
+                    authFetch(`${apiBase}${endpoint}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            type: 'cinematic',
-                            youtube_id: document.getElementById('cin-ytid').value.trim(),
-                            title: document.getElementById('cin-title').value.trim(),
-                            genre: document.getElementById('cin-genre').value.trim(),
-                            description: document.getElementById('cin-desc').value.trim(),
-                            order: parseInt(document.getElementById('cin-order').value) || 99
-                        })
+                        body: JSON.stringify(payload)
                     })
                     .then(res => res.json())
                     .then(data => {
                         btn.disabled = false;
                         if (data.status === 'success') {
-                            setStatus('cin-form-status', '✓ Video added to live site!', 'success');
-                            document.getElementById('add-cinematic-form').reset();
-                            document.getElementById('cin-thumb-preview').style.display = 'none';
+                            setStatus('cin-form-status', editId ? '✓ Video saved!' : '✓ Video added!', 'success');
+                            exitEditMode('cinematic');
                             loadCmsVideos('cinematic');
                         } else {
                             setStatus('cin-form-status', '✕ Error: ' + data.message, 'error');
@@ -2164,30 +2593,35 @@
                 // Shorts form
                 document.getElementById('add-shorts-form').addEventListener('submit', e => {
                     e.preventDefault();
+                    const editId = document.getElementById('sht-edit-id').value;
                     const btn = document.getElementById('add-short-btn');
                     btn.disabled = true;
                     setStatus('sht-form-status', 'Saving...', '');
 
-                    authFetch(`${apiBase}/api/add_video`, {
+                    const payload = {
+                        type: 'shorts',
+                        youtube_id: extractYoutubeId(document.getElementById('sht-ytid').value),
+                        title: document.getElementById('sht-title').value.trim(),
+                        views: document.getElementById('sht-views').value.trim(),
+                        retention: document.getElementById('sht-retention').value.trim(),
+                        tags: document.getElementById('sht-tags').value.trim(),
+                        order: parseInt(document.getElementById('sht-order').value) || 99
+                    };
+
+                    const endpoint = editId ? '/api/update_video' : '/api/add_video';
+                    if (editId) payload.id = editId;
+
+                    authFetch(`${apiBase}${endpoint}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            type: 'shorts',
-                            youtube_id: document.getElementById('sht-ytid').value.trim(),
-                            title: document.getElementById('sht-title').value.trim(),
-                            views: document.getElementById('sht-views').value.trim(),
-                            retention: document.getElementById('sht-retention').value.trim(),
-                            tags: document.getElementById('sht-tags').value.trim(),
-                            order: parseInt(document.getElementById('sht-order').value) || 99
-                        })
+                        body: JSON.stringify(payload)
                     })
                     .then(res => res.json())
                     .then(data => {
                         btn.disabled = false;
                         if (data.status === 'success') {
-                            setStatus('sht-form-status', '✓ Short added to live site!', 'success');
-                            document.getElementById('add-shorts-form').reset();
-                            document.getElementById('sht-thumb-preview').style.display = 'none';
+                            setStatus('sht-form-status', editId ? '✓ Short saved!' : '✓ Short added!', 'success');
+                            exitEditMode('shorts');
                             loadCmsVideos('shorts');
                         } else {
                             setStatus('sht-form-status', '✕ Error: ' + data.message, 'error');
@@ -2196,6 +2630,47 @@
                     .catch(() => {
                         btn.disabled = false;
                         setStatus('sht-form-status', '✕ Network error.', 'error');
+                    });
+                });
+
+                // Showreel form
+                document.getElementById('update-showreel-form').addEventListener('submit', e => {
+                    e.preventDefault();
+                    const btn = document.getElementById('update-showreel-btn');
+                    btn.disabled = true;
+                    setStatus('shw-form-status', 'Saving...', '');
+
+                    const payload = {
+                        type: 'showreel',
+                        youtube_id: extractYoutubeId(document.getElementById('shw-ytid').value),
+                        title: document.getElementById('shw-title').value.trim(),
+                        genre: document.getElementById('shw-genre').value.trim(),
+                        description: document.getElementById('shw-desc').value.trim(),
+                        order: 0
+                    };
+
+                    const editId = window.currentShowreel ? window.currentShowreel.id : null;
+                    const endpoint = editId ? '/api/update_video' : '/api/add_video';
+                    if (editId) payload.id = editId;
+
+                    authFetch(`${apiBase}${endpoint}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        btn.disabled = false;
+                        if (data.status === 'success') {
+                            setStatus('shw-form-status', '✓ Showreel updated!', 'success');
+                            loadCmsShowreel();
+                        } else {
+                            setStatus('shw-form-status', '✕ Error: ' + data.message, 'error');
+                        }
+                    })
+                    .catch(() => {
+                        btn.disabled = false;
+                        setStatus('shw-form-status', '✕ Network error.', 'error');
                     });
                 });
 
@@ -2220,7 +2695,7 @@
                     .then(data => {
                         btn.disabled = false;
                         if (data.status === 'success') {
-                            setStatus('rev-form-status', '✓ Review published to live site!', 'success');
+                            setStatus('rev-form-status', '✓ Review published!', 'success');
                             document.getElementById('add-review-form').reset();
                             loadCmsReviews();
                         } else {

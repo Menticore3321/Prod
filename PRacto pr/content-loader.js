@@ -73,11 +73,37 @@ async function loadContent() {
   const indexLabel = document.querySelector('.active-index-label');
 
   try {
-    const [cinematicRes, shortsRes, reviewsRes] = await Promise.all([
+    const [cinematicRes, shortsRes, reviewsRes, showreelRes] = await Promise.all([
       fetch(`${API_BASE}/videos?type=cinematic`),
       fetch(`${API_BASE}/videos?type=shorts`),
-      fetch(`${API_BASE}/reviews`)
+      fetch(`${API_BASE}/reviews`),
+      fetch(`${API_BASE}/videos?type=showreel`)
     ]);
+
+    // ── Showreel Video ─────────────────────────────────────────
+    if (showreelRes.ok) {
+      const showreels = await showreelRes.json();
+      if (Array.isArray(showreels) && showreels.length > 0) {
+        const showreel = showreels[0];
+        const wrapper = document.querySelector('.showreel-wrapper');
+        const img = document.querySelector('.showreel-img');
+        const metaTag = document.querySelector('.showreel-meta .meta-tag');
+        const metaTime = document.querySelector('.showreel-meta .meta-time');
+        
+        if (wrapper && showreel.youtube_id) {
+          wrapper.setAttribute('data-video-id', showreel.youtube_id);
+        }
+        if (img && showreel.youtube_id) {
+          img.src = `https://img.youtube.com/vi/${showreel.youtube_id}/maxresdefault.jpg`;
+        }
+        if (metaTag && showreel.genre) {
+          metaTag.textContent = showreel.genre;
+        }
+        if (metaTime && showreel.description) {
+          metaTime.textContent = showreel.description;
+        }
+      }
+    }
 
     // ── Cinematic Videos ───────────────────────────────────────
     if (cinematicTrack && cinematicRes.ok) {

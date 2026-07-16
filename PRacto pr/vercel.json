@@ -9,6 +9,9 @@
     { "source": "/api/videos", "destination": "/api/videos.py" },
     { "source": "/api/add_video", "destination": "/api/add_video.py" },
     { "source": "/api/delete_video", "destination": "/api/delete_video.py" },
+    { "source": "/api/youtube_info", "destination": "/api/youtube_info.py" },
+    { "source": "/api/update_video", "destination": "/api/update_video.py" },
+    { "source": "/api/update_order", "destination": "/api/update_order.py" },
     { "source": "/api/reviews", "destination": "/api/reviews.py" },
     { "source": "/api/add_review", "destination": "/api/add_review.py" },
     { "source": "/api/delete_review", "destination": "/api/delete_review.py" }
