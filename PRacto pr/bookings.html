@@ -1091,6 +1091,13 @@
         .cms-item-card[draggable="true"]:active {
             cursor: grabbing;
         }
+        .cms-item-thumb, .cms-item-thumb-sq, .cms-item-info, .cms-item-title, .cms-item-meta {
+            pointer-events: none;
+            user-select: none;
+        }
+        .cms-item-card button, .cms-item-card a {
+            pointer-events: auto;
+        }
         .cms-item-card.dragging {
             opacity: 0.5;
             border-color: var(--color-neon);
@@ -2117,33 +2124,42 @@
                 list.addEventListener('dragstart', (e) => {
                     const card = e.target.closest('.cms-item-card');
                     if (!card) return;
-                    dragSourceEl = card;
-                    e.dataTransfer.effectAllowed = 'move';
-                    card.style.opacity = '0.4';
                     card.classList.add('dragging');
+                    card.style.opacity = '0.4';
+                    e.dataTransfer.effectAllowed = 'move';
                 });
                 
                 list.addEventListener('dragover', (e) => {
                     e.preventDefault();
                     e.dataTransfer.dropEffect = 'move';
-                    const card = e.target.closest('.cms-item-card');
-                    if (!card || card === dragSourceEl) return;
                     
-                    const rect = card.getBoundingClientRect();
-                    const midpoint = rect.top + rect.height / 2;
-                    if (e.clientY < midpoint) {
-                        list.insertBefore(dragSourceEl, card);
+                    const draggingCard = list.querySelector('.dragging');
+                    if (!draggingCard) return;
+                    
+                    const cards = [...list.querySelectorAll('.cms-item-card:not(.dragging)')];
+                    const nextCard = cards.find(card => {
+                        const box = card.getBoundingClientRect();
+                        const offset = e.clientY - box.top - box.height / 2;
+                        return offset < 0;
+                    });
+                    
+                    if (nextCard == null) {
+                        list.appendChild(draggingCard);
                     } else {
-                        list.insertBefore(dragSourceEl, card.nextSibling);
+                        list.insertBefore(draggingCard, nextCard);
                     }
                 });
                 
                 list.addEventListener('dragend', (e) => {
                     const card = e.target.closest('.cms-item-card');
                     if (card) {
-                        card.style.opacity = '1';
                         card.classList.remove('dragging');
+                        card.style.opacity = '1';
                     }
+                    list.querySelectorAll('.cms-item-card').forEach(c => {
+                        c.classList.remove('dragging');
+                        c.style.opacity = '1';
+                    });
                     saveNewOrder(listId, type);
                 });
             };
