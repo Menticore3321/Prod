@@ -156,43 +156,45 @@ class handler(BaseHTTPRequestHandler):
             self._respond(500, {'status': 'error', 'message': str(e)})
 
     def _handle_youtube_info(self, youtube_id):
-        url = f"https://www.youtube.com/watch?v={youtube_id}"
-        req = urllib.request.Request(
-            url, 
-            headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'}
-        )
+        title = ""
+        oembed_url = f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={youtube_id}&format=json"
         try:
-            with urllib.request.urlopen(req, timeout=10) as response:
+            req_oe = urllib.request.Request(oembed_url, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req_oe, timeout=5) as response:
+                data = json.loads(response.read().decode('utf-8'))
+                title = data.get('title', '')
+        except Exception:
+            pass
+
+        desc = ""
+        watch_url = f"https://www.youtube.com/watch?v={youtube_id}"
+        try:
+            req_w = urllib.request.Request(
+                watch_url, 
+                headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'}
+            )
+            with urllib.request.urlopen(req_w, timeout=5) as response:
                 html = response.read().decode('utf-8')
-                
-                title = None
-                title_match = re.search(r'<meta property="og:title" content="([^"]+)">', html)
-                if title_match:
-                    title = title_match.group(1)
-                else:
-                    title_match2 = re.search(r'<title>([^<]+)</title>', html)
-                    if title_match2:
-                        title = title_match2.group(1).replace(" - YouTube", "")
-                
-                desc = None
+                if not title:
+                    title_match = re.search(r'<meta property="og:title" content="([^"]+)">', html)
+                    if title_match:
+                        title = title_match.group(1)
                 desc_match = re.search(r'<meta property="og:description" content="([^"]*)">', html)
                 if desc_match:
                     desc = desc_match.group(1)
-                else:
-                    desc_match2 = re.search(r'<meta name="description" content="([^"]*)">', html)
-                    if desc_match2:
-                        desc = desc_match2.group(1)
-                
-                if title: title = html_lib.unescape(title)
-                if desc: desc = html_lib.unescape(desc)
-                
-                self._respond(200, {
-                    'status': 'success',
-                    'title': title or '',
-                    'description': desc or ''
-                })
-        except Exception as e:
-            self._respond(500, {'status': 'error', 'message': f"Failed to fetch from YouTube: {str(e)}"})
+                    if "Enjoy the videos and music you love" in desc:
+                        desc = ""
+        except Exception:
+            pass
+
+        if title: title = html_lib.unescape(title)
+        if desc: desc = html_lib.unescape(desc)
+
+        self._respond(200, {
+            'status': 'success',
+            'title': title,
+            'description': desc
+        })
 
     def _handle_add_video(self, data):
         project_id = os.environ.get('FIREBASE_PROJECT_ID')
@@ -220,7 +222,7 @@ class handler(BaseHTTPRequestHandler):
                 "views": {"stringValue": data.get('views', '').strip()},
                 "retention": {"stringValue": data.get('retention', '').strip()},
                 "tags": {"stringValue": data.get('tags', '').strip()},
-                "order": {"integerValue": safe_int(data.get('order'), 99)},
+                "order": {"integerValue": str(safe_int(data.get('order'), 99))},
                 "created_at": {"stringValue": created_at},
             }
         }
@@ -295,7 +297,7 @@ class handler(BaseHTTPRequestHandler):
                 "views": {"stringValue": data.get('views', '').strip()},
                 "retention": {"stringValue": data.get('retention', '').strip()},
                 "tags": {"stringValue": data.get('tags', '').strip()},
-                "order": {"integerValue": safe_int(data.get('order'), 99)},
+                "order": {"integerValue": str(safe_int(data.get('order'), 99))},
             }
         }
 
@@ -341,7 +343,7 @@ class handler(BaseHTTPRequestHandler):
                     "update": {
                         "name": f"projects/{project_id}/databases/(default)/documents/videos/{video_id}",
                         "fields": {
-                            "order": {"integerValue": safe_int(order, 99)}
+                            "order": {"integerValue": str(safe_int(order, 99))}
                         }
                     },
                     "updateMask": {
