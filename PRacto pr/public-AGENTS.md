@@ -21,4 +21,4 @@
 - Do not perform recursive or exhaustive crawling of API endpoints.
 
 ## Contact
-- For questions regarding AI agent access, contact: edit@deejproductions.co
+- For questions regarding AI agent access, contact: joshideepak3321@gmail.com
