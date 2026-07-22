@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/AGENTS.md", "destination": "/public-AGENTS.md" },
     { "source": "/api/booking", "destination": "/api/booking.py" },
     { "source": "/api/bookings", "destination": "/api/bookings.py" },
     { "source": "/api/delete_booking", "destination": "/api/delete_booking.py" },
@@ -15,5 +16,15 @@
     { "source": "/api/reviews", "destination": "/api/reviews.py" },
     { "source": "/api/add_review", "destination": "/api/add_review.py" },
     { "source": "/api/delete_review", "destination": "/api/delete_review.py" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+      ]
+    }
   ]
 }

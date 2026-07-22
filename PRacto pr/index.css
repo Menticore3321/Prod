@@ -2063,6 +2063,41 @@ section {
     margin-top: 1rem;
 }
 
+/* ─────────────────────────────────────────────────────────
+   SEO: Minimum Touch-Target Sizes (48×48 px)
+   Ensures mobile accessibility and reduces misclick rate.
+───────────────────────────────────────────────────────── */
+.nav-link,
+.social-link,
+.btn-contact,
+.submit-btn,
+.reviews-control-btn,
+.modal-close,
+#audio-panel-trigger,
+.audio-menu-close {
+    min-width: 48px;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Footer external citation link (E-E-A-T signal) */
+.footer-citation-link {
+    text-decoration: none;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.5px;
+    transition: var(--transition-fast);
+    opacity: 0.5;
+}
+
+.footer-citation-link:hover {
+    color: var(--color-neon);
+    opacity: 1;
+}
+
 /* Mobile floating capsule menu load entrance animation */
 @keyframes menuBounce {
     0% {

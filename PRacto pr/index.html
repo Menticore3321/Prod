@@ -4,7 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEE J PRODUCTIONS | Premium Video Editor Portfolio</title>
+    <title>Premium Video Editor Portfolio | DEE J PRODUCTIONS</title>
+    <meta name="description" content="DEE J PRODUCTIONS — high-impact video editing for commercial brands, cinematic documentaries, and viral short-form creators. View showreel, cinematic works, and book your next project.">
+    <link rel="canonical" href="https://deej1.vercel.app/">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://deej1.vercel.app/">
+    <meta property="og:title" content="Premium Video Editor Portfolio | DEE J PRODUCTIONS">
+    <meta property="og:description" content="High-impact video editing for commercial brands, cinematic documentaries, and viral short-form creators. View showreel and book your next project.">
+    <meta property="og:image" content="https://img.youtube.com/vi/ScMzIvxBSi4/maxresdefault.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Premium Video Editor Portfolio | DEE J PRODUCTIONS">
+    <meta name="twitter:description" content="High-impact video editing for commercial brands, cinematic documentaries, and viral short-form creators.">
+    <meta name="twitter:image" content="https://img.youtube.com/vi/ScMzIvxBSi4/maxresdefault.jpg">
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "DEE J PRODUCTIONS",
+      "url": "https://deej1.vercel.app/",
+      "description": "Premium video editing portfolio — high-impact editing for commercial brands, cinematic documentaries, and viral short-form creators.",
+      "author": {
+        "@type": "Person",
+        "name": "DEE J",
+        "jobTitle": "Video Editor & Visual Architect",
+        "url": "https://deej1.vercel.app/"
+      }
+    }
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,10 +48,10 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="index.css?v=2.2.6">
 
-    <!-- CDNs (GSAP, Lenis) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
+    <!-- CDNs (GSAP, Lenis) — deferred to avoid blocking render -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js" defer></script>
 </head>
 
 <body>
@@ -186,8 +218,8 @@
                 <div class="showreel-wrapper" data-video-id="ScMzIvxBSi4">
                     <div class="showreel-preview">
                         <div class="glow-bg"></div>
-                        <img src="https://img.youtube.com/vi/ScMzIvxBSi4/maxresdefault.jpg" alt="Showreel Thumbnail"
-                            class="showreel-img">
+                        <img src="https://img.youtube.com/vi/ScMzIvxBSi4/maxresdefault.jpg" alt="DEE J PRODUCTIONS Showreel — Premium Video Editing Compilation"
+                            class="showreel-img" width="1280" height="720">
                         <div class="play-btn-circle">
                             <svg class="play-svg" viewBox="0 0 24 24">
                                 <path d="M8 5v14l11-7z" />
@@ -240,11 +272,11 @@
             <div class="hero-container reviews-container">
                 <div class="hero-left reviews-left">
                     <div class="hero-tagline">CLIENT TESTIMONIALS</div>
-                    <h1 class="hero-title reviews-title">
+                    <h2 class="hero-title reviews-title">
                         <span class="reveal-text">WHAT THEY</span><br>
                         <span class="reveal-text accent">SAY ABOUT</span><br>
                         <span class="reveal-text">THE CUTS.</span>
-                    </h1>
+                    </h2>
                     <p class="hero-desc reviews-desc">
                         Collaborating with world-class filmmakers, viral creators, and commercial brands to transform
                         raw footage into visual masterpieces. Here is what our clients say about the cuts.
@@ -325,6 +357,7 @@
                 <footer class="footer-bottom">
                     <span class="copy-text">© 2026 DEE J PRODUCTIONS. ALL RIGHTS RESERVED.</span>
                     <span class="design-by">DESIGNED & ENGINEERED DEE J Productions.</span>
+                    <a href="https://en.wikipedia.org/wiki/Video_editing" target="_blank" rel="noopener" class="footer-citation-link">Learn about video editing</a>
                 </footer>
             </div>
         </section>

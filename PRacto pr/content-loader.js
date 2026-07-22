@@ -15,7 +15,7 @@ function buildCinematicCard(v) {
     <div class="video-card long-card" data-video-id="${v.youtube_id}" data-doc-id="${v.id}">
       <div class="card-image-wrapper">
         <img src="https://img.youtube.com/vi/${v.youtube_id}/maxresdefault.jpg"
-             alt="${v.title}" loading="lazy">
+             alt="${v.title}" loading="lazy" width="1280" height="720">
         <div class="card-overlay">
           <span class="card-play-icon">◢</span>
         </div>
@@ -34,7 +34,7 @@ function buildShortCard(v) {
       <div class="phone-mockup">
         <div class="phone-screen">
           <img src="https://img.youtube.com/vi/${v.youtube_id}/hqdefault.jpg"
-               alt="${v.title}" class="short-thumb" loading="lazy">
+               alt="${v.title}" class="short-thumb" loading="lazy" width="480" height="360">
           <div class="short-overlay">
             <div class="short-stats">
               <span class="stat-views">${v.views || ''}</span>

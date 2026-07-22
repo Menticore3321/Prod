@@ -1,0 +1,22 @@
+# deej1.vercel.app
+
+> DEE J PRODUCTIONS — Premium Video Editing Portfolio & Booking Platform
+
+## About
+DEE J PRODUCTIONS is a professional video editing studio specializing in high-impact editing for commercial brands, cinematic documentaries, and viral short-form creators. The site showcases a curated portfolio of cinematic works, viral shorts, and a director's cut showreel.
+
+## Core Offerings
+- **Showreel** — Director's cut compilation of the best cinematic and commercial editing work
+- **Cinematic Works** — Long-form storytelling, commercials, and documentary editing
+- **Viral Shorts** — Micro-content engineered for high retention, hooks, and loops (TikTok, YouTube Shorts, Reels)
+- **Client Reviews** — Testimonials from collaborating filmmakers, creators, and brands
+
+## Booking & Contact
+- Project inquiries and booking briefs can be submitted directly through the on-site contact form
+- Formats available: Commercial / Ad Campaign, Cinematic / Long-form Documentary, Short-form Packs, Full-time Retainer / Brand Partnership
+- Currently booking for Q3/Q4 2026
+
+## Technical Details
+- Single-page application with GSAP scroll-driven animations
+- Dynamic content loaded from backend API (videos, reviews)
+- Responsive design optimized for desktop and mobile
